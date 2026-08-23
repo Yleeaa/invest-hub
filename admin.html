@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="微信公众号维护 - 文章管理">
+    <title>微信公众号维护</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --sidebar-active: #3b82f6;
+            --page-bg: #0a0f1a;
+            --page-bg-2: #0d1320;
+            --card-bg: #141b2d;
+            --card-bg-alt: #1a2236;
+            --border: #1e293b;
+            --border-light: #2a3650;
+            --text: #e2e8f0;
+            --text-soft: #94a3b8;
+            --text-dim: #64748b;
+            --primary: #3b82f6;
+            --primary-hover: #60a5fa;
+            --danger: #ef4444;
+            --danger-soft: rgba(239, 68, 68, 0.1);
+            --success: #22c55e;
+            --success-soft: rgba(34, 197, 94, 0.1);
+            --warn: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
+            background: var(--page-bg);
+            background-image:
+                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(59, 130, 246, 0.06), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 100% 100%, rgba(168, 85, 247, 0.04), transparent 50%),
+                linear-gradient(180deg, var(--page-bg-2) 0%, var(--page-bg) 100%);
+            color: var(--text);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* ===== 侧边栏 ===== */
+        .sidebar {
+            width: 240px;
+            min-width: 240px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f172a 0%, #0c1120 100%);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+        .sidebar-header {
+            padding: 1.5rem 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .sidebar-header .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .sidebar-header .subtitle {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            margin-top: 0.3rem;
+            letter-spacing: 1px;
+        }
+        .sidebar-nav {
+            flex: 1;
+            padding: 0.75rem;
+            overflow-y: auto;
+        }
+        .sidebar-nav .nav-label {
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.75rem 0.75rem 0.4rem;
+        }
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.65rem 0.85rem;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            margin-bottom: 2px;
+        }
+        .sidebar-nav a:hover {
+            background: var(--sidebar-hover);
+            color: #fff;
+        }
+        .sidebar-nav a.active {
+            background: var(--sidebar-active);
+            color: #fff;
+        }
+        .sidebar-nav a .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .sidebar-nav a .nav-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .sidebar-header .logo .icon {
+            width: 32px;
+            height: 32px;
+            background: var(--sidebar-active);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .sidebar-header .logo .icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .sidebar-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .sidebar-footer a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+        .sidebar-footer a:hover { color: #cbd5e1; }
+
+        /* ===== 主内容区 ===== */
+        .main {
+            flex: 1;
+            min-width: 0;
+            height: 100vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部栏 */
+        .topbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-light);
+            padding: 0 2rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .topbar .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+        }
+        .topbar .breadcrumb .current {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .topbar .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .topbar .btn-preview {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            background: var(--card-bg-alt);
+            color: var(--text-soft);
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .topbar .btn-preview:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* 内容区 */
+        .content {
+            flex: 1;
+            padding: 1.5rem 2rem;
+        }
+
+        /* 统计卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(26, 34, 54, 0.8) 0%, rgba(20, 27, 45, 0.6) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.1rem 1.25rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .stat-card .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            margin-bottom: 0.35rem;
+        }
+        .stat-card .stat-num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+        .stat-card .stat-num.primary { color: var(--primary); }
+        .stat-card .stat-num.success { color: var(--success); }
+        .stat-card .stat-num.warn { color: var(--warn); }
+        .stat-card .stat-num.danger { color: var(--danger); }
+
+        /* 面板 */
+        .panel {
+            background: linear-gradient(180deg, rgba(20, 27, 45, 0.9) 0%, rgba(20, 27, 45, 0.7) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(42, 54, 80, 0.4);
+        }
+        .panel-header h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .panel-header h3 svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+        .btn svg, .btn-preview svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .panel-header .panel-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .panel-body {
+            padding: 1.5rem;
+        }
+
+        /* 表单 */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 1.25rem;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+        .form-field.full { grid-column: 1 / -1; }
+        .form-field label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .form-field label .req { color: var(--danger); }
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 0.55rem 0.85rem;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--card-bg-alt);
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .form-field input::placeholder,
+        .form-field textarea::placeholder { color: var(--text-dim); }
+        .form-field select option {
+            background: var(--card-bg-alt);
+            color: var(--text);
+        }
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .form-field textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+        .form-field select { cursor: pointer; }
+        .form-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-light);
+        }
+        .form-footer .hint {
+            margin-left: auto;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        /* 按钮 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            font-size: 0.83rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary {
+            background: var(--card-bg-alt);
+            border: 1px solid var(--border-light);
+            color: var(--text-soft);
+        }
+        .btn-secondary:hover { border-color: var(--text-dim); color: var(--text); }
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.78rem;
+        }
+        .btn-danger {
+            background: var(--card-bg-alt);
+            border: 1px solid var(--border-light);
+            color: var(--danger);
+        }
+        .btn-danger:hover {
+            background: var(--danger-soft);
+            border-color: var(--danger);
+        }
+
+        /* 表格 */
+        .table-wrap {
+            overflow-x: auto;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th {
+            text-align: left;
+            padding: 0.65rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-soft);
+            background: rgba(26, 34, 54, 0.5);
+            border-bottom: 1px solid var(--border-light);
+            white-space: nowrap;
+        }
+        .data-table td {
+            padding: 0.7rem 1rem;
+            font-size: 0.83rem;
+            color: var(--text);
+            border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+            vertical-align: middle;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover td { background: rgba(30, 41, 59, 0.4); }
+        .data-table .td-title { font-weight: 500; }
+        .data-table .td-summary {
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text-soft);
+        }
+        .data-table .td-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+        .data-table .td-link a:hover { text-decoration: underline; }
+        .data-table .td-actions { white-space: nowrap; }
+        .data-table .empty-row td {
+            text-align: center;
+            color: var(--text-dim);
+            padding: 2.5rem 1rem;
+        }
+
+        /* 标签 */
+        .tag {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 500;
+        }
+        .tag-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .tag-green { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+        .tag-orange { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .tag-purple { background: rgba(168, 139, 250, 0.15); color: #c4b5fd; }
+        .tag-red { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .tag-cyan { background: rgba(6, 182, 212, 0.15); color: #67e8f9; }
+
+        /* 筛选栏 */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .filter-bar select {
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.8rem;
+            font-family: inherit;
+            color: var(--text-soft);
+            background: var(--card-bg-alt);
+            cursor: pointer;
+            outline: none;
+        }
+        .filter-bar select option {
+            background: var(--card-bg-alt);
+            color: var(--text);
+        }
+        .filter-bar input {
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.8rem;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--card-bg-alt);
+            outline: none;
+            width: 200px;
+        }
+        .filter-bar input::placeholder { color: var(--text-dim); }
+        .filter-bar input:focus { border-color: var(--primary); }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border: 1px solid var(--border-light);
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { background: #16a34a; }
+        .toast.error { background: var(--danger); }
+
+        /* 弹窗 */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 8, 15, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .modal-overlay.show { opacity: 1; visibility: visible; }
+        .modal {
+            background: linear-gradient(180deg, rgba(26, 34, 54, 0.95) 0%, rgba(20, 27, 45, 0.95) 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            width: 560px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.25s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .modal-overlay.show .modal { transform: scale(1) translateY(0); }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+        .modal-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 1.3rem;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            background: var(--card-bg-alt);
+            color: var(--text);
+        }
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-light);
+            flex-shrink: 0;
+        }
+        .modal-footer .hint {
+            margin-right: auto;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                min-width: 0;
+                height: auto;
+                flex-direction: row;
+                align-items: center;
+                padding: 0 1rem;
+            }
+            .sidebar-header { padding: 0.75rem 0; border-bottom: none; flex: 1; }
+            .sidebar-header .subtitle { display: none; }
+            .sidebar-nav { display: none; }
+            .sidebar-footer { border-top: none; padding: 0.5rem 0; }
+            .main { height: auto; }
+            .topbar { padding: 0 1rem; }
+            .content { padding: 1rem; }
+            .form-grid { grid-template-columns: 1fr; }
+            .filter-bar { flex-wrap: wrap; }
+            .filter-bar input { width: 100%; }
+            .data-table .td-summary { max-width: 120px; }
+            .modal { max-width: 95vw; border-radius: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg></span>
+                <span>投么有度</span>
+            </div>
+            <div class="subtitle">管理后台</div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-label">功能菜单</div>
+            <a href="javascript:void(0)" class="active" onclick="switchPage('articles', this)">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2.5"/></svg></span>
+                微信公众号维护
+            </a>
+            <a href="javascript:void(0)" onclick="switchPage('holdings', this)">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="5" width="4" height="16" rx="1"/></svg></span>
+                持仓分布
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="wechat.html" target="_blank">
+                <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg> 返回公众号页面
+            </a>
+        </div>
+    </aside>
+
+    <!-- 主内容 -->
+    <div class="main">
+        <!-- 顶部栏 -->
+        <div class="topbar">
+            <div class="breadcrumb">
+                <span>管理后台</span>
+                <span>/</span>
+                <span class="current" id="currentPageName">微信公众号维护</span>
+            </div>
+            <div class="topbar-actions" id="topbarActions">
+                <a href="wechat.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览公众号页面</a>
+            </div>
+        </div>
+
+        <!-- 内容 -->
+        <div class="content">
+            <!-- ===== 文章管理页面 ===== -->
+            <div id="page-articles" class="page-content">
+            <!-- 统计 -->
+            <div class="stats-grid" id="statsGrid"></div>
+
+            <!-- 分类管理 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> 分类管理</h3>
+                    <div class="panel-actions">
+                        <button class="btn btn-primary btn-sm" onclick="openCategoryModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增分类</button>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>分类名称</th>
+                                <th>标签颜色</th>
+                                <th>图标</th>
+                                <th>文章数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoryTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 文章列表 -->
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><svg viewBox="0 0 24 24"><path d="M9 2h6a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 文章列表</h3>
+                    <div class="panel-actions">
+                        <div class="filter-bar">
+                            <button class="btn btn-primary btn-sm" onclick="openModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增文章</button>
+                            <select id="filterCategory" onchange="renderArticles()">
+                                <option value="">全部分类</option>
+                            </select>
+                            <input type="text" id="filterKeyword" placeholder="搜索标题..." oninput="renderArticles()">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>分类</th>
+                                <th>文章名称</th>
+                                <th>简介</th>
+                                <th>跳转链接</th>
+                                <th>日期</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="articleTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+            </div><!-- /page-articles -->
+
+            <!-- ===== 持仓分布页面 ===== -->
+            <div id="page-holdings" class="page-content" style="display:none">
+                <!-- 持仓统计 -->
+                <div class="stats-grid" id="holdingsStatsGrid"></div>
+
+                <!-- 现金管理 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/></svg> 现金管理</h3>
+                        <div class="panel-actions">
+                            <button class="btn btn-primary btn-sm" onclick="openCashModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增现金</button>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>名称</th>
+                                    <th>金额</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cashTbody"></tbody>
+                            <tfoot>
+                                <tr style="font-weight:600;background:var(--bg);">
+                                    <td>现金合计</td>
+                                    <td id="cashTotal">—</td>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 投资标的类型管理 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> 投资标的类型</h3>
+                        <div class="panel-actions">
+                            <button class="btn btn-primary btn-sm" onclick="openInvTypeModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增类型</button>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>类型名称</th>
+                                    <th>标的数量</th>
+                                    <th>当前市值</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invTypeTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 投资标的列表 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M9 2h6a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 投资标的</h3>
+                        <div class="panel-actions">
+                            <div class="filter-bar">
+                                <button class="btn btn-primary btn-sm" onclick="openInvTargetModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增标的</button>
+                                <button class="btn btn-secondary btn-sm" onclick="loadSampleTargets()"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> 载入示例数据</button>
+                                <select id="filterInvType" onchange="renderInvTargets()">
+                                    <option value="">全部类型</option>
+                                </select>
+                                <input type="text" id="filterInvKeyword" placeholder="搜索名称/代码..." oninput="renderInvTargets()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>类型</th>
+                                    <th>基金代码</th>
+                                    <th>名称</th>
+                                    <th>当前市值</th>
+                                    <th>收益</th>
+                                    <th>收益率</th>
+                                    <th>持仓成本</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invTargetTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /page-holdings -->
+        </div>
+    </div>
+
+    <!-- 新增文章弹窗 -->
+    <div class="modal-overlay" id="articleModal" onclick="if(event.target===this) closeModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">新增文章</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="articleForm" onsubmit="return false;">
+                    <input type="hidden" id="fEditIndex" value="-1">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>文章分类 <span class="req">*</span></label>
+                            <select id="fCategory" required>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>发布日期</label>
+                            <input type="date" id="fDate">
+                        </div>
+                        <div class="form-field full">
+                            <label>文章名称 <span class="req">*</span></label>
+                            <input type="text" id="fTitle" placeholder="请输入文章标题" required>
+                        </div>
+                        <div class="form-field full">
+                            <label>文章简介 <span class="req">*</span></label>
+                            <textarea id="fSummary" placeholder="请输入文章简介..." required></textarea>
+                        </div>
+                        <div class="form-field full">
+                            <label>跳转链接 <span class="req">*</span></label>
+                            <input type="url" id="fLink" placeholder="https://mp.weixin.qq.com/s/..." required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="modalHint">添加后在公众号页面同步显示</span>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="modalSubmitBtn" onclick="submitArticle()">添加文章</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分类弹窗 -->
+    <div class="modal-overlay" id="categoryModal" onclick="if(event.target===this) closeCategoryModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="catModalTitle">新增分类</h3>
+                <button class="modal-close" onclick="closeCategoryModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm" onsubmit="return false;">
+                    <input type="hidden" id="cEditOldName" value="">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label>分类名称 <span class="req">*</span></label>
+                            <input type="text" id="cName" placeholder="请输入分类名称" required>
+                        </div>
+                        <div class="form-field">
+                            <label>标签颜色</label>
+                            <select id="cTagColor"></select>
+                        </div>
+                        <div class="form-field">
+                            <label>图标</label>
+                            <select id="cIcon"></select>
+                        </div>
+                        <div class="form-field full">
+                            <label>分类描述</label>
+                            <textarea id="cDesc" placeholder="可选，分类的简短描述..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="catModalHint">添加后可在文章中使用此分类</span>
+                <button type="button" class="btn btn-secondary" onclick="closeCategoryModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="catModalSubmitBtn" onclick="submitCategory()">添加分类</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 投资标的类型弹窗 -->
+    <div class="modal-overlay" id="invTypeModal" onclick="if(event.target===this) closeInvTypeModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="invTypeModalTitle">新增投资类型</h3>
+                <button class="modal-close" onclick="closeInvTypeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="invTypeForm" onsubmit="return false;">
+                    <input type="hidden" id="itEditOldName" value="">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label>类型名称 <span class="req">*</span></label>
+                            <input type="text" id="itName" placeholder="如：纯债、A股等" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="invTypeModalHint">添加后可在投资标的中使用此类型</span>
+                <button type="button" class="btn btn-secondary" onclick="closeInvTypeModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="invTypeSubmitBtn" onclick="submitInvType()">添加类型</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 投资标的弹窗 -->
+    <div class="modal-overlay" id="invTargetModal" onclick="if(event.target===this) closeInvTargetModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="invTargetModalTitle">新增投资标的</h3>
+                <button class="modal-close" onclick="closeInvTargetModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="invTargetForm" onsubmit="return false;">
+                    <input type="hidden" id="invEditIndex" value="-1">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>投资标的类型 <span class="req">*</span></label>
+                            <select id="invType" required></select>
+                        </div>
+                        <div class="form-field">
+                            <label>基金代码 <span class="req">*</span></label>
+                            <input type="text" id="invCode" placeholder="请输入基金代码" required>
+                        </div>
+                        <div class="form-field full">
+                            <label>名称 <span class="req">*</span></label>
+                            <input type="text" id="invName" placeholder="请输入名称" required>
+                        </div>
+                        <div class="form-field">
+                            <label>当前市值 <span class="req">*</span></label>
+                            <input type="number" id="invMarketValue" placeholder="0.00" step="0.01" required oninput="updateProfitRatePreview()">
+                        </div>
+                        <div class="form-field">
+                            <label>收益 <span class="req">*</span></label>
+                            <input type="number" id="invProfit" placeholder="0.00" step="0.01" required oninput="updateProfitRatePreview()">
+                        </div>
+                        <div class="form-field">
+                            <label>收益率（自动计算）</label>
+                            <input type="text" id="invProfitRate" readonly placeholder="—" style="background:var(--card-bg);color:var(--text-soft)">
+                        </div>
+                        <div class="form-field">
+                            <label>持仓成本（自动计算）</label>
+                            <input type="text" id="invCost" readonly placeholder="—" style="background:var(--card-bg);color:var(--text-soft)">
+                        </div>
+                        <div class="form-field full">
+                            <label>备注</label>
+                            <textarea id="invRemark" placeholder="可选备注..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="invTargetModalHint">收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益</span>
+                <button type="button" class="btn btn-secondary" onclick="closeInvTargetModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="invTargetSubmitBtn" onclick="submitInvTarget()">添加标的</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 现金弹窗 -->
+    <div class="modal-overlay" id="cashModal" onclick="if(event.target===this) closeCashModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="cashModalTitle">新增现金</h3>
+                <button type="button" class="modal-close" onclick="closeCashModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="cashForm" onsubmit="event.preventDefault(); submitCash();">
+                    <input type="hidden" id="cashEditIndex" value="-1">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>名称 <span class="req">*</span></label>
+                            <input type="text" id="cashName" placeholder="如：招商银行活期" required>
+                        </div>
+                        <div class="form-field">
+                            <label>金额 <span class="req">*</span></label>
+                            <input type="number" id="cashAmount" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-field full">
+                            <label>备注</label>
+                            <textarea id="cashRemark" placeholder="可选备注..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="cashModalHint">录入现金类资产，如活期存款、余额宝等</span>
+                <button type="button" class="btn btn-secondary" onclick="closeCashModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="cashSubmitBtn" onclick="submitCash()">添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/data.js"></script>
+    <script>
+        // Toast 提示
+        function showToast(msg, type) {
+            var toast = document.getElementById('toast');
+            if (!toast) return;
+            var icon = type === 'success' ? '✓ ' : (type === 'error' ? '✗ ' : '');
+            toast.textContent = icon + msg;
+            toast.className = 'toast show ' + (type || '');
+            setTimeout(function() { toast.classList.remove('show'); }, 2200);
+        }
+
+        /* ===== 分类下拉动态填充 ===== */
+        function getCatTagMap() {
+            var cats = Storage.getCategories();
+            var map = {};
+            cats.forEach(function(c) { map[c.name] = c.tagColor || 'tag-blue'; });
+            return map;
+        }
+
+        function populateCategoryDropdowns() {
+            var cats = Storage.getCategories();
+            var filterSelect = document.getElementById('filterCategory');
+            var formSelect = document.getElementById('fCategory');
+            var filterVal = filterSelect.value;
+            var formVal = formSelect.value;
+
+            filterSelect.innerHTML = '<option value="">全部分类</option>';
+            cats.forEach(function(c) {
+                filterSelect.innerHTML += '<option value="' + c.name + '">' + c.name + '</option>';
+            });
+            if (filterVal) filterSelect.value = filterVal;
+
+            formSelect.innerHTML = '';
+            cats.forEach(function(c) {
+                formSelect.innerHTML += '<option value="' + c.name + '">' + c.name + '</option>';
+            });
+            if (formVal && cats.some(function(c) { return c.name === formVal; })) {
+                formSelect.value = formVal;
+            } else if (cats.length > 0) {
+                formSelect.value = cats[0].name;
+            }
+        }
+
+        /* ===== 分类管理 ===== */
+        function renderCategories() {
+            var cats = Storage.getCategories();
+            var articles = Storage.getArticles();
+            var tbody = document.getElementById('categoryTbody');
+            if (cats.length === 0) {
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="5">暂无分类，请先添加分类</td></tr>';
+                return;
+            }
+            tbody.innerHTML = cats.map(function(c, i) {
+                var count = articles.filter(function(a) { return a.category === c.name; }).length;
+                return '<tr>' +
+                    '<td><span class="tag ' + (c.tagColor || 'tag-blue') + '">' + c.name + '</span></td>' +
+                    '<td style="color:var(--text-soft)">' + (c.tagColor || 'tag-blue') + '</td>' +
+                    '<td style="color:var(--text-soft)">' + (c.icon || '—') + '</td>' +
+                    '<td>' + count + '</td>' +
+                    '<td class="td-actions">' +
+                        '<button class="btn btn-secondary btn-sm" onclick="openEditCategoryModal(' + i + ')">编辑</button> ' +
+                        '<button class="btn btn-danger btn-sm" onclick="deleteCategory(' + i + ')">删除</button>' +
+                    '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        function populateCategoryFormDropdowns() {
+            var colorSelect = document.getElementById('cTagColor');
+            var iconSelect = document.getElementById('cIcon');
+            colorSelect.innerHTML = TAG_COLORS.map(function(t) {
+                return '<option value="' + t.value + '">' + t.label + '</option>';
+            }).join('');
+            iconSelect.innerHTML = Object.keys(CATEGORY_ICONS).map(function(key) {
+                return '<option value="' + key + '">' + key + '</option>';
+            }).join('');
+        }
+
+        function openCategoryModal() {
+            document.getElementById('categoryForm').reset();
+            document.getElementById('cEditOldName').value = '';
+            populateCategoryFormDropdowns();
+            document.getElementById('catModalTitle').textContent = '新增分类';
+            document.getElementById('catModalHint').textContent = '添加后可在文章中使用此分类';
+            document.getElementById('catModalSubmitBtn').textContent = '添加分类';
+            document.getElementById('categoryModal').classList.add('show');
+        }
+
+        function openEditCategoryModal(index) {
+            var cats = Storage.getCategories();
+            var c = cats[index];
+            if (!c) return;
+            document.getElementById('cEditOldName').value = c.name;
+            document.getElementById('cName').value = c.name;
+            document.getElementById('cDesc').value = c.desc || '';
+            populateCategoryFormDropdowns();
+            document.getElementById('cTagColor').value = c.tagColor || 'tag-blue';
+            document.getElementById('cIcon').value = c.icon || 'compass';
+            document.getElementById('catModalTitle').textContent = '编辑分类';
+            document.getElementById('catModalHint').textContent = '修改后，使用此分类的文章将同步更新';
+            document.getElementById('catModalSubmitBtn').textContent = '保存修改';
+            document.getElementById('categoryModal').classList.add('show');
+        }
+
+        function closeCategoryModal() {
+            document.getElementById('categoryModal').classList.remove('show');
+        }
+
+        function submitCategory() {
+            var oldName = document.getElementById('cEditOldName').value;
+            var name = document.getElementById('cName').value.trim();
+            var tagColor = document.getElementById('cTagColor').value;
+            var icon = document.getElementById('cIcon').value;
+            var desc = document.getElementById('cDesc').value.trim();
+
+            if (!name) {
+                showToast('请输入分类名称', 'error');
+                return;
+            }
+
+            var cats = Storage.getCategories();
+            var duplicate = cats.some(function(c) { return c.name === name && c.name !== oldName; });
+            if (duplicate) {
+                showToast('分类名称已存在', 'error');
+                return;
+            }
+
+            var cat = { name: name, tagColor: tagColor, icon: icon, desc: desc };
+
+            if (oldName) {
+                Storage.updateCategory(oldName, cat);
+                showToast('分类修改成功，相关文章已同步更新', 'success');
+            } else {
+                Storage.addCategory(cat);
+                showToast('分类添加成功', 'success');
+            }
+
+            renderCategories();
+            populateCategoryDropdowns();
+            renderArticles();
+            closeCategoryModal();
+        }
+
+        function deleteCategory(index) {
+            var cats = Storage.getCategories();
+            var c = cats[index];
+            if (!c) return;
+            var articles = Storage.getArticles();
+            var count = articles.filter(function(a) { return a.category === c.name; }).length;
+            var msg = count > 0
+                ? '分类「' + c.name + '」下有 ' + count + ' 篇文章，删除后这些文章将不再显示该分类。确认删除？'
+                : '确认删除分类「' + c.name + '」？';
+            if (!confirm(msg)) return;
+            Storage.deleteCategory(c.name);
+            renderCategories();
+            populateCategoryDropdowns();
+            renderArticles();
+            showToast('分类已删除', 'success');
+        }
+
+        /* ===== 文章管理 ===== */
+        // 弹窗控制 — 新增
+        function openModal() {
+            resetForm();
+            document.getElementById('fEditIndex').value = '-1';
+            document.getElementById('modalTitle').textContent = '新增文章';
+            document.getElementById('modalHint').textContent = '添加后在公众号页面同步显示';
+            document.getElementById('modalSubmitBtn').textContent = '添加文章';
+            document.getElementById('articleModal').classList.add('show');
+        }
+
+        // 弹窗控制 — 编辑
+        function openEditModal(index) {
+            var articles = Storage.getArticles();
+            var a = articles[index];
+            if (!a) return;
+            populateCategoryDropdowns();
+            document.getElementById('fEditIndex').value = index;
+            document.getElementById('fCategory').value = a.category || '';
+            document.getElementById('fDate').value = a.date || '';
+            document.getElementById('fTitle').value = a.title || '';
+            document.getElementById('fSummary').value = a.summary || '';
+            document.getElementById('fLink').value = a.link || '';
+            document.getElementById('modalTitle').textContent = '编辑文章';
+            document.getElementById('modalHint').textContent = '修改后在公众号页面同步更新';
+            document.getElementById('modalSubmitBtn').textContent = '保存修改';
+            document.getElementById('articleModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('articleModal').classList.remove('show');
+        }
+
+        // ESC 关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { closeModal(); closeCategoryModal(); closeInvTypeModal(); closeInvTargetModal(); }
+        });
+
+        // 渲染统计
+        function renderStats(articles) {
+            var cats = Storage.getCategories();
+            var colorMap = {
+                'tag-blue': 'primary',
+                'tag-green': 'success',
+                'tag-orange': 'warn',
+                'tag-purple': 'primary',
+                'tag-red': 'danger',
+                'tag-cyan': 'primary'
+            };
+            var html = '<div class="stat-card"><div class="stat-label">文章总数</div><div class="stat-num">' + articles.length + '</div></div>';
+            cats.forEach(function(cat) {
+                var count = articles.filter(function(a) { return a.category === cat.name; }).length;
+                var colorClass = colorMap[cat.tagColor] || 'primary';
+                html += '<div class="stat-card"><div class="stat-label">' + cat.name + '</div><div class="stat-num ' + colorClass + '">' + count + '</div></div>';
+            });
+            document.getElementById('statsGrid').innerHTML = html;
+        }
+
+        // 渲染文章列表
+        function renderArticles() {
+            var articles = Storage.getArticles();
+            var catTagMap = getCatTagMap();
+
+            // 筛选
+            var filterCat = document.getElementById('filterCategory').value;
+            var keyword = document.getElementById('filterKeyword').value.trim().toLowerCase();
+            if (filterCat) {
+                articles = articles.filter(function(a) { return a.category === filterCat; });
+            }
+            if (keyword) {
+                articles = articles.filter(function(a) {
+                    return a.title.toLowerCase().indexOf(keyword) >= 0;
+                });
+            }
+
+            renderStats(Storage.getArticles());
+
+            var tbody = document.getElementById('articleTbody');
+            if (articles.length === 0) {
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="6">暂无文章数据</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = articles.map(function(a, i) {
+                var tagClass = catTagMap[a.category] || 'tag-blue';
+                var linkHtml = a.link
+                    ? '<a href="' + a.link + '" target="_blank">打开 <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>'
+                    : '<span style="color:var(--text-dim)">—</span>';
+                return '<tr>' +
+                    '<td><span class="tag ' + tagClass + '">' + a.category + '</span></td>' +
+                    '<td class="td-title">' + a.title + '</td>' +
+                    '<td class="td-summary" title="' + (a.summary || '').replace(/"/g, '&quot;') + '">' + (a.summary || '') + '</td>' +
+                    '<td class="td-link">' + linkHtml + '</td>' +
+                    '<td>' + (a.date || '') + '</td>' +
+                    '<td class="td-actions">' +
+                        '<button class="btn btn-secondary btn-sm" onclick="openEditModal(' + i + ')">编辑</button> ' +
+                        '<button class="btn btn-danger btn-sm" onclick="deleteArticle(' + i + ')">删除</button>' +
+                    '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        // 提交文章（新增或修改）
+        function submitArticle() {
+            var editIndex = parseInt(document.getElementById('fEditIndex').value);
+            var category = document.getElementById('fCategory').value;
+            var date = document.getElementById('fDate').value;
+            var title = document.getElementById('fTitle').value.trim();
+            var summary = document.getElementById('fSummary').value.trim();
+            var link = document.getElementById('fLink').value.trim();
+
+            if (!category) {
+                showToast('请先添加至少一个分类', 'error');
+                return;
+            }
+            if (!title || !summary || !link) {
+                showToast('请填写所有必填项', 'error');
+                return;
+            }
+
+            if (!date) {
+                var now = new Date();
+                date = now.getFullYear() + '-' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0');
+            }
+
+            var article = {
+                date: date,
+                category: category,
+                title: title,
+                summary: summary,
+                link: link
+            };
+
+            if (editIndex >= 0) {
+                Storage.updateArticle(editIndex, article);
+                showToast('文章修改成功', 'success');
+            } else {
+                Storage.addArticle(article);
+                showToast('文章添加成功', 'success');
+            }
+            renderArticles();
+            closeModal();
+        }
+
+        // 删除文章
+        function deleteArticle(index) {
+            if (!confirm('确认删除这篇文章？')) return;
+            Storage.deleteArticle(index);
+            renderArticles();
+            showToast('文章已删除', 'success');
+        }
+
+        // 重置表单
+        function resetForm() {
+            document.getElementById('articleForm').reset();
+            setDefaultDate();
+        }
+
+        // 设置默认日期
+        function setDefaultDate() {
+            var now = new Date();
+            var dateStr = now.getFullYear() + '-' +
+                String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                String(now.getDate()).padStart(2, '0');
+            document.getElementById('fDate').value = dateStr;
+        }
+
+        /* ===== 页面切换 ===== */
+        function switchPage(page, el) {
+            document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+                a.classList.remove('active');
+            });
+            el.classList.add('active');
+            document.getElementById('page-articles').style.display = page === 'articles' ? '' : 'none';
+            document.getElementById('page-holdings').style.display = page === 'holdings' ? '' : 'none';
+            document.getElementById('currentPageName').textContent = page === 'articles' ? '微信公众号维护' : '持仓分布';
+            document.getElementById('topbarActions').innerHTML = page === 'articles'
+                ? '<a href="wechat.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览公众号页面</a>'
+                : '<a href="holdings.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览持仓页面</a>';
+            if (page === 'holdings') {
+                populateInvTypeDropdowns();
+                renderInvTypes();
+                renderInvTargets();
+            }
+        }
+
+        /* ===== 持仓分布 - 工具函数 ===== */
+        function formatMoney(num) {
+            if (num === null || num === undefined || num === '') return '—';
+            var n = parseFloat(num);
+            if (isNaN(n)) return '—';
+            return n.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function formatProfit(num) {
+            if (num === null || num === undefined || num === '') return '—';
+            var n = parseFloat(num);
+            if (isNaN(n)) return '—';
+            var prefix = n > 0 ? '+' : '';
+            return prefix + formatMoney(num);
+        }
+        function formatRate(profit, marketValue) {
+            var p = parseFloat(profit);
+            var a = parseFloat(marketValue);
+            if (isNaN(p) || isNaN(a) || a === 0) return '—';
+            var rate = p / a * 100;
+            var prefix = rate > 0 ? '+' : '';
+            return prefix + rate.toFixed(2) + '%';
+        }
+        function profitColor(num) {
+            var n = parseFloat(num);
+            if (isNaN(n) || n === 0) return 'var(--text-soft)';
+            return n > 0 ? '#f87171' : '#4ade80';
+        }
+        function rateColor(profit, marketValue) {
+            var p = parseFloat(profit);
+            var a = parseFloat(marketValue);
+            if (isNaN(p) || isNaN(a) || a === 0) return 'var(--text-soft)';
+            return p > 0 ? '#f87171' : '#4ade80';
+        }
+
+        var INV_TYPE_TAG_COLORS = ['tag-blue', 'tag-green', 'tag-orange', 'tag-purple', 'tag-red', 'tag-cyan'];
+        function getInvTypeTagColor(typeName) {
+            var types = Storage.getInvTypes();
+            var idx = types.indexOf(typeName);
+            if (idx < 0) idx = 0;
+            return INV_TYPE_TAG_COLORS[idx % INV_TYPE_TAG_COLORS.length];
+        }
+
+        /* ===== 投资标的类型管理 ===== */
+        function populateInvTypeDropdowns() {
+            var types = Storage.getInvTypes();
+            var filterSelect = document.getElementById('filterInvType');
+            var formSelect = document.getElementById('invType');
+            var filterVal = filterSelect.value;
+            var formVal = formSelect.value;
+
+            filterSelect.innerHTML = '<option value="">全部类型</option>';
+            types.forEach(function(t) {
+                filterSelect.innerHTML += '<option value="' + t + '">' + t + '</option>';
+            });
+            if (filterVal) filterSelect.value = filterVal;
+
+            formSelect.innerHTML = '';
+            types.forEach(function(t) {
+                formSelect.innerHTML += '<option value="' + t + '">' + t + '</option>';
+            });
+            if (formVal && types.indexOf(formVal) >= 0) {
+                formSelect.value = formVal;
+            } else if (types.length > 0) {
+                formSelect.value = types[0];
+            }
+        }
+
+        function renderInvTypes() {
+            var types = Storage.getInvTypes();
+            var targets = Storage.getInvTargets();
+            var tbody = document.getElementById('invTypeTbody');
+            if (types.length === 0) {
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="4">暂无类型，请先添加类型</td></tr>';
+                return;
+            }
+            tbody.innerHTML = types.map(function(t, i) {
+                var typeTargets = targets.filter(function(item) { return item.type === t; });
+                var totalAmount = typeTargets.reduce(function(sum, item) {
+                    return sum + (parseFloat(item.marketValue) || 0);
+                }, 0);
+                return '<tr>' +
+                    '<td><span class="tag ' + INV_TYPE_TAG_COLORS[i % INV_TYPE_TAG_COLORS.length] + '">' + t + '</span></td>' +
+                    '<td>' + typeTargets.length + '</td>' +
+                    '<td>' + formatMoney(totalAmount) + '</td>' +
+                    '<td class="td-actions">' +
+                        '<button class="btn btn-secondary btn-sm" onclick="openEditInvTypeModal(' + i + ')">编辑</button> ' +
+                        '<button class="btn btn-danger btn-sm" onclick="deleteInvType(' + i + ')">删除</button>' +
+                    '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        function openInvTypeModal() {
+            document.getElementById('invTypeForm').reset();
+            document.getElementById('itEditOldName').value = '';
+            document.getElementById('invTypeModalTitle').textContent = '新增投资类型';
+            document.getElementById('invTypeModalHint').textContent = '添加后可在投资标的中使用此类型';
+            document.getElementById('invTypeSubmitBtn').textContent = '添加类型';
+            document.getElementById('invTypeModal').classList.add('show');
+        }
+
+        function openEditInvTypeModal(index) {
+            var types = Storage.getInvTypes();
+            var name = types[index];
+            if (!name) return;
+            document.getElementById('itEditOldName').value = name;
+            document.getElementById('itName').value = name;
+            document.getElementById('invTypeModalTitle').textContent = '编辑投资类型';
+            document.getElementById('invTypeModalHint').textContent = '修改后，使用此类型的投资标的将同步更新';
+            document.getElementById('invTypeSubmitBtn').textContent = '保存修改';
+            document.getElementById('invTypeModal').classList.add('show');
+        }
+
+        function closeInvTypeModal() {
+            document.getElementById('invTypeModal').classList.remove('show');
+        }
+
+        function submitInvType() {
+            var oldName = document.getElementById('itEditOldName').value;
+            var name = document.getElementById('itName').value.trim();
+            if (!name) {
+                showToast('请输入类型名称', 'error');
+                return;
+            }
+            var types = Storage.getInvTypes();
+            if (types.indexOf(name) >= 0 && name !== oldName) {
+                showToast('类型名称已存在', 'error');
+                return;
+            }
+            if (oldName) {
+                Storage.updateInvType(oldName, name);
+                showToast('类型修改成功，相关标的已同步更新', 'success');
+            } else {
+                Storage.addInvType(name);
+                showToast('类型添加成功', 'success');
+            }
+            populateInvTypeDropdowns();
+            renderInvTypes();
+            renderInvTargets();
+            closeInvTypeModal();
+        }
+
+        function deleteInvType(index) {
+            var types = Storage.getInvTypes();
+            var name = types[index];
+            if (!name) return;
+            var targets = Storage.getInvTargets();
+            var count = targets.filter(function(t) { return t.type === name; }).length;
+            var msg = count > 0
+                ? '类型「' + name + '」下有 ' + count + ' 个投资标的，删除后这些标的的类型将变为空。确认删除？'
+                : '确认删除类型「' + name + '」？';
+            if (!confirm(msg)) return;
+            Storage.deleteInvType(name);
+            populateInvTypeDropdowns();
+            renderInvTypes();
+            renderInvTargets();
+            showToast('类型已删除', 'success');
+        }
+
+        /* ===== 持仓统计 ===== */
+        function renderHoldingsStats() {
+            var targets = Storage.getInvTargets();
+            var cashList = Storage.getCash();
+            var totalMarket = 0, totalProfit = 0, totalCost = 0;
+            targets.forEach(function(t) {
+                totalMarket += parseFloat(t.marketValue) || 0;
+                totalProfit += parseFloat(t.profit) || 0;
+                totalCost += parseFloat(t.cost) || 0;
+            });
+            var totalCash = cashList.reduce(function(s, c) { return s + (parseFloat(c.amount) || 0); }, 0);
+            var totalAsset = totalMarket + totalCash;
+            var totalRate = totalMarket !== 0 ? (totalProfit / totalMarket * 100) : 0;
+            var html = '<div class="stat-card"><div class="stat-label">总资产</div><div class="stat-num primary">' + formatMoney(totalAsset) + '</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">总市值</div><div class="stat-num">' + formatMoney(totalMarket) + '</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">现金合计</div><div class="stat-num">' + formatMoney(totalCash) + '</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">总收益</div><div class="stat-num" style="color:' + profitColor(totalProfit) + '">' + formatProfit(totalProfit) + '</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">总收益率</div><div class="stat-num" style="color:' + profitColor(totalProfit) + '">' + (totalRate > 0 ? '+' : '') + totalRate.toFixed(2) + '%</div></div>';
+            document.getElementById('holdingsStatsGrid').innerHTML = html;
+        }
+
+        /* ===== 投资标的管理 ===== */
+        function renderInvTargets() {
+            var targets = Storage.getInvTargets();
+            renderHoldingsStats();
+
+            var filterType = document.getElementById('filterInvType').value;
+            var keyword = document.getElementById('filterInvKeyword').value.trim().toLowerCase();
+
+            var filtered = targets.map(function(t, i) {
+                return { target: t, realIndex: i };
+            });
+            if (filterType) {
+                filtered = filtered.filter(function(item) { return item.target.type === filterType; });
+            }
+            if (keyword) {
+                filtered = filtered.filter(function(item) {
+                    return (item.target.name || '').toLowerCase().indexOf(keyword) >= 0 ||
+                           (item.target.code || '').toLowerCase().indexOf(keyword) >= 0;
+                });
+            }
+
+            var tbody = document.getElementById('invTargetTbody');
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="9">暂无投资标的数据</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(function(item) {
+                var t = item.target;
+                var idx = item.realIndex;
+                var tagClass = getInvTypeTagColor(t.type);
+                var profitVal = parseFloat(t.profit) || 0;
+                var marketVal = parseFloat(t.marketValue) || 0;
+                return '<tr>' +
+                    '<td><span class="tag ' + tagClass + '">' + (t.type || '—') + '</span></td>' +
+                    '<td>' + (t.code || '—') + '</td>' +
+                    '<td class="td-title">' + (t.name || '—') + '</td>' +
+                    '<td>' + formatMoney(t.marketValue) + '</td>' +
+                    '<td style="color:' + profitColor(profitVal) + ';font-weight:500">' + formatProfit(t.profit) + '</td>' +
+                    '<td style="color:' + rateColor(profitVal, marketVal) + ';font-weight:500">' + formatRate(t.profit, t.marketValue) + '</td>' +
+                    '<td>' + formatMoney(t.cost) + '</td>' +
+                    '<td class="td-summary" title="' + (t.remark || '').replace(/"/g, '&quot;') + '">' + (t.remark || '—') + '</td>' +
+                    '<td class="td-actions">' +
+                        '<button class="btn btn-secondary btn-sm" onclick="openEditInvTargetModal(' + idx + ')">编辑</button> ' +
+                        '<button class="btn btn-danger btn-sm" onclick="deleteInvTarget(' + idx + ')">删除</button>' +
+                    '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        function updateProfitRatePreview() {
+            var profit = parseFloat(document.getElementById('invProfit').value) || 0;
+            var market = parseFloat(document.getElementById('invMarketValue').value) || 0;
+            var rateEl = document.getElementById('invProfitRate');
+            var costEl = document.getElementById('invCost');
+            // 持仓成本 = 当前市值 - 收益
+            var cost = market - profit;
+            costEl.value = isNaN(cost) || market === 0 ? '' : cost.toFixed(2);
+            // 收益率 = 收益 / 当前市值
+            if (market === 0) {
+                rateEl.value = '';
+                rateEl.style.color = 'var(--text-soft)';
+                return;
+            }
+            var rate = profit / market * 100;
+            rateEl.value = (rate > 0 ? '+' : '') + rate.toFixed(2) + '%';
+            rateEl.style.color = profit > 0 ? '#f87171' : (profit < 0 ? '#4ade80' : 'var(--text-soft)');
+        }
+
+        function openInvTargetModal() {
+            document.getElementById('invTargetForm').reset();
+            document.getElementById('invEditIndex').value = '-1';
+            document.getElementById('invProfitRate').value = '';
+            document.getElementById('invProfitRate').style.color = 'var(--text-soft)';
+            document.getElementById('invCost').value = '';
+            populateInvTypeDropdowns();
+            document.getElementById('invTargetModalTitle').textContent = '新增投资标的';
+            document.getElementById('invTargetModalHint').textContent = '收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益';
+            document.getElementById('invTargetSubmitBtn').textContent = '添加标的';
+            document.getElementById('invTargetModal').classList.add('show');
+        }
+
+        function openEditInvTargetModal(index) {
+            var targets = Storage.getInvTargets();
+            var t = targets[index];
+            if (!t) return;
+            populateInvTypeDropdowns();
+            document.getElementById('invEditIndex').value = index;
+            document.getElementById('invType').value = t.type || '';
+            document.getElementById('invCode').value = t.code || '';
+            document.getElementById('invName').value = t.name || '';
+            document.getElementById('invMarketValue').value = t.marketValue || '';
+            document.getElementById('invProfit').value = t.profit || '';
+            document.getElementById('invRemark').value = t.remark || '';
+            updateProfitRatePreview();
+            document.getElementById('invTargetModalTitle').textContent = '编辑投资标的';
+            document.getElementById('invTargetModalHint').textContent = '修改后自动更新统计数据';
+            document.getElementById('invTargetSubmitBtn').textContent = '保存修改';
+            document.getElementById('invTargetModal').classList.add('show');
+        }
+
+        function closeInvTargetModal() {
+            document.getElementById('invTargetModal').classList.remove('show');
+        }
+
+        function submitInvTarget() {
+            var editIndex = parseInt(document.getElementById('invEditIndex').value);
+            var type = document.getElementById('invType').value;
+            var code = document.getElementById('invCode').value.trim();
+            var name = document.getElementById('invName').value.trim();
+            var marketValue = document.getElementById('invMarketValue').value;
+            var profit = document.getElementById('invProfit').value;
+            var remark = document.getElementById('invRemark').value.trim();
+
+            if (!type) {
+                showToast('请先添加至少一个投资类型', 'error');
+                return;
+            }
+            if (!code || !name || !marketValue || profit === '') {
+                showToast('请填写所有必填项', 'error');
+                return;
+            }
+
+            var mv = parseFloat(marketValue) || 0;
+            var pf = parseFloat(profit) || 0;
+            // 持仓成本 = 当前市值 - 收益
+            var cost = mv - pf;
+
+            var target = {
+                type: type,
+                code: code,
+                name: name,
+                marketValue: mv,
+                profit: pf,
+                cost: cost,
+                remark: remark
+            };
+
+            if (editIndex >= 0) {
+                Storage.updateInvTarget(editIndex, target);
+                showToast('投资标的修改成功', 'success');
+            } else {
+                Storage.addInvTarget(target);
+                showToast('投资标的添加成功', 'success');
+            }
+            renderInvTypes();
+            renderInvTargets();
+            closeInvTargetModal();
+        }
+
+        function deleteInvTarget(index) {
+            var targets = Storage.getInvTargets();
+            var t = targets[index];
+            if (!t) return;
+            if (!confirm('确认删除投资标的「' + (t.name || t.code) + '」？')) return;
+            Storage.deleteInvTarget(index);
+            renderInvTypes();
+            renderInvTargets();
+            showToast('投资标的已删除', 'success');
+        }
+
+        /* ===== 载入示例数据 ===== */
+        function loadSampleTargets() {
+            if (!confirm('将载入 15 个示例投资标的、默认类型及示例现金，覆盖当前数据，确认吗？')) return;
+            Storage.setInvTypes(SAMPLE_INV_TYPES.slice());
+            Storage.setInvTargets(JSON.parse(JSON.stringify(SAMPLE_INV_TARGETS)));
+            Storage.setCash(JSON.parse(JSON.stringify(SAMPLE_CASH)));
+            populateInvTypeDropdowns();
+            renderInvTypes();
+            renderInvTargets();
+            renderCash();
+            showToast('示例数据已载入', 'success');
+        }
+
+        /* ===== 现金管理 ===== */
+        function renderCash() {
+            var cashList = Storage.getCash();
+            var tbody = document.getElementById('cashTbody');
+            if (cashList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-tip">暂无现金记录，点击「新增现金」录入</td></tr>';
+            } else {
+                tbody.innerHTML = cashList.map(function(item, idx) {
+                    return '<tr>' +
+                        '<td class="td-title">' + (item.name || '—') + '</td>' +
+                        '<td>' + formatMoney(item.amount) + '</td>' +
+                        '<td class="td-summary" title="' + (item.remark || '').replace(/"/g, '&quot;') + '">' + (item.remark || '—') + '</td>' +
+                        '<td class="td-actions">' +
+                            '<button class="btn btn-secondary btn-sm" onclick="openEditCashModal(' + idx + ')">编辑</button> ' +
+                            '<button class="btn btn-danger btn-sm" onclick="deleteCash(' + idx + ')">删除</button>' +
+                        '</td>' +
+                    '</tr>';
+                }).join('');
+            }
+            // 合计
+            var total = cashList.reduce(function(s, c) { return s + (parseFloat(c.amount) || 0); }, 0);
+            document.getElementById('cashTotal').textContent = formatMoney(total);
+            // 同步更新统计卡片
+            renderHoldingsStats();
+        }
+
+        function openCashModal() {
+            document.getElementById('cashForm').reset();
+            document.getElementById('cashEditIndex').value = '-1';
+            document.getElementById('cashModalTitle').textContent = '新增现金';
+            document.getElementById('cashModalHint').textContent = '录入现金类资产，如活期存款、余额宝等';
+            document.getElementById('cashSubmitBtn').textContent = '添加';
+            document.getElementById('cashModal').classList.add('show');
+        }
+
+        function openEditCashModal(index) {
+            var cashList = Storage.getCash();
+            var c = cashList[index];
+            if (!c) return;
+            document.getElementById('cashEditIndex').value = index;
+            document.getElementById('cashName').value = c.name || '';
+            document.getElementById('cashAmount').value = c.amount || '';
+            document.getElementById('cashRemark').value = c.remark || '';
+            document.getElementById('cashModalTitle').textContent = '编辑现金';
+            document.getElementById('cashModalHint').textContent = '修改后自动更新统计数据';
+            document.getElementById('cashSubmitBtn').textContent = '保存修改';
+            document.getElementById('cashModal').classList.add('show');
+        }
+
+        function closeCashModal() {
+            document.getElementById('cashModal').classList.remove('show');
+        }
+
+        function submitCash() {
+            var editIndex = parseInt(document.getElementById('cashEditIndex').value);
+            var name = document.getElementById('cashName').value.trim();
+            var amount = document.getElementById('cashAmount').value;
+            var remark = document.getElementById('cashRemark').value.trim();
+
+            if (!name || !amount) {
+                showToast('请填写名称和金额', 'error');
+                return;
+            }
+
+            var item = {
+                name: name,
+                amount: parseFloat(amount) || 0,
+                remark: remark
+            };
+
+            if (editIndex >= 0) {
+                Storage.updateCash(editIndex, item);
+                showToast('现金记录已更新', 'success');
+            } else {
+                Storage.addCash(item);
+                showToast('现金记录已添加', 'success');
+            }
+            closeCashModal();
+            renderCash();
+        }
+
+        function deleteCash(index) {
+            var cashList = Storage.getCash();
+            var c = cashList[index];
+            if (!c) return;
+            if (!confirm('确认删除现金记录「' + (c.name || '') + '」？')) return;
+            Storage.deleteCash(index);
+            renderCash();
+            showToast('现金记录已删除', 'success');
+        }
+
+        // 初始化
+        populateCategoryDropdowns();
+        renderCategories();
+        renderArticles();
+
+        // 持仓分布初始化：若投资标的为空（含 localStorage 缓存的空数组），自动载入示例数据
+        (function initHoldingsData() {
+            var stored = localStorage.getItem(Storage.KEY_INV_TARGETS);
+            var targets = Storage.getInvTargets();
+            if (!targets || targets.length === 0) {
+                Storage.setInvTypes(SAMPLE_INV_TYPES.slice());
+                Storage.setInvTargets(JSON.parse(JSON.stringify(SAMPLE_INV_TARGETS)));
+            } else if (!stored) {
+                // 从未存储过，但 getInvTargets 返回了示例数据，持久化一次
+                Storage.setInvTypes(SAMPLE_INV_TYPES.slice());
+                Storage.setInvTargets(JSON.parse(JSON.stringify(SAMPLE_INV_TARGETS)));
+            }
+            // 现金数据初始化
+            var storedCash = localStorage.getItem(Storage.KEY_CASH);
+            if (!storedCash) {
+                Storage.setCash(JSON.parse(JSON.stringify(SAMPLE_CASH)));
+            }
+        })();
+
+        populateInvTypeDropdowns();
+        renderInvTypes();
+        renderInvTargets();
+        renderCash();
+    </script>
+</body>
+</html>

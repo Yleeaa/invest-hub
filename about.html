@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="关于我 - 投资理念与个人介绍">
+    <title>关于我 · 生活大于投资</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a961;
+            --gold-bright: #d4b56a;
+            --gold-soft: rgba(201, 169, 97, 0.15);
+            --white: #f0f0f0;
+            --white-soft: rgba(255, 255, 255, 0.15);
+            --white-glow: rgba(255, 255, 255, 0.4);
+            --accent-gradient: linear-gradient(135deg, #c9a961 0%, #f0f0f0 100%);
+            --title-gradient: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #ffffff 100%);
+            --bg: #000000;
+            --bg-soft: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text: #f0f0f0;
+            --text-soft: #a8a8a8;
+            --text-dim: #6a6a6a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .serif { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+
+        /* ===== 左侧导航栏 ===== */
+        .navbar {
+            position: relative;
+            width: 220px;
+            min-width: 220px;
+            height: 100vh;
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(201, 169, 97, 0.08);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-container {
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 3rem;
+        }
+
+        /* Logo 区域 */
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .nav-logo .title {
+             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
+             font-weight: 900;
+             font-size: 1.9rem;
+             background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+             -webkit-background-clip: text;
+             background-clip: text;
+             -webkit-text-fill-color: transparent;
+             color: transparent;
+             letter-spacing: 6px;
+             line-height: 1.15;
+             position: relative;
+             display: inline-block;
+             padding: 0.15rem 0 0.5rem;
+             align-self: flex-start;
+             text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
+             font-feature-settings: "palt" 1;
+         }
+        .nav-logo .title::before {
+             content: '';
+             position: absolute;
+             left: -0.85rem;
+             top: 50%;
+             transform: translateY(-50%);
+             width: 2px;
+             height: 65%;
+             background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+             border-radius: 2px;
+             opacity: 0.7;
+         }
+        .nav-logo .title::after {
+             content: '';
+             position: absolute;
+             bottom: 0;
+             left: 0;
+             width: 48px;
+             height: 2px;
+             background: linear-gradient(90deg, var(--gold), transparent);
+             border-radius: 2px;
+         }
+        .nav-logo .subtitle {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* 导航菜单 */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+        }
+        .nav-menu li { width: 100%; }
+        .nav-menu a {
+             display: flex;
+             align-items: center;
+             gap: 0.75rem;
+             color: var(--text-soft);
+             font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+             font-size: 0.82rem;
+             font-weight: 500;
+             letter-spacing: 0.5px;
+            padding: 0.7rem 1rem;
+            border-radius: 0;
+            position: relative;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+            text-decoration: none;
+        }
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 0;
+            background: var(--gold);
+            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-menu a .nav-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-style: italic;
+            transition: color 0.3s ease;
+            min-width: 16px;
+        }
+        .nav-menu a:hover {
+            color: var(--text);
+            padding-left: 1.3rem;
+        }
+        .nav-menu a:hover::before { height: 60%; }
+        .nav-menu a:hover .nav-num { color: var(--gold); }
+        .nav-menu a.active {
+            color: var(--gold);
+            padding-left: 1.3rem;
+        }
+        .nav-menu a.active::before { height: 60%; }
+        .nav-menu a.active .nav-num { color: var(--gold); }
+
+        /* 导航底部 */
+        .nav-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--surface-border);
+        }
+        .nav-footer .nav-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1;
+        }
+        .nav-footer .nav-date {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== 主内容区 ===== */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .main-content::-webkit-scrollbar { width: 4px; }
+        .main-content::-webkit-scrollbar-track { background: transparent; }
+        .main-content::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, rgba(201, 169, 97, 0.25), rgba(255, 255, 255, 0.2)); border-radius: 2px; }
+
+        /* 网格背景 */
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 右上角管理入口 */
+        .admin-entry {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.5rem;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid rgba(201, 169, 97, 0.25);
+            border-radius: 100px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .admin-entry:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 97, 0.1);
+        }
+
+        /* 页面头部 */
+        .page-header {
+            position: relative;
+            z-index: 1;
+            padding: 1.25rem 2rem 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .page-header .header-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.08);
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .page-header h1 {
+            font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif;
+            font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+            font-weight: 500;
+            background: var(--title-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 0.2rem;
+            letter-spacing: 1px;
+        }
+        .page-header p {
+            color: var(--text-soft);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        /* 通用 section */
+        .section {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* 个人简介 */
+        .profile-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.06) 100%);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 2rem;
+            align-items: center;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.08);
+        }
+        .profile-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background:
+                linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+                var(--accent-gradient) border-box;
+            background-origin: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif;
+            font-size: 4rem;
+            font-weight: 500;
+            position: relative;
+        }
+        .profile-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            opacity: 0.2;
+            filter: blur(15px);
+            z-index: -1;
+        }
+        .profile-info h2 {
+            font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, #d4b56a 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 0.4rem;
+        }
+        .profile-info .tagline {
+            background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+            font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif;
+        }
+        .profile-info p {
+            color: var(--text-soft);
+            line-height: 1.9;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+        .profile-info p strong {
+            background: linear-gradient(135deg, #d4b56a 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 600;
+        }
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+        .profile-meta .badge {
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.15) 0%, rgba(255, 255, 255, 0.12) 100%);
+            color: var(--white);
+            padding: 0.35rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.3s ease;
+        }
+        .profile-meta .badge:hover {
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.25) 0%, rgba(255, 255, 255, 0.2) 100%);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* 通用卡片 */
+        .card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 24px rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #d4b56a 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            font-weight: 500;
+        }
+        .card .card-text {
+            color: var(--text-soft);
+            line-height: 1.9;
+            font-size: 0.9rem;
+        }
+        .card .card-text p { margin-bottom: 0.85rem; }
+        .card .card-text strong {
+            background: linear-gradient(135deg, #d4b56a 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        /* 常识列表 */
+        .belief-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .belief-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border-left: 2px solid var(--white);
+            transition: all 0.3s ease;
+        }
+        .belief-item:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border-left-color: var(--gold);
+            transform: translateX(3px);
+        }
+        .belief-item h4 {
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .belief-item p {
+            color: var(--text-soft);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        /* 投资原则网格 */
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .principle-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid var(--surface-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .principle-card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.1) 100%);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
+        }
+        .principle-num {
+            display: inline-block;
+            width: 34px;
+            height: 34px;
+            line-height: 34px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.2) 0%, rgba(255, 255, 255, 0.15) 100%);
+            color: var(--gold-bright);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .principle-card h4 {
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .principle-card p {
+            color: var(--text-soft);
+            font-size: 0.85rem;
+            line-height: 1.7;
+        }
+
+        /* 联系我 */
+        .contact-section .text-muted {
+            color: var(--text-dim);
+            margin-top: 1rem;
+            font-size: 0.8rem;
+        }
+        .contact-section .text-muted strong {
+            background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        /* 页脚 */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 3rem 2rem 2.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.03));
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            max-width: 480px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+        .footer-mark {
+            font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, #d4b56a 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+        .footer-mark .sep {
+            color: var(--text-dim);
+            font-weight: 300;
+            margin: 0 0.5rem;
+            -webkit-text-fill-color: var(--text-dim);
+        }
+        .footer-tagline {
+            color: var(--text-soft);
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.25rem;
+        }
+        .footer-divider {
+            width: 32px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold), var(--white));
+            margin: 0 auto 1.25rem;
+        }
+        .footer-disclaimer {
+            color: var(--text-dim);
+            font-size: 0.72rem;
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+        .footer-copyright {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+        .footer-copyright .copyright-symbol {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            margin-right: 0.2rem;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            html, body { height: auto; overflow: auto; }
+            body { flex-direction: column; }
+            .navbar {
+                width: 100%;
+                min-width: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--surface-border);
+            }
+            .nav-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: auto;
+                gap: 1rem;
+                padding: 0.875rem 1.5rem;
+            }
+            .nav-menu {
+                flex-direction: row;
+                gap: 1rem;
+                align-items: center;
+            }
+            .nav-menu a { padding: 0.4rem 0.5rem; }
+            .nav-menu a::before { display: none; }
+            .nav-footer { display: none; }
+            .main-content { height: auto; overflow-y: visible; }
+            .page-header { padding: 1.5rem 1.25rem 1rem; }
+            .profile-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+            .profile-avatar {
+                margin: 0 auto;
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+            .profile-meta { justify-content: center; }
+            .card { padding: 1.5rem; }
+            .section { padding: 1.5rem 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="title">投么有度</span>
+                <span class="subtitle">Retirement Plan</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><span class="nav-num">01</span>首页</a></li>
+                <li><a href="holdings.html"><span class="nav-num">02</span>退休计划</a></li>
+                <li><a href="about.html" class="active"><span class="nav-num">03</span>关于我</a></li>
+                <li><a href="wechat.html"><span class="nav-num">04</span>公众号</a></li>
+            </ul>
+            <div class="nav-footer">
+                <div class="nav-time">始于 2026</div>
+                <div class="nav-date">长期投资纪实</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <div id="aurora-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;"></div>
+        <div class="grid-bg"></div>
+
+        <!-- 右上角系统管理入口 -->
+        <a href="admin.html" class="admin-entry" target="_blank">⚙ 系统管理</a>
+
+        <!-- 页面头部 -->
+        <header class="page-header">
+            <div class="header-tag">About</div>
+            <h1 class="serif">关于我</h1>
+            <p>一个普通投资者 · 用理性与时间，慢慢变富</p>
+        </header>
+
+        <!-- 个人简介 -->
+        <section class="section">
+            <div class="profile-card">
+                <div class="profile-avatar">我</div>
+                <div class="profile-info">
+                    <h2 class="serif">退休计划的践行者</h2>
+                    <p class="tagline">"把时间留给生活，把理性交给市场"</p>
+                    <p>
+                        你好，这里是<strong>「生活大于投资」</strong>，我是一名普通投资者，始终相信投资只是工具，<strong>生活才是最终目的</strong>。
+                    </p>
+                    <p>
+                        <strong>投资缘起：</strong><br>
+                        身处人工智能变革的时代，面对未来诸多的不确定。<br>
+                        在某一刻我突然顿悟了，意识到了投资的重要性和存在的意义。<br>
+                        并开始践行长期投资之道，起步时间不长，但道阻且长。<br>
+                        一名仍在持续学习的小白投资者。
+                    </p>
+                    <p>
+                        <strong>投资理念：</strong><br>
+                        专注构建一套能够长期持有的资产配置组合，追求平稳可持续的理财路径。<br>
+                        始终恪守：<strong>「生活大于投资，投资服务生活」</strong>，不为收益透支日常情绪与生活节奏。
+                    </p>
+                    <p>
+                        以此自勉，亦与诸君共勉！
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-mark">生活大于投资<span class="sep">·</span>退休计划</div>
+            <div class="footer-tagline">用时间抵达自由</div>
+            <div class="footer-divider"></div>
+            <p class="footer-disclaimer">本站所有内容仅为个人投资记录与思考，不构成任何投资建议</p>
+            <p class="footer-copyright"><span class="copyright-symbol"></span> Life &gt; Investment</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/splash-cursor.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="生活大于投资 - 退休计划的思考与实践">
+    <title>生活大于投资 · 退休计划</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a961;
+            --gold-bright: #d4b56a;
+            --gold-soft: rgba(201, 169, 97, 0.15);
+            --purple: #a78bfa;
+            --purple-bright: #c4b5fd;
+            --bg: #000000;
+            --bg-soft: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text: #f0f0f0;
+            --text-soft: #888888;
+            --text-dim: #555555;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .serif { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+        .display { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+
+        /* ===== 左侧导航栏 ===== */
+        .navbar {
+            position: relative;
+            width: 220px;
+            min-width: 220px;
+            height: 100vh;
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(201, 169, 97, 0.08);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-container {
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 3rem;
+        }
+
+        /* Logo 区域 */
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+        .nav-logo .title {
+             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
+             font-weight: 900;
+             font-size: 1.9rem;
+             background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+             -webkit-background-clip: text;
+             background-clip: text;
+             -webkit-text-fill-color: transparent;
+             color: transparent;
+             letter-spacing: 6px;
+             line-height: 1.15;
+             position: relative;
+             display: inline-block;
+             padding: 0.15rem 0 0.5rem;
+             align-self: flex-start;
+             text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
+             font-feature-settings: "palt" 1;
+         }
+        .nav-logo .title::before {
+             content: '';
+             position: absolute;
+             left: -0.85rem;
+             top: 50%;
+             transform: translateY(-50%);
+             width: 2px;
+             height: 65%;
+             background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+             border-radius: 2px;
+             opacity: 0.7;
+         }
+        .nav-logo .title::after {
+             content: '';
+             position: absolute;
+             bottom: 0;
+             left: 0;
+             width: 48px;
+             height: 2px;
+             background: linear-gradient(90deg, var(--gold), transparent);
+             border-radius: 2px;
+         }
+        .nav-logo .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 300;
+            color: var(--text-dim);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* 导航菜单 */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+        }
+        .nav-menu li { width: 100%; }
+        .nav-menu a {
+             display: flex;
+             align-items: center;
+             gap: 0.75rem;
+             color: var(--text-soft);
+             font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+             font-size: 0.82rem;
+             font-weight: 500;
+             letter-spacing: 0.5px;
+            padding: 0.7rem 1rem;
+            border-radius: 0;
+            position: relative;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+            text-decoration: none;
+        }
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 0;
+            background: var(--gold);
+            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-menu a .nav-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-style: italic;
+            transition: color 0.3s ease;
+            min-width: 16px;
+        }
+        .nav-menu a:hover {
+            color: var(--text);
+            padding-left: 1.3rem;
+        }
+        .nav-menu a:hover::before { height: 60%; }
+        .nav-menu a:hover .nav-num { color: var(--gold); }
+        .nav-menu a.active {
+            color: var(--gold);
+            padding-left: 1.3rem;
+        }
+        .nav-menu a.active::before { height: 60%; }
+        .nav-menu a.active .nav-num { color: var(--gold); }
+
+        /* 导航底部 */
+        .nav-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--surface-border);
+        }
+        .nav-footer .nav-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1;
+        }
+        .nav-footer .nav-date {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+        }
+        /* 右上角管理入口 */
+        .admin-entry {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.5rem;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid rgba(201, 169, 97, 0.25);
+            border-radius: 100px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .admin-entry:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 97, 0.1);
+        }
+        .hero-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        /* Hero 标签 */
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.45rem 1.1rem;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 100px;
+            background: rgba(201, 169, 97, 0.05);
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .hero-tag::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.5); }
+        }
+
+        /* Hero 主标题：金色渐变 */
+        .hero h1 {
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #f0f0f0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0;
+            text-shadow: none;
+            filter: drop-shadow(0 0 24px rgba(201, 169, 97, 0.45));
+        }
+        .hero h1 .accent {
+            color: var(--gold);
+            font-weight: 900;
+        }
+
+        /* Hero 副标题：金色细体衬线斜体 */
+        .hero h2 {
+            font-family: 'Cormorant Garamond', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+            font-weight: 300;
+            font-style: normal;
+            line-height: 1.5;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            letter-spacing: 1.5px;
+        }
+
+        /* Hero 分隔线 */
+        .hero-divider {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            margin-bottom: 2rem;
+        }
+
+        /* Hero 描述：粗黑体 */
+        .hero h3 {
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-size: clamp(0.82rem, 1.1vw, 0.92rem);
+            font-weight: 400;
+            line-height: 2.1;
+            color: var(--text-soft);
+            max-width: 480px;
+            letter-spacing: 1px;
+        }
+
+        /* Hero 底部装饰 */
+        .hero-scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.4;
+        }
+        .hero-scroll-hint .hint-text {
+            font-size: 0.6rem;
+            color: var(--text-soft);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .hero-scroll-hint .hint-line {
+            width: 1px;
+            height: 30px;
+            background: var(--text-soft);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+        @keyframes scrollLine {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            51% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .admin-entry { top: 0.5rem; right: 0.75rem; padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+            html, body { height: auto; overflow: auto; }
+            body { flex-direction: column; }
+            .navbar {
+                width: 100%;
+                min-width: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--surface-border);
+            }
+            .nav-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: auto;
+                gap: 1rem;
+                padding: 0.875rem 1.5rem;
+            }
+            .nav-menu {
+                flex-direction: row;
+                gap: 1rem;
+                align-items: center;
+            }
+            .nav-menu a { padding: 0.4rem 0.5rem; }
+            .nav-menu a::before { display: none; }
+            .nav-footer { display: none; }
+            .hero { flex: none; min-height: 80vh; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="title">投么有度</span>
+                <span class="subtitle">Retirement Plan</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active"><span class="nav-num">01</span>首页</a></li>
+                <li><a href="holdings.html"><span class="nav-num">02</span>退休计划</a></li>
+                <li><a href="about.html"><span class="nav-num">03</span>关于我</a></li>
+                <li><a href="wechat.html"><span class="nav-num">04</span>公众号</a></li>
+            </ul>
+            <div class="nav-footer">
+                <div class="nav-time">始于 2026</div>
+                <div class="nav-date">长期投资纪实</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div id="aurora-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;"></div>
+        <div class="hero-grid-bg"></div>
+        <a href="admin.html" class="admin-entry" target="_blank">⚙ 系统管理</a>
+        <div class="hero-container">
+            <div class="hero-tag">退休 计划</div>
+            <h1 class="serif">生活大于投资</h1>
+            <h2>收益有度，生活无限</h2>
+            <div class="hero-divider"></div>
+            <h3>用 5 年、10 年甚至 20 年的眼光，构筑一份可持续、可承受的组合，让资产成为生活的支撑，而非生活的全部，这里将作为退休计划的执行起点。</h3>
+        </div>
+        <div class="hero-scroll-hint">
+            <span class="hint-text">Scroll</span>
+            <div class="hint-line"></div>
+        </div>
+    </header>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/splash-cursor.js?v=1"></script>
+    <script src="js/soft-aurora.js?v=2"></script>
+    <script src="js/shape-blur.js?v=1"></script>
+    <script>
+    </script>
+</body>
+</html>

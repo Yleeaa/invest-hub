@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="退休计划 - 基金经理实录 · 找到适合自己的投资方式，体会复利的魅力">
+    <title>退休计划 · 基金经理实录</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a961;
+            --gold-bright: #d4b56a;
+            --gold-soft: rgba(201, 169, 97, 0.15);
+            --purple: #a78bfa;
+            --purple-bright: #c4b5fd;
+            --bg: #000000;
+            --bg-soft: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text: #f0f0f0;
+            --text-soft: #888888;
+            --text-dim: #555555;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .serif { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+
+        /* ===== 左侧导航栏 ===== */
+        .navbar {
+            position: relative;
+            width: 220px;
+            min-width: 220px;
+            height: 100vh;
+            background: transparent;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(201, 169, 97, 0.08);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-container {
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            gap: 3rem;
+        }
+
+        /* Logo 区域 */
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .nav-logo .title {
+             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
+             font-weight: 900;
+             font-size: 1.9rem;
+             background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+             -webkit-background-clip: text;
+             background-clip: text;
+             -webkit-text-fill-color: transparent;
+             color: transparent;
+             letter-spacing: 6px;
+             line-height: 1.15;
+             position: relative;
+             display: inline-block;
+             padding: 0.15rem 0 0.5rem;
+             align-self: flex-start;
+             text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
+             font-feature-settings: "palt" 1;
+         }
+        .nav-logo .title::before {
+             content: '';
+             position: absolute;
+             left: -0.85rem;
+             top: 50%;
+             transform: translateY(-50%);
+             width: 2px;
+             height: 65%;
+             background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+             border-radius: 2px;
+             opacity: 0.7;
+         }
+        .nav-logo .title::after {
+             content: '';
+             position: absolute;
+             bottom: 0;
+             left: 0;
+             width: 48px;
+             height: 2px;
+             background: linear-gradient(90deg, var(--gold), transparent);
+             border-radius: 2px;
+         }
+        .nav-logo .subtitle {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* 导航菜单 */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            flex: 1;
+        }
+        .nav-menu li { width: 100%; }
+        .nav-menu a {
+             display: flex;
+             align-items: center;
+             gap: 0.75rem;
+             color: var(--text-soft);
+             font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+             font-size: 0.82rem;
+             font-weight: 500;
+             letter-spacing: 0.5px;
+            padding: 0.7rem 1rem;
+            border-radius: 0;
+            position: relative;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+            text-decoration: none;
+        }
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 0;
+            background: var(--gold);
+            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-menu a .nav-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-style: italic;
+            transition: color 0.3s ease;
+            min-width: 16px;
+        }
+        .nav-menu a:hover {
+            color: var(--text);
+            padding-left: 1.3rem;
+        }
+        .nav-menu a:hover::before { height: 60%; }
+        .nav-menu a:hover .nav-num { color: var(--gold); }
+        .nav-menu a.active {
+            color: var(--gold);
+            padding-left: 1.3rem;
+        }
+        .nav-menu a.active::before { height: 60%; }
+        .nav-menu a.active .nav-num { color: var(--gold); }
+
+        /* 导航底部 */
+        .nav-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--surface-border);
+        }
+        .nav-footer .nav-time {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text);
+            font-weight: 400;
+            line-height: 1;
+        }
+        .nav-footer .nav-date {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== 主内容区 ===== */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .main-content::-webkit-scrollbar { width: 4px; }
+        .main-content::-webkit-scrollbar-track { background: transparent; }
+        .main-content::-webkit-scrollbar-thumb { background: rgba(201, 169, 97, 0.2); border-radius: 2px; }
+
+        /* 网格背景 */
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 右上角管理入口 */
+        .admin-entry {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.5rem;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid rgba(201, 169, 97, 0.25);
+            border-radius: 100px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .admin-entry:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 97, 0.1);
+        }
+
+        /* ===== 顶部标题区 ===== */
+        .plan-header {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 2rem 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .plan-header .header-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 100px;
+            background: rgba(201, 169, 97, 0.05);
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .plan-header h1 {
+            font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif;
+            font-size: clamp(2.2rem, 4vw, 2.6rem);
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.6rem;
+            letter-spacing: 6px;
+        }
+        .plan-header h2 {
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 4px;
+            margin-bottom: 0.6rem;
+        }
+        .plan-header p {
+            color: var(--text-soft);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* ===== 主体两栏布局 ===== */
+        .plan-body {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 1.25rem;
+        }
+
+        /* ===== 面板 ===== */
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--gold);
+            font-weight: 700;
+            text-align: center;
+            padding: 0.7rem 1rem;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        /* ===== 通用表格样式 ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            color: var(--text-soft);
+        }
+        .data-table th, .data-table td {
+            border: 1px solid var(--surface-border);
+            padding: 0.45rem 0.6rem;
+            text-align: center;
+        }
+        .data-table thead th {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .data-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* 类型分组（主表左侧分类列） */
+        .cat-cell {
+            background: rgba(255, 255, 255, 0.04) !important;
+            color: var(--text);
+            font-weight: 600;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 4px;
+            width: 36px;
+            padding: 0.6rem 0.2rem;
+        }
+        .cat-cell-bond      { color: #6fcf97; }
+        .cat-cell-stable    { color: #8ab1ff; }
+        .cat-cell-domestic  { color: #fbbf24; }
+        .cat-cell-overseas  { color: #c4b5fd; }
+
+        /* 资金行：金色高亮 */
+        .row-total {
+            background: rgba(201, 169, 97, 0.12) !important;
+            font-weight: 700;
+            color: var(--gold-bright);
+        }
+        .row-total td {
+            background: rgba(201, 169, 97, 0.12) !important;
+        }
+
+        /* 合计行：浅白高亮 */
+        .row-grand {
+            background: rgba(255, 255, 255, 0.06) !important;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .row-grand td {
+            background: rgba(255, 255, 255, 0.06) !important;
+        }
+
+        /* 收益正负颜色（A 股红涨绿跌） */
+        .num-pos { color: #f87171; font-weight: 600; }
+        .num-neg { color: #4ade80; font-weight: 600; }
+        .num-zero { color: var(--text-dim); }
+
+        /* ===== 2026 年度面板 ===== */
+        .plan-2026 {
+            margin-top: 1.25rem;
+        }
+        .panel-2026 {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--gold);
+            font-weight: 700;
+            text-align: center;
+            padding: 0.6rem 1rem;
+            letter-spacing: 2px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .summary-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            text-align: center;
+        }
+        .summary-cell {
+            padding: 0.9rem 0.5rem;
+            border-right: 1px solid var(--surface-border);
+        }
+        .summary-cell:last-child { border-right: none; }
+        .summary-cell .lbl {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 0.3rem;
+        }
+        .summary-cell .val {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .val-red { color: #f87171; }
+        .val-blue { color: #8ab1ff; }
+        .val-orange { color: var(--gold); }
+
+        /* ===== 左侧仓位控制区 ===== */
+        .left-stack { display: flex; flex-direction: column; gap: 1.25rem; }
+        .tag-cell {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 3px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+        .tag-domestic { background: rgba(91, 141, 239, 0.25); color: #8ab1ff; }
+        .tag-hk       { background: rgba(212, 175, 122, 0.25); color: var(--gold); }
+        .tag-overseas { background: rgba(167, 139, 250, 0.25); color: #c4b5fd; }
+
+        /* ===== 页脚 ===== */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 1rem;
+        }
+        .footer p {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            line-height: 1.8;
+        }
+        .footer p strong {
+            color: var(--text-soft);
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            html, body { height: auto; overflow: auto; }
+            .admin-entry { top: 0.5rem; right: 0.75rem; padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+            body { flex-direction: column; }
+            .navbar {
+                width: 100%;
+                min-width: 0;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--surface-border);
+            }
+            .nav-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: auto;
+                gap: 1rem;
+                padding: 0.875rem 1.5rem;
+            }
+            .nav-menu {
+                flex-direction: row;
+                gap: 1rem;
+                align-items: center;
+            }
+            .nav-menu a { padding: 0.4rem 0.5rem; }
+            .nav-menu a::before { display: none; }
+            .nav-footer { display: none; }
+            .main-content { height: auto; overflow-y: visible; }
+        }
+        @media (max-width: 1024px) {
+            .plan-body { grid-template-columns: 1fr; }
+            .plan-header h1 { font-size: 1.9rem; letter-spacing: 4px; }
+            .plan-header h2 { font-size: 1.1rem; letter-spacing: 2px; }
+        }
+        @media (max-width: 640px) {
+            .data-table { font-size: 0.78rem; }
+            .data-table th, .data-table td { padding: 0.35rem 0.3rem; }
+            .cat-cell { font-size: 0.7rem; letter-spacing: 2px; width: 28px; }
+            .summary-row { grid-template-columns: 1fr; }
+            .summary-cell { border-right: none; border-bottom: 1px solid var(--surface-border); }
+            .plan-header { padding: 2rem 1rem 1.5rem; }
+            .plan-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="title">投么有度</span>
+                <span class="subtitle">Retirement Plan</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><span class="nav-num">01</span>首页</a></li>
+                <li><a href="holdings.html"><span class="nav-num">02</span>退休计划</a></li>
+                <li><a href="about.html"><span class="nav-num">03</span>关于我</a></li>
+                <li><a href="wechat.html"><span class="nav-num">04</span>公众号</a></li>
+            </ul>
+            <div class="nav-footer">
+                <div class="nav-time">始于 2026</div>
+                <div class="nav-date">长期投资纪实</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <div id="aurora-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;"></div>
+        <div class="grid-bg"></div>
+
+        <!-- 右上角系统管理入口 -->
+        <a href="admin.html" class="admin-entry" target="_blank">⚙ 系统管理</a>
+
+        <!-- 顶部标题 -->
+        <header class="plan-header">
+            <div class="header-tag">Retirement</div>
+            <h1 class="serif">退 休 计 划</h1>
+            <h2>基 金 经 理 实 录</h2>
+            <p>找到适合自己的投资方式，体会复利的魅力</p>
+        </header>
+
+        <!-- 主体两栏 -->
+        <div class="plan-body">
+
+            <!-- ================= 左侧：仓位控制 ================= -->
+            <div class="left-stack">
+
+                <!-- 仓位控制面板 -->
+                <section class="panel">
+                    <div class="panel-title">仓位控制（场外账户）</div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2">名称</th>
+                                <th>金额</th>
+                                <th>仓位</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="tag-cell tag-domestic">国内</span></td>
+                                <td>债券</td>
+                                <td>30520.96</td>
+                                <td>30.02%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag-cell tag-domestic">国内</span></td>
+                                <td>固收+</td>
+                                <td>34973.23</td>
+                                <td>34.40%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag-cell tag-domestic">国内</span></td>
+                                <td>A股</td>
+                                <td>10274.57</td>
+                                <td>10.11%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag-cell tag-hk">香港</span></td>
+                                <td>港股</td>
+                                <td>2529</td>
+                                <td>2.49%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag-cell tag-overseas">海外</span></td>
+                                <td>纳斯达克100</td>
+                                <td>10451.65</td>
+                                <td>10.28%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag-cell tag-overseas">海外</span></td>
+                                <td>标普500</td>
+                                <td>5307.09</td>
+                                <td>5.22%</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tag-cell tag-overseas">海外</span></td>
+                                <td>日本</td>
+                                <td>4089.63</td>
+                                <td>4.02%</td>
+                            </tr>
+                            <tr class="row-total">
+                                <td colspan="2">总计投入</td>
+                                <td>98146.13</td>
+                                <td>96.54%</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">收益率（总投入）</td>
+                                <td colspan="2" class="num-pos">0.00%</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">真实收益率（总资金）</td>
+                                <td colspan="2" class="num-pos">0.00%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- 资产汇总 -->
+                <section class="panel">
+                    <table class="data-table">
+                        <tbody>
+                            <tr>
+                                <td>债券</td>
+                                <td>30520.96</td>
+                                <td>30.02%</td>
+                                <td rowspan="6" style="text-align:left; padding:0.6rem; font-size:0.82rem; color:var(--gold); background:rgba(201,169,97,0.06);">
+                                    偏债比例偏高，<br>需要降低，<br>加债券
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>固收+</td>
+                                <td>34973.23</td>
+                                <td>34.40%</td>
+                            </tr>
+                            <tr>
+                                <td>A股</td>
+                                <td>10274.57</td>
+                                <td>10.11%</td>
+                            </tr>
+                            <tr>
+                                <td>海外（含港股）</td>
+                                <td>22377.37</td>
+                                <td>22.01%</td>
+                            </tr>
+                            <tr>
+                                <td>现金</td>
+                                <td>3521.53</td>
+                                <td>3.46%</td>
+                            </tr>
+                            <tr class="row-grand">
+                                <td>合计</td>
+                                <td>101667.66</td>
+                                <td>69.98%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- 2026 年度 -->
+                <section class="panel plan-2026">
+                    <div class="panel-2026">2026 年度</div>
+                    <div class="summary-row">
+                        <div class="summary-cell">
+                            <div class="lbl">总资金（当前）</div>
+                            <div class="val val-red">¥101,667.66</div>
+                        </div>
+                        <div class="summary-cell">
+                            <div class="lbl">现金</div>
+                            <div class="val val-blue">¥3,521.53</div>
+                        </div>
+                        <div class="summary-cell">
+                            <div class="lbl">预计定投</div>
+                            <div class="val val-orange">¥11,650.00</div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- ================= 右侧：基金经理实录 ================= -->
+            <section class="panel">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">类型</th>
+                            <th>名称</th>
+                            <th>简称</th>
+                            <th>持仓占比</th>
+                            <th>现金额</th>
+                            <th>收益</th>
+                            <th>收益率</th>
+                            <th>持仓成本</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 债券 -->
+                        <tr>
+                            <td class="cat-cell cat-cell-bond" rowspan="5">债<br>券</td>
+                            <td>长城短债债券D</td>
+                            <td>长城短债D</td>
+                            <td>10.19%</td>
+                            <td>10004.21</td>
+                            <td class="num-pos">4.21</td>
+                            <td class="num-pos">0.04%</td>
+                            <td>10000</td>
+                        </tr>
+                        <tr>
+                            <td>长城短债债券A</td>
+                            <td>长城短债A</td>
+                            <td>4.58%</td>
+                            <td>4499.48</td>
+                            <td class="num-neg">-0.52</td>
+                            <td class="num-neg">-0.01%</td>
+                            <td>4500</td>
+                        </tr>
+                        <tr>
+                            <td>长盛盛裕纯债债券D</td>
+                            <td>长盛盛裕纯债D</td>
+                            <td>6.11%</td>
+                            <td>6001.62</td>
+                            <td class="num-pos">1.62</td>
+                            <td class="num-pos">0.03%</td>
+                            <td>6000</td>
+                        </tr>
+                        <tr>
+                            <td>东方添益债券</td>
+                            <td>东方添益债券</td>
+                            <td>5.10%</td>
+                            <td>5007.82</td>
+                            <td class="num-pos">7.82</td>
+                            <td class="num-pos">0.16%</td>
+                            <td>5000</td>
+                        </tr>
+                        <tr>
+                            <td>鹏华丰享债券</td>
+                            <td>鹏华丰享债券</td>
+                            <td>5.10%</td>
+                            <td>5007.83</td>
+                            <td class="num-pos">7.83</td>
+                            <td class="num-pos">0.16%</td>
+                            <td>5000</td>
+                        </tr>
+
+                        <!-- 固收+ -->
+                        <tr>
+                            <td class="cat-cell cat-cell-stable" rowspan="3">固<br>收<br>+</td>
+                            <td>易方达瑞锦灵活配置混合A</td>
+                            <td>灵活配置(股债偏债)</td>
+                            <td>10.29%</td>
+                            <td>10098.72</td>
+                            <td class="num-pos">98.72</td>
+                            <td class="num-pos">0.99%</td>
+                            <td>10000</td>
+                        </tr>
+                        <tr>
+                            <td>易方达瑞锦灵活配置混合C</td>
+                            <td>灵活配置(股债偏债)</td>
+                            <td>25.34%</td>
+                            <td>24874.51</td>
+                            <td class="num-neg">-125.49</td>
+                            <td class="num-neg">-0.50%</td>
+                            <td>25000</td>
+                        </tr>
+                        <tr>
+                            <td>易方达中证500ETF联接C</td>
+                            <td>中证500</td>
+                            <td>5.41%</td>
+                            <td>5307.09</td>
+                            <td class="num-pos">254.09</td>
+                            <td class="num-pos">5.03%</td>
+                            <td>5053</td>
+                        </tr>
+
+                        <!-- 场外 - 国内-权益类 -->
+                        <tr>
+                            <td class="cat-cell cat-cell-domestic" rowspan="2">场<br>外</td>
+                            <td>华泰柏瑞中证红利低波动ETF联接A</td>
+                            <td>红利低波动50（偏银行）</td>
+                            <td>10.47%</td>
+                            <td>10274.57</td>
+                            <td class="num-pos">352.43</td>
+                            <td class="num-pos">3.55%</td>
+                            <td>9922.1</td>
+                        </tr>
+                        <tr>
+                            <td>南方恒生科技ETF联接(QDII)C</td>
+                            <td>恒生科技</td>
+                            <td>2.58%</td>
+                            <td>2529</td>
+                            <td class="num-neg">-21.00</td>
+                            <td class="num-neg">-0.82%</td>
+                            <td>2550</td>
+                        </tr>
+
+                        <!-- 场外 - 海外-权益类 -->
+                        <tr>
+                            <td class="cat-cell cat-cell-overseas" rowspan="6">海<br>外<br>-<br>权<br>益</td>
+                            <td>摩根标普500指数(QDII)A</td>
+                            <td>标普500</td>
+                            <td>5.41%</td>
+                            <td>5307.09</td>
+                            <td class="num-pos">254.09</td>
+                            <td class="num-pos">5.03%</td>
+                            <td>5053</td>
+                        </tr>
+                        <tr>
+                            <td>南方纳斯达克100指数(QDII)A</td>
+                            <td>纳斯达克100（南方）</td>
+                            <td>3.39%</td>
+                            <td>3323.4</td>
+                            <td class="num-pos">103.40</td>
+                            <td class="num-pos">3.21%</td>
+                            <td>3220</td>
+                        </tr>
+                        <tr>
+                            <td>招商纳斯达克100ETF联接(QDII)A</td>
+                            <td>纳斯达克100（招商）</td>
+                            <td>4.71%</td>
+                            <td>4622.92</td>
+                            <td class="num-pos">312.92</td>
+                            <td class="num-pos">7.26%</td>
+                            <td>4310</td>
+                        </tr>
+                        <tr>
+                            <td>景顺长城纳斯达克科技市值加权ETF联接(QDII)A</td>
+                            <td>纳斯达克100（加权）</td>
+                            <td>2.55%</td>
+                            <td>2505.33</td>
+                            <td class="num-pos">445.33</td>
+                            <td class="num-pos">21.62%</td>
+                            <td>2060</td>
+                        </tr>
+                        <tr>
+                            <td>华安三菱日联日经225ETF联接(QDII)C</td>
+                            <td>日经225</td>
+                            <td>1.20%</td>
+                            <td>1181.53</td>
+                            <td class="num-pos">61.53</td>
+                            <td class="num-pos">5.49%</td>
+                            <td>1120</td>
+                        </tr>
+                        <tr>
+                            <td>摩根日本精选股票(QDII)A</td>
+                            <td>日本精选</td>
+                            <td>2.96%</td>
+                            <td>2908.10</td>
+                            <td class="num-pos">115.60</td>
+                            <td class="num-pos">4.14%</td>
+                            <td>2792.5</td>
+                        </tr>
+
+                        <!-- 合计 -->
+                        <tr class="row-grand">
+                            <td colspan="3">已投资合计</td>
+                            <td>100.00%</td>
+                            <td>98146.13</td>
+                            <td class="num-pos">1618.49</td>
+                            <td class="num-pos">5.22%</td>
+                            <td>31028</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="background:rgba(255,255,255,0.03);">现金（需更新）</td>
+                            <td colspan="2" style="background:rgba(255,255,255,0.03);">3,521.53</td>
+                            <td colspan="2" style="background:rgba(255,255,255,0.03);"></td>
+                        </tr>
+                        <tr class="row-total">
+                            <td colspan="4">预计定投</td>
+                            <td colspan="2">11,650.00</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p><strong>生活大于投资</strong> · 退休计划的思考与实践</p>
+                <p>本站所有内容仅为个人投资记录与思考，不构成任何投资建议</p>
+                <p class="mt-2">© 2026 Life &gt; Investment · 用时间抵达自由</p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/splash-cursor.js?v=1"></script>
+</body>
+</html>

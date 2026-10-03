@@ -435,8 +435,27 @@
 
             function fundIndex(f) { return f.index || 'NDX'; }
 
+            // 场外基金：若同一产品存在 A/C/D/I/E/F 等多个份额，只保留 A 类
+            function dedupShareClasses(list) {
+                var groups = {};
+                list.forEach(function (f) {
+                    if (f.cat === 'ETF') return;
+                    var key = f.company + '|' + fundIndex(f) + '|' + f.cat;
+                    (groups[key] = groups[key] || []).push(f);
+                });
+                var keepA = {};
+                Object.keys(groups).forEach(function (k) {
+                    if (groups[k].some(function (f) { return f.cls === 'A'; })) keepA[k] = true;
+                });
+                return list.filter(function (f) {
+                    if (f.cat === 'ETF') return true;
+                    var key = f.company + '|' + fundIndex(f) + '|' + f.cat;
+                    return keepA[key] ? f.cls === 'A' : true;
+                });
+            }
+
             function filtered() {
-                var list = DATA.filter(function (f) {
+                var list = dedupShareClasses(DATA).filter(function (f) {
                     if (f.ccy !== '人民币') return false; // 调试中：只显示国内人民币份额
                     if (state.idx && state.idx !== fundIndex(f)) return false;
                     if (state.cat === '场内' && f.cat !== 'ETF') return false;

@@ -1,0 +1,20 @@
+﻿CloudBase CLI 3.8.0
+璇曡瘯 tcb ai 鍛戒护锛屽紑鍚?AI 鍘熺敓寮€鍙?- 鏁版嵁鍔犺浇涓?..
+i 涓婁紶閰嶇疆: 骞跺彂=1, 閲嶈瘯娆℃暟=3, 閲嶈瘯闂撮殧=2000ms
+- 鍑嗗涓婁紶涓?..
+node.exe : 
+所在位置 C:\Users\Ylee\AppData\Roaming\npm\tcb.ps1:24 字符: 5
++     & "node$exe"  "$basedir/node_modules/@cloudbase/cli/bin/tcb" $arg ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+鉁?鏂囦欢涓婁紶瀹屾垚
+鈭?
+閮ㄧ讲瀹屾垚 https://ceshi-1-d1g0czdaa999081f4-1470950321.tcloudbaseapp.com
+i 
+i 涓嬩竴姝ワ細
+i   鈥?楠岃瘉鏂囦欢璺緞: tcb hosting list js
+i   鈥?缁х画涓婁紶鍏朵粬鐩綍: tcb hosting deploy <localPath> <cloudPath>
+i   鈥?璁块棶缃戠珯: https://ceshi-1-d1g0czdaa999081f4-1470950321.tcloudbaseapp.com
+i   CDN 缂撳瓨鎻愮ず锛氬椤甸潰鏈洿鏂帮紝鍙敤 curl -H "Cache-Control: no-cache" https://ceshi-1-d1g0czdaa999081f4-1470950321.tcloudbaseapp.com 鎴栨祻瑙堝櫒鏃犵棔妯″紡楠岃瘉锛孋DN 閫氬父鍦ㄦ暟鍒嗛挓鍐呭埛鏂?i   闇€瑕佺増鏈鐞嗭紵鎺ㄨ崘浣跨敤 tcb app deploy锛屾敮鎸佷簯绔瀯寤恒€佺増鏈洖婊氬拰鏈嶅姟鍚嶇鐞?鈭?鏂囦欢閮ㄧ讲鎴愬姛锛?

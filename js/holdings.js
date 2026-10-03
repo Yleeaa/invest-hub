@@ -30,6 +30,15 @@ function typeToMarket(typeName) {
 function getDisplayList() {
     // 从新数据源读取并转换为统一格式
     const list = Storage.getInvTargets();
+    const typeOrder = Storage.getInvTypes();
+    // 按类型排序
+    list.sort((a, b) => {
+        let idxA = typeOrder.indexOf(a.type);
+        let idxB = typeOrder.indexOf(b.type);
+        if (idxA === -1) idxA = 999;
+        if (idxB === -1) idxB = 999;
+        return idxA - idxB;
+    });
     return list.map((t, i) => {
         const marketValue = parseFloat(t.marketValue) || 0;
         const profit = parseFloat(t.profit) || 0;
@@ -39,6 +48,7 @@ function getDisplayList() {
             code: t.code || '',
             name: t.name || '',
             type: t.type || '—',
+            category: t.category || '未分类',
             market: typeToMarket(t.type),
             remark: t.remark || '',
             marketValue: marketValue,
@@ -85,21 +95,28 @@ function renderStats() {
     const list = getDisplayList();
     const m = calcInvMetrics(list);
 
+    // 债券类（债券 + 偏债）与 权益类（A股/港股/美股/日股）占总资产百分比
+    let bondTotal = 0, equityTotal = 0;
+    list.forEach(item => {
+        if (item.type === '债券' || item.type === '偏债') bondTotal += item.marketValue;
+        else if (['A股', '港股', '美股', '日股'].indexOf(item.type) !== -1) equityTotal += item.marketValue;
+    });
+    const bondPct = m.totalAsset > 0 ? (bondTotal / m.totalAsset * 100) : 0;
+    const equityPct = m.totalAsset > 0 ? (equityTotal / m.totalAsset * 100) : 0;
+
     const cards = [
         { label: '总资产', value: '¥ ' + fmtMoney(m.totalAsset), sub: '市值 + 现金' },
         { label: '总市值', value: '¥ ' + fmtMoney(m.totalMarket), sub: '' },
         { label: '现金', value: '¥ ' + fmtMoney(m.totalCash), sub: m.totalAsset > 0 ? '占比 ' + (m.totalCash / m.totalAsset * 100).toFixed(1) + '%' : '' },
         {
-            label: '累计收益',
-            value: (m.totalProfit >= 0 ? '+' : '') + '¥ ' + fmtMoney(m.totalProfit),
-            sub: '',
-            color: m.totalProfit >= 0 ? 'success' : 'danger'
+            label: '债券类占比',
+            value: bondPct.toFixed(1) + '%',
+            sub: '债券整体（含偏债）/ 总资产',
         },
         {
-            label: '总收益率',
-            value: (m.totalProfitRate >= 0 ? '+' : '') + fmtPercent(m.totalProfitRate),
-            sub: '收益 / 当前市值',
-            color: m.totalProfitRate >= 0 ? 'success' : 'danger'
+            label: '权益类占比',
+            value: equityPct.toFixed(1) + '%',
+            sub: '股票类整体 / 总资产',
         },
     ];
 
@@ -220,45 +237,68 @@ function typeColor(type) {
     return TYPE_COLOR_MAP[type] || '#94a3b8';
 }
 
-/* ===== 持仓明细表 ===== */
+/* ===== 分类颜色映射（按 INV_CATEGORIES 顺序循环取色） ===== */
+const CATEGORY_PALETTE = ['#c9a961', '#6b9eff', '#f09696', '#6fd9a0', '#a995f5', '#fbc94d', '#5dd9e8', '#a0aec0'];
+function categoryColor(name) {
+    const cats = (typeof Storage !== 'undefined' && Storage.getInvCategories) ? Storage.getInvCategories() : [];
+    let idx = cats.indexOf(name);
+    if (idx < 0) idx = 0;
+    return CATEGORY_PALETTE[idx % CATEGORY_PALETTE.length];
+}
+
+/* ===== 持仓明细表（按分类聚合） ===== */
 function renderDetail() {
     const list = getDisplayList();
     const m = calcInvMetrics(list);
 
+    // 按 category 聚合
+    const catMap = {};
+    list.forEach(d => {
+        const c = d.category || '未分类';
+        if (!catMap[c]) catMap[c] = { name: c, marketValue: 0, profit: 0, count: 0 };
+        catMap[c].marketValue += d.marketValue;
+        catMap[c].profit += d.profit;
+        catMap[c].count += 1;
+    });
+
+    // 按 INV_CATEGORIES 配置顺序排序
+    const cats = (typeof Storage !== 'undefined' && Storage.getInvCategories) ? Storage.getInvCategories() : [];
+    const aggregated = Object.values(catMap).sort((a, b) => {
+        let ia = cats.indexOf(a.name);
+        let ib = cats.indexOf(b.name);
+        if (ia === -1) ia = 999;
+        if (ib === -1) ib = 999;
+        return ia - ib;
+    });
+
     const tbody = document.querySelector('#detailTable tbody');
-    if (list.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" class="text-muted" style="text-align:center; padding: 2rem;">暂无投资标的，请到 <a href="admin.html" target="_blank" style="color: var(--h-gold);">管理后台</a> 录入</td></tr>';
+    if (aggregated.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-muted" style="text-align:center; padding: 2rem;">暂无投资标的，请到 <a href="admin.html" target="_blank" style="color: var(--h-gold);">管理后台</a> 录入</td></tr>';
     } else {
-        tbody.innerHTML = list.map((d, idx) => {
-            const color = typeColor(d.type);
+        tbody.innerHTML = aggregated.map(d => {
+            const weight = m.totalMarket > 0 ? d.marketValue / m.totalMarket : 0;
+            const color = categoryColor(d.name);
+            // 收益率 = 该分类总收益 / 该分类总市值
+            const rate = d.marketValue > 0 ? d.profit / d.marketValue : 0;
+            const rateColor = d.profit >= 0 ? 'var(--up)' : 'var(--down)';
+            const rateText = (rate >= 0 ? '+' : '') + (rate * 100).toFixed(2) + '%';
             return `
             <tr>
-                <td><span class="badge" style="background:${color}22;color:${color};">${d.type}</span></td>
-                <td style="color: var(--h-text-2); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">${d.code || '—'}</td>
+                <td><span class="badge" style="background:${color}22;color:${color};">${d.name}</span></td>
+                <td style="text-align:right;">¥ ${fmtMoney(d.marketValue)}</td>
+                <td style="text-align:right; color:${rateColor}; font-weight:600;">${rateText}</td>
                 <td>
-                    <strong>${d.name}</strong>
-                </td>
-                <td style="text-align:right;">${fmtMoney(d.marketValue)}</td>
-                <td style="text-align:right;" class="${d.profit >= 0 ? 'text-success' : 'text-danger'}">
-                    ${d.profit >= 0 ? '+' : ''}${fmtMoney(d.profit)}
-                </td>
-                <td style="text-align:right;" class="${d.profit >= 0 ? 'text-success' : 'text-danger'}">
-                    ${d.profit >= 0 ? '+' : ''}${(d.profitRate * 100).toFixed(2)}%
-                </td>
-                <td style="text-align:right; color: var(--h-text-2);">${d.cost > 0 ? fmtMoney(d.cost) : '—'}</td>
-                <td style="color: var(--h-text-2); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${(d.remark || '').replace(/"/g, '&quot;')}">${d.remark || '—'}</td>
-                <td>
-                    <div class="weight-bar" title="${(d.weight * 100).toFixed(2)}%">
-                        <span style="width:${(d.weight * 100).toFixed(2)}%"></span>
+                    <div class="weight-bar" title="${(weight * 100).toFixed(2)}%">
+                        <span style="width:${(weight * 100).toFixed(2)}%"></span>
                     </div>
-                    <div class="text-muted" style="font-size: 0.75rem; margin-top: 4px;">${(d.weight * 100).toFixed(2)}%</div>
+                    <div class="text-muted" style="font-size: 0.75rem; margin-top: 4px;">${(weight * 100).toFixed(2)}%</div>
                 </td>
             </tr>`;
         }).join('');
     }
 
     document.getElementById('detailSummary').textContent =
-        '共 ' + m.count + ' 只标的 · 总市值 ¥ ' + fmtMoney(m.totalMarket) + ' · 现金 ¥ ' + fmtMoney(m.totalCash) + ' · 总资产 ¥ ' + fmtMoney(m.totalAsset) + ' · 累计收益 ' + (m.totalProfit >= 0 ? '+' : '') + fmtMoney(m.totalProfit) + '（' + (m.totalProfitRate >= 0 ? '+' : '') + (m.totalProfitRate * 100).toFixed(2) + '%）';
+        '总市值 ¥ ' + fmtMoney(m.totalMarket) + ' · 现金 ¥ ' + fmtMoney(m.totalCash) + ' · 总资产 ¥ ' + fmtMoney(m.totalAsset) + ' · 持仓收益 ' + (m.totalProfit >= 0 ? '+' : '') + fmtMoney(m.totalProfit) + '（' + (m.totalProfitRate >= 0 ? '+' : '') + (m.totalProfitRate * 100).toFixed(2) + '%）';
 }
 
 /* ===== 增删改（前端不再提供，引导到后台） ===== */

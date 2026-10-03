@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="生活大于投资 - 退休计划的思考与实践">
     <title>生活大于投资 · 退休计划</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
@@ -32,173 +32,66 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
             background: var(--bg);
             color: var(--text);
-            display: flex;
-            flex-direction: row;
             overflow: hidden;
+            position: relative;
         }
 
         .serif { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
         .display { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
 
-        /* ===== 左侧导航栏 ===== */
-        .navbar {
-            position: relative;
-            width: 220px;
-            min-width: 220px;
-            height: 100vh;
-            background: transparent;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(201, 169, 97, 0.08);
+        /* ===== 左上角品牌区 ===== */
+        .brand {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.75rem;
             z-index: 1000;
             display: flex;
             flex-direction: column;
+            gap: 0.4rem;
         }
-        .nav-container {
-            padding: 2.5rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 3rem;
-        }
-
-        /* Logo 区域 */
-        .nav-logo {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-        .nav-logo .title {
-             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
-             font-weight: 900;
-             font-size: 1.9rem;
-             background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
-             -webkit-background-clip: text;
-             background-clip: text;
-             -webkit-text-fill-color: transparent;
-             color: transparent;
-             letter-spacing: 6px;
-             line-height: 1.15;
-             position: relative;
-             display: inline-block;
-             padding: 0.15rem 0 0.5rem;
-             align-self: flex-start;
-             text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
-             font-feature-settings: "palt" 1;
-         }
-        .nav-logo .title::before {
-             content: '';
-             position: absolute;
-             left: -0.85rem;
-             top: 50%;
-             transform: translateY(-50%);
-             width: 2px;
-             height: 65%;
-             background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
-             border-radius: 2px;
-             opacity: 0.7;
-         }
-        .nav-logo .title::after {
-             content: '';
-             position: absolute;
-             bottom: 0;
-             left: 0;
-             width: 48px;
-             height: 2px;
-             background: linear-gradient(90deg, var(--gold), transparent);
-             border-radius: 2px;
-         }
-        .nav-logo .subtitle {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 300;
-            color: var(--text-dim);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* 导航菜单 */
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            flex: 1;
-        }
-        .nav-menu li { width: 100%; }
-        .nav-menu a {
-             display: flex;
-             align-items: center;
-             gap: 0.75rem;
-             color: var(--text-soft);
-             font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
-             font-size: 0.82rem;
-             font-weight: 500;
-             letter-spacing: 0.5px;
-            padding: 0.7rem 1rem;
-            border-radius: 0;
+        .brand-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
+            font-weight: 900;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 6px;
+            line-height: 1.15;
             position: relative;
-            transition: color 0.3s ease, padding-left 0.3s ease;
-            text-decoration: none;
+            display: inline-block;
+            padding: 0.15rem 0 0.5rem;
+            align-self: flex-start;
+            text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
+            font-feature-settings: "palt" 1;
         }
-        .nav-menu a::before {
+        .brand-title::before {
             content: '';
             position: absolute;
-            left: 0;
+            left: -0.85rem;
             top: 50%;
             transform: translateY(-50%);
             width: 2px;
-            height: 0;
-            background: var(--gold);
-            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 65%;
+            background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+            border-radius: 2px;
+            opacity: 0.7;
         }
-        .nav-menu a .nav-num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            font-style: italic;
-            transition: color 0.3s ease;
-            min-width: 16px;
-        }
-        .nav-menu a:hover {
-            color: var(--text);
-            padding-left: 1.3rem;
-        }
-        .nav-menu a:hover::before { height: 60%; }
-        .nav-menu a:hover .nav-num { color: var(--gold); }
-        .nav-menu a.active {
-            color: var(--gold);
-            padding-left: 1.3rem;
-        }
-        .nav-menu a.active::before { height: 60%; }
-        .nav-menu a.active .nav-num { color: var(--gold); }
-
-        /* 导航底部 */
-        .nav-footer {
-            margin-top: auto;
-            padding-top: 2rem;
-            border-top: 1px solid var(--surface-border);
-        }
-        .nav-footer .nav-time {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            color: var(--text);
+        .brand-subtitle {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-size: 0.6rem;
             font-weight: 400;
-            line-height: 1;
-        }
-        .nav-footer .nav-date {
-            font-size: 0.65rem;
             color: var(--text-dim);
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            margin-top: 0.3rem;
         }
 
         /* ===== Hero ===== */
         .hero {
             position: relative;
-            flex: 1;
-            min-height: 0;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -214,32 +107,101 @@
             mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
             -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
         }
-        /* 右上角管理入口 */
-        .admin-entry {
+        /* 右上角导航 */
+        .top-nav {
             position: fixed;
-            top: 1.25rem;
-            right: 1.5rem;
-            z-index: 999;
-            display: inline-flex;
+            top: 1.5rem;
+            right: 1.75rem;
+            z-index: 1000;
+            display: flex;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 1.1rem;
-            border: 1px solid rgba(201, 169, 97, 0.25);
-            border-radius: 100px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: var(--gold);
-            font-size: 0.78rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            gap: 0;
+        }
+        .top-nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin: 0;
+            padding: 0;
+        }
+        .top-nav-menu li {
+            list-style: none;
+            position: relative;
+        }
+        .top-nav-menu li + li::before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 12px;
+            background: rgba(201, 169, 97, 0.25);
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+        .top-nav-menu a {
+            display: inline-block;
+            color: var(--text-soft);
             text-decoration: none;
-            transition: all 0.3s ease;
+            padding: 0.4rem 0.85rem;
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            position: relative;
+            transition: color 0.3s ease;
         }
-        .admin-entry:hover {
+        .top-nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .top-nav-menu a:hover {
+            color: var(--text);
+        }
+        .top-nav-menu a:hover::after,
+        .top-nav-menu a.active::after {
+            width: calc(100% - 1.7rem);
+        }
+        .top-nav-menu a.active {
+            color: var(--gold);
+        }
+        .top-nav-toggle {
+            display: none;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            background: none;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 100px;
+            color: var(--gold);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+        .top-nav-toggle:hover {
             border-color: var(--gold);
-            background: rgba(201, 169, 97, 0.1);
+            background: rgba(201, 169, 97, 0.08);
         }
+        .top-nav-toggle span {
+            display: block;
+            width: 16px;
+            height: 1.5px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .top-nav.open .top-nav-toggle span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+        .top-nav.open .top-nav-toggle span:nth-child(2) { opacity: 0; }
+        .top-nav.open .top-nav-toggle span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
         .hero-container {
             max-width: 700px;
             margin: 0 auto;
@@ -334,117 +296,169 @@
             color: var(--text-soft);
             max-width: 480px;
             letter-spacing: 1px;
+            margin-bottom: 2.5rem;
         }
 
-        /* Hero 底部装饰 */
-        .hero-scroll-hint {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
+        /* Hero 按钮组 */
+        .hero-actions {
             display: flex;
-            flex-direction: column;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .hero-btn {
+            display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            opacity: 0.4;
+            justify-content: center;
+            padding: 0.85rem 2rem;
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            border-radius: 100px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: box-shadow 0.35s ease, transform 0.35s ease, background 0.35s ease, border-color 0.35s ease;
         }
-        .hero-scroll-hint .hint-text {
-            font-size: 0.6rem;
-            color: var(--text-soft);
-            letter-spacing: 3px;
-            text-transform: uppercase;
+        /* 主按钮：金色填充 */
+        .hero-btn.primary {
+            background: linear-gradient(135deg, #d4b56a 0%, #c9a961 50%, #b8964f 100%);
+            color: #1a1206;
+            border: 1px solid var(--gold);
         }
-        .hero-scroll-hint .hint-line {
-            width: 1px;
-            height: 30px;
-            background: var(--text-soft);
-            animation: scrollLine 2s ease-in-out infinite;
+        .hero-btn.primary:hover {
+            box-shadow: 0 0 22px rgba(201, 169, 97, 0.55), 0 0 48px rgba(201, 169, 97, 0.25);
+            transform: translateY(-1px);
         }
-        @keyframes scrollLine {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            51% { transform: scaleY(1); transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
+        /* 次按钮：金色边框透明底 */
+        .hero-btn.secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+        .hero-btn.secondary:hover {
+            box-shadow: 0 0 18px rgba(201, 169, 97, 0.4), 0 0 40px rgba(201, 169, 97, 0.18);
+            background: rgba(201, 169, 97, 0.06);
+            transform: translateY(-1px);
+        }
+
+        /* 右下角免责声明 */
+        .disclaimer {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1rem;
+            z-index: 999;
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-size: 0.66rem;
+            color: rgba(201, 169, 97, 0.45);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            line-height: 1.6;
+            pointer-events: none;
         }
 
         /* ===== 响应式 ===== */
         @media (max-width: 768px) {
-            .admin-entry { top: 0.5rem; right: 0.75rem; padding: 0.4rem 0.8rem; font-size: 0.7rem; }
+            .top-nav { top: 1rem; right: 1rem; }
+            .top-nav-toggle { display: flex; }
+            .top-nav-menu {
+                display: none;
+                position: absolute;
+                top: calc(100% + 0.75rem);
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 0.5rem 0;
+                border-radius: 0.5rem;
+                background: rgba(8, 8, 10, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(201, 169, 97, 0.2);
+                min-width: 140px;
+            }
+            .top-nav.open .top-nav-menu { display: flex; }
+            .top-nav-menu li + li::before {
+                width: calc(100% - 2rem);
+                height: 1px;
+                margin: 0 1rem;
+            }
+            .top-nav-menu a {
+                display: block;
+                padding: 0.7rem 1.25rem;
+                text-align: center;
+                letter-spacing: 2px;
+            }
+            .top-nav-menu a::after {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 0.3rem;
+            }
+            .top-nav-menu a:hover::after,
+            .top-nav-menu a.active::after {
+                width: calc(100% - 2.5rem);
+            }
             html, body { height: auto; overflow: auto; }
-            body { flex-direction: column; }
-            .navbar {
-                width: 100%;
-                min-width: 0;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid var(--surface-border);
-            }
-            .nav-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                height: auto;
-                gap: 1rem;
-                padding: 0.875rem 1.5rem;
-            }
-            .nav-menu {
-                flex-direction: row;
-                gap: 1rem;
-                align-items: center;
-            }
-            .nav-menu a { padding: 0.4rem 0.5rem; }
-            .nav-menu a::before { display: none; }
-            .nav-footer { display: none; }
-            .hero { flex: none; min-height: 80vh; }
+            .brand { top: 1rem; left: 1rem; }
+            .brand-title { font-size: 1.4rem; letter-spacing: 3px; }
+            .hero { min-height: 80vh; }
+        }
+        @media (max-width: 480px) {
+            .hero { min-height: 70vh; }
+            .hero-container { padding: 1.5rem 1.25rem; }
+            .hero-tag { margin-bottom: 1.5rem; letter-spacing: 2px; }
+            .hero h2 { margin-bottom: 1.25rem; }
+            .hero-divider { height: 36px; margin-bottom: 1.25rem; }
+            .hero h3 { letter-spacing: 0.5px; line-height: 1.9; margin-bottom: 1.75rem; }
+            .hero-actions { gap: 0.85rem; }
+            .hero-btn { padding: 0.7rem 1.4rem; font-size: 0.78rem; letter-spacing: 1px; }
+            .disclaimer { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- 导航 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span class="title">投么有度</span>
-                <span class="subtitle">Retirement Plan</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="active"><span class="nav-num">01</span>首页</a></li>
-                <li><a href="holdings.html"><span class="nav-num">02</span>退休计划</a></li>
-                <li><a href="about.html"><span class="nav-num">03</span>关于我</a></li>
-                <li><a href="wechat.html"><span class="nav-num">04</span>公众号</a></li>
-            </ul>
-            <div class="nav-footer">
-                <div class="nav-time">始于 2026</div>
-                <div class="nav-date">长期投资纪实</div>
-            </div>
-        </div>
-    </nav>
+    <!-- 左上角品牌区 -->
+    <div class="brand">
+        <span class="brand-title">投么有度</span>
+        <span class="brand-subtitle">Retirement Plan</span>
+    </div>
+
+    <!-- 右上角页面切换 -->
+    <div class="top-nav" id="topNav">
+        <ul class="top-nav-menu">
+            <li><a href="index.html" class="active">首页</a></li>
+            <li><a href="holdings.html">退休计划</a></li>
+            <li><a href="wechat.html">文章</a></li>
+            <li><a href="about.html">关于我</a></li>
+        </ul>
+        <button class="top-nav-toggle" aria-label="切换导航菜单" onclick="this.closest('.top-nav').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 
     <!-- Hero -->
     <header class="hero">
         <div id="aurora-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;"></div>
         <div class="hero-grid-bg"></div>
-        <a href="admin.html" class="admin-entry" target="_blank">⚙ 系统管理</a>
         <div class="hero-container">
-            <div class="hero-tag">退休 计划</div>
+            <div class="hero-tag">退休计划</div>
             <h1 class="serif">生活大于投资</h1>
             <h2>收益有度，生活无限</h2>
             <div class="hero-divider"></div>
-            <h3>用 5 年、10 年甚至 20 年的眼光，构筑一份可持续、可承受的组合，让资产成为生活的支撑，而非生活的全部，这里将作为退休计划的执行起点。</h3>
-        </div>
-        <div class="hero-scroll-hint">
-            <span class="hint-text">Scroll</span>
-            <div class="hint-line"></div>
+            <h3>以 5‑20 年的长远眼光，搭建一套可以长期坚持、适合自己的资产组合。让资产成为生活的后盾，而不是生活的全部。本站是个人退休投资计划的记录起点。</h3>
+            <div class="hero-actions">
+                <a href="holdings.html" class="hero-btn primary">查看实盘计划</a>
+                <a href="wechat.html" class="hero-btn secondary">阅读原创文章</a>
+            </div>
         </div>
     </header>
+    <div class="disclaimer">本站所有内容仅为个人投资记录与思考，不构成任何投资建议</div>
 
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/splash-cursor.js?v=1"></script>
+    <script src="js/splash-cursor.js?v=2"></script>
     <script src="js/soft-aurora.js?v=2"></script>
     <script src="js/shape-blur.js?v=1"></script>
-    <script>
-    </script>
 </body>
 </html>

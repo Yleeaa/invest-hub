@@ -1,0 +1,9 @@
+{
+  "name": "fetch-nasdaq-funds",
+  "version": "1.0.0",
+  "description": "每日抓取纳斯达克100被动指数基金基本信息与限购情况",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.5.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "get-index-quotes",
+  "version": "1.0.0",
+  "description": "读取美股主要指数最新行情（HTTP 云函数）",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.5.0"
+  }
+}

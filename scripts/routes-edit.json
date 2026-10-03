@@ -1,0 +1,1 @@
+{"domain":"*","routes":[{"path":"/get-nasdaq-funds","upstreamResourceType":"WEB_SCF","upstreamResourceName":"get-nasdaq-funds"}]}

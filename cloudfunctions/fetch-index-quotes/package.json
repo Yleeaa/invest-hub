@@ -1,0 +1,9 @@
+{
+  "name": "fetch-index-quotes",
+  "version": "1.0.0",
+  "description": "每日抓取美股主要指数（纳指100/标普500/道指）行情并写入云数据库",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^3.5.0"
+  }
+}

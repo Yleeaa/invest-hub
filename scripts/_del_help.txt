@@ -1,0 +1,24 @@
+﻿CloudBase CLI 3.8.0
+璇曡瘯 tcb ai 鍛戒护锛屽紑鍚?AI 鍘熺敓寮€鍙?Usage: tcb hosting delete [options] [cloudPath]
+
+鍒犻櫎闈欐€佺綉绔欐枃浠舵垨鐩綍锛堝垹闄ょ洰褰曞繀椤诲姞 --dir锛宑loudPath 鏀寔 images 鎴?/images 涓ょ鍐欐硶锛?
+Options:
+  -e, --env-id <envId>  鐜 ID
+  -d, --dir             鍒犻櫎鐩爣鏄惁涓烘枃浠跺す
+  --dry-run             棰勮瑕佸垹闄ょ殑鏂囦欢锛屼笉瀹為檯鎵ц鍒犻櫎
+  --json                浠?JSON 鏍煎紡杈撳嚭
+  -h, --help            鏌ョ湅鍛戒护甯姪淇℃伅
+
+鎻忚堪:
+  鍒犻櫎闈欐€佺綉绔欐枃浠舵垨鐩綍锛堝垹闄ょ洰褰曞繀椤诲姞 --dir锛宑loudPath 鏀寔 images 鎴?/images 涓ょ鍐欐硶锛?
+绀轰緥:
+  tcb hosting delete index.html               # 鍒犻櫎鍗曚釜鏂囦欢
+  tcb hosting delete static --dir             # 鍒犻櫎鏁翠釜鐩綍锛堝繀椤诲姞 --dir锛?  tcb hosting delete /static --dir            # 鍚屼笂锛屽墠瀵?/ 浼氳鑷姩蹇界暐
+  tcb hosting delete static --dir --dry-run   # 棰勮灏嗗垹闄ゅ摢浜涙枃浠讹紝涓嶅疄闄呮墽琛?  tcb hosting delete static --dir --yes       # 璺宠繃纭鐩存帴鍒犻櫎锛圕I 鍦烘櫙锛?
+鐩稿叧鍛戒护:
+  tcb hosting list
+  tcb hosting deploy
+
+鏂囨。:
+  https://docs.cloudbase.net/cli-v1/hosting
+

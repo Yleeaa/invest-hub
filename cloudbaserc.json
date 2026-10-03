@@ -1,0 +1,59 @@
+{
+  "version": "2.1",
+  "envId": "ceshi-1-d1g0czdaa999081f4",
+  "functionRoot": "cloudfunctions",
+  "functions": [
+    {
+      "name": "get-nasdaq-funds",
+      "type": "HTTP",
+      "runtime": "Nodejs20.19",
+      "timeout": 30
+    },
+    {
+      "name": "get-index-quotes",
+      "type": "HTTP",
+      "runtime": "Nodejs20.19",
+      "timeout": 30
+    },
+    {
+      "name": "fetch-nasdaq-funds",
+      "type": "Event",
+      "runtime": "Nodejs20.19",
+      "timeout": 300,
+      "triggers": [
+        {
+          "name": "daily-0100",
+          "type": "timer",
+          "config": "0 0 1 * * * *"
+        }
+      ]
+    },
+    {
+      "name": "fetch-index-quotes",
+      "type": "Event",
+      "runtime": "Nodejs20.19",
+      "timeout": 60,
+      "triggers": [
+        {
+          "name": "daily-0600",
+          "type": "timer",
+          "config": "0 0 6 * * * *"
+        }
+      ]
+    }
+  ],
+  "gateway": {
+    "routes": [
+      {
+        "path": "/get-nasdaq-funds",
+        "target": "function:get-nasdaq-funds",
+        "enableAuth": false
+      },
+      {
+        "path": "/get-index-quotes",
+        "target": "function:get-index-quotes",
+        "enableAuth": false
+      }
+    ]
+  }
+}

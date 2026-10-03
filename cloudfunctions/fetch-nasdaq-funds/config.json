@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "openapi": []
+  },
+  "triggers": [
+    {
+      "name": "daily-0100",
+      "type": "timer",
+      "config": "0 0 1 * * * *"
+    }
+  ]
+}

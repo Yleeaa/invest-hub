@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="公众号 - 生活大于投资">
-    <title>公众号 · 生活大于投资</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="文章 - 生活大于投资">
+    <title>文章 · 叨居</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -26,92 +26,82 @@
             --surface-border: rgba(255, 255, 255, 0.08);
             --text: #f0f0f0;
             --text-soft: #a8a8a8;
-            --text-dim: #6a6a6a;
+            --text-dim: #555555;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body { height: 100%; }
+        /* 隐藏滚动条 */
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { display: none; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
             background: var(--bg);
             color: var(--text);
-            display: flex;
-            flex-direction: row;
-            overflow: hidden;
+            overflow-x: hidden;
+            position: relative;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body::-webkit-scrollbar { display: none; }
+        /* 顶部渐变遮罩：避免滚动内容与固定品牌/导航重叠 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 7rem;
+            background: linear-gradient(to bottom, var(--bg) 0%, rgba(0, 0, 0, 0.88) 55%, transparent 100%);
+            z-index: 999;
+            pointer-events: none;
         }
 
         .serif { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+        .display { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
 
-        /* ===== 左侧导航栏 ===== */
-        .navbar {
-            position: relative;
-            width: 220px;
-            min-width: 220px;
-            height: 100vh;
-            background: transparent;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(201, 169, 97, 0.08);
+        /* ===== 左上角品牌区 ===== */
+        .brand {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.75rem;
             z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-        .nav-container {
-            padding: 2.5rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 3rem;
-        }
-
-        /* Logo 区域 */
-        .nav-logo {
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
         }
-        .nav-logo .title {
-             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
-             font-weight: 900;
-             font-size: 1.9rem;
-             background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
-             -webkit-background-clip: text;
-             background-clip: text;
-             -webkit-text-fill-color: transparent;
-             color: transparent;
-             letter-spacing: 6px;
-             line-height: 1.15;
-             position: relative;
-             display: inline-block;
-             padding: 0.15rem 0 0.5rem;
-             align-self: flex-start;
-             text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
-             font-feature-settings: "palt" 1;
-         }
-        .nav-logo .title::before {
-             content: '';
-             position: absolute;
-             left: -0.85rem;
-             top: 50%;
-             transform: translateY(-50%);
-             width: 2px;
-             height: 65%;
-             background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
-             border-radius: 2px;
-             opacity: 0.7;
-         }
-        .nav-logo .title::after {
-             content: '';
-             position: absolute;
-             bottom: 0;
-             left: 0;
-             width: 48px;
-             height: 2px;
-             background: linear-gradient(90deg, var(--gold), transparent);
-             border-radius: 2px;
-         }
-        .nav-logo .subtitle {
+        .brand-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
+            font-weight: 900;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 6px;
+            line-height: 1.15;
+            position: relative;
+            display: inline-block;
+            padding: 0.15rem 0 0.5rem;
+            align-self: flex-start;
+            text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
+            font-feature-settings: "palt" 1;
+        }
+        .brand-title::before {
+            content: '';
+            position: absolute;
+            left: -0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 65%;
+            background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+        .brand-subtitle {
             font-family: 'Inter', 'Noto Sans SC', sans-serif;
             font-size: 0.6rem;
             font-weight: 400;
@@ -120,99 +110,118 @@
             text-transform: uppercase;
         }
 
-        /* 导航菜单 */
-        .nav-menu {
+        /* ===== 右上角导航 ===== */
+        .top-nav {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.75rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .top-nav-menu {
             list-style: none;
             display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            flex: 1;
+            align-items: center;
+            gap: 0;
+            margin: 0;
+            padding: 0;
         }
-        .nav-menu li { width: 100%; }
-        .nav-menu a {
-             display: flex;
-             align-items: center;
-             gap: 0.75rem;
-             color: var(--text-soft);
-             font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
-             font-size: 0.82rem;
-             font-weight: 500;
-             letter-spacing: 0.5px;
-            padding: 0.7rem 1rem;
-            border-radius: 0;
+        .top-nav-menu li {
+            list-style: none;
             position: relative;
-            transition: color 0.3s ease, padding-left 0.3s ease;
-            text-decoration: none;
         }
-        .nav-menu a::before {
+        .top-nav-menu li + li::before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 12px;
+            background: rgba(201, 169, 97, 0.25);
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+        .top-nav-menu a {
+            display: inline-block;
+            color: var(--text-soft);
+            text-decoration: none;
+            padding: 0.4rem 0.85rem;
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .top-nav-menu a::after {
             content: '';
             position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 2px;
-            height: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
             background: var(--gold);
-            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .nav-menu a .nav-num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            font-style: italic;
-            transition: color 0.3s ease;
-            min-width: 16px;
-        }
-        .nav-menu a:hover {
+        .top-nav-menu a:hover {
             color: var(--text);
-            padding-left: 1.3rem;
         }
-        .nav-menu a:hover::before { height: 60%; }
-        .nav-menu a:hover .nav-num { color: var(--gold); }
-        .nav-menu a.active {
+        .top-nav-menu a:hover::after,
+        .top-nav-menu a.active::after {
+            width: calc(100% - 1.7rem);
+        }
+        .top-nav-menu a.active {
             color: var(--gold);
-            padding-left: 1.3rem;
         }
-        .nav-menu a.active::before { height: 60%; }
-        .nav-menu a.active .nav-num { color: var(--gold); }
-
-        /* 导航底部 */
-        .nav-footer {
-            margin-top: auto;
-            padding-top: 2rem;
-            border-top: 1px solid var(--surface-border);
+        .top-nav-toggle {
+            display: none;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            background: none;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 100px;
+            color: var(--gold);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.3s ease, background 0.3s ease;
         }
-        .nav-footer .nav-time {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            color: var(--text);
-            font-weight: 400;
-            line-height: 1;
+        .top-nav-toggle:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 97, 0.08);
         }
-        .nav-footer .nav-date {
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 0.3rem;
+        .top-nav-toggle span {
+            display: block;
+            width: 16px;
+            height: 1.5px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
+        .top-nav.open .top-nav-toggle span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+        .top-nav.open .top-nav-toggle span:nth-child(2) { opacity: 0; }
+        .top-nav.open .top-nav-toggle span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
         /* ===== 主内容区 ===== */
         .main-content {
-            flex: 1;
-            min-width: 0;
-            height: 100vh;
-            overflow-y: auto;
             position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 6rem;
+            padding-bottom: 2rem;
         }
-        .main-content::-webkit-scrollbar { width: 4px; }
-        .main-content::-webkit-scrollbar-track { background: transparent; }
-        .main-content::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, rgba(201, 169, 97, 0.25), rgba(255, 255, 255, 0.2)); border-radius: 2px; }
 
         /* 网格背景 */
         .grid-bg {
-            position: absolute;
-            inset: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background-image:
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
@@ -223,33 +232,6 @@
             z-index: 0;
         }
 
-        /* 右上角管理入口 */
-        .admin-entry {
-            position: fixed;
-            top: 1.25rem;
-            right: 1.5rem;
-            z-index: 999;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 1.1rem;
-            border: 1px solid rgba(201, 169, 97, 0.25);
-            border-radius: 100px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: var(--gold);
-            font-size: 0.78rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .admin-entry:hover {
-            border-color: var(--gold);
-            background: rgba(201, 169, 97, 0.1);
-        }
-
         /* 页面头部 */
         .page-header {
             position: relative;
@@ -257,96 +239,70 @@
             padding: 2rem 2rem 1.5rem;
             border-bottom: 1px solid var(--surface-border);
         }
-        .page-header .header-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.3rem 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 100px;
-            background: rgba(255, 255, 255, 0.08);
-            font-size: 0.6rem;
-            font-weight: 500;
-            color: var(--white);
-            margin-bottom: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
         .header-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1.5rem;
-            max-width: 900px;
+            max-width: 1280px;
             margin: 0 auto;
             flex-wrap: wrap;
         }
         .header-left {
             text-align: left;
+            flex: 1;
+            min-width: 280px;
         }
-        .header-left h1 {
-            font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif;
-            font-size: clamp(1.6rem, 3vw, 2.1rem);
-            font-weight: 500;
-            background: var(--title-gradient);
+        .page-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
-            margin-bottom: 0.3rem;
-            letter-spacing: 1px;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 0 32px rgba(201, 169, 97, 0.25);
         }
-        .header-left h1 .sub {
-            background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            font-size: 1rem;
-            font-weight: 400;
-            margin-left: 0.5rem;
-        }
-        .header-left .intro {
-            color: var(--text-soft);
-            font-size: 0.8rem;
-            line-height: 1.5;
-            max-width: 420px;
-        }
-        .header-right {
-            display: flex;
+        .page-update-time {
+            display: inline-flex;
             align-items: center;
-            gap: 1.75rem;
-            flex-shrink: 0;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.85rem;
         }
-        .header-stats {
-            display: flex;
-            gap: 1.5rem;
+        .page-update-time::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--gold);
         }
-        .header-stats .stat-item {
-            font-size: 0.75rem;
+        .page-subtitle {
+            font-size: 0.88rem;
             color: var(--text-soft);
-            text-align: center;
+            line-height: 1.7;
+            letter-spacing: 0.5px;
+            max-width: 560px;
         }
-        .header-stats .stat-item strong {
-            background: linear-gradient(135deg, #d4b56a 0%, #ffffff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            font-size: 1.25rem;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.1rem;
-        }
-        .header-qr {
+        .footer-qr {
+            position: absolute;
+            right: 2rem;
+            bottom: 2.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.4rem;
             cursor: pointer;
-            position: relative;
         }
-        .header-qr-img {
+        .footer-qr-img {
             width: 80px;
             height: 80px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(201, 169, 97, 0.1));
@@ -360,29 +316,29 @@
             overflow: hidden;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .header-qr-img img {
+        .footer-qr-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 8px;
         }
-        .header-qr:hover .header-qr-img {
+        .footer-qr:hover .footer-qr-img {
             border-color: rgba(255, 255, 255, 0.65);
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
         }
-        .header-qr span {
+        .footer-qr span {
             font-size: 0.65rem;
             color: var(--text-soft);
             letter-spacing: 1px;
             transition: color 0.3s ease;
         }
-        .header-qr:hover span {
+        .footer-qr:hover span {
             color: var(--white);
         }
         /* 二维码放大弹窗 */
         .qr-popup {
             position: absolute;
-            top: calc(100% + 0.75rem);
+            bottom: calc(100% + 0.75rem);
             right: 0;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -395,11 +351,11 @@
             box-shadow: 0 12px 40px rgba(255, 255, 255, 0.12);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-8px);
+            transform: translateY(8px);
             transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
             z-index: 100;
         }
-        .header-qr:hover .qr-popup {
+        .footer-qr:hover .qr-popup {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -442,7 +398,7 @@
         .article-section {
             position: relative;
             z-index: 1;
-            max-width: 900px;
+            max-width: 1280px;
             margin: 2rem auto;
             padding: 0 1.5rem;
         }
@@ -500,12 +456,13 @@
             align-items: flex-start;
         }
 
-        /* 左侧分类树 */
+        /* 左侧分类树：top 与顶部遮罩高度对齐，避免被遮罩覆盖 */
         .category-tree {
             width: 250px;
             min-width: 250px;
             position: sticky;
-            top: 1rem;
+            top: 7rem;
+            z-index: 10;
         }
         .tree-title {
             font-size: 0.6rem;
@@ -667,28 +624,6 @@
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        /* 加载更多 */
-        .load-more {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--surface-border);
-            color: var(--text-soft);
-            padding: 0.6rem 1.5rem;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-outline:hover {
-            border-color: rgba(255, 255, 255, 0.4);
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
         /* 页脚 */
         .footer {
             position: relative;
@@ -759,33 +694,48 @@
 
         /* ===== 响应式 ===== */
         @media (max-width: 768px) {
-            html, body { height: auto; overflow: auto; }
-            body { flex-direction: column; }
-            .admin-entry { top: 0.5rem; right: 0.75rem; padding: 0.4rem 0.8rem; font-size: 0.7rem; }
-            .navbar {
-                width: 100%;
-                min-width: 0;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid var(--surface-border);
+            .top-nav { top: 1rem; right: 1rem; }
+            .top-nav-toggle { display: flex; }
+            .top-nav-menu {
+                display: none;
+                position: absolute;
+                top: calc(100% + 0.75rem);
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 0.5rem 0;
+                border-radius: 0.5rem;
+                background: rgba(8, 8, 10, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(201, 169, 97, 0.2);
+                min-width: 140px;
             }
-            .nav-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                height: auto;
-                gap: 1rem;
-                padding: 0.875rem 1.5rem;
+            .top-nav.open .top-nav-menu { display: flex; }
+            .top-nav-menu li + li::before {
+                width: calc(100% - 2rem);
+                height: 1px;
+                margin: 0 1rem;
             }
-            .nav-menu {
-                flex-direction: row;
-                gap: 1rem;
-                align-items: center;
+            .top-nav-menu a {
+                display: block;
+                padding: 0.7rem 1.25rem;
+                text-align: center;
+                letter-spacing: 2px;
             }
-            .nav-menu a { padding: 0.4rem 0.5rem; }
-            .nav-menu a::before { display: none; }
-            .nav-footer { display: none; }
-            .main-content { height: auto; overflow-y: visible; }
+            .top-nav-menu a::after {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 0.3rem;
+            }
+            .top-nav-menu a:hover::after,
+            .top-nav-menu a.active::after {
+                width: calc(100% - 2.5rem);
+            }
+            .brand { top: 1rem; left: 1rem; }
+            .brand-title { font-size: 1.4rem; letter-spacing: 3px; }
+            .main-content { padding-top: 5rem; }
             .page-header { padding: 2.5rem 1.25rem 2rem; }
             .wechat-section { padding: 0 1.25rem; margin: 1.5rem auto; }
             .wechat-info {
@@ -802,61 +752,48 @@
             .category-tree::-webkit-scrollbar-thumb { background: rgba(201, 169, 97, 0.2); }
             .article-item { padding: 1.25rem; }
             .article-item .title { font-size: 1rem; }
+            .footer-qr { position: relative; right: auto; bottom: auto; margin: 1.5rem auto 0; width: fit-content; }
+        }
+        @media (max-width: 480px) {
+            .page-header { padding: 1.75rem 1rem 1.25rem; }
+            .wechat-section { padding: 0 1rem; margin: 1.25rem auto; }
+            .article-section { padding: 0 1rem; }
+            .wechat-info { padding: 1.25rem 1rem; }
+            .article-item { padding: 1rem; }
         }
     </style>
 </head>
 <body>
-    <!-- 导航 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span class="title">投么有度</span>
-                <span class="subtitle">Retirement Plan</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html"><span class="nav-num">01</span>首页</a></li>
-                <li><a href="holdings.html"><span class="nav-num">02</span>退休计划</a></li>
-                <li><a href="about.html"><span class="nav-num">03</span>关于我</a></li>
-                <li><a href="wechat.html" class="active"><span class="nav-num">04</span>公众号</a></li>
-            </ul>
-            <div class="nav-footer">
-                <div class="nav-time">始于 2026</div>
-                <div class="nav-date">长期投资纪实</div>
-            </div>
-        </div>
-    </nav>
+    <!-- 左上角品牌区 -->
+    <div class="brand">
+        <span class="brand-title">投么有度</span>
+        <span class="brand-subtitle">Retirement Plan</span>
+    </div>
+
+    <!-- 右上角页面切换 -->
+    <div class="top-nav" id="topNav">
+        <ul class="top-nav-menu">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="holdings.html">退休计划</a></li>
+            <li><a href="wechat.html" class="active">文章</a></li>
+            <li><a href="about.html">关于我</a></li>
+        </ul>
+        <button class="top-nav-toggle" aria-label="切换导航菜单" onclick="this.closest('.top-nav').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 
     <!-- 主内容 -->
     <main class="main-content">
         <div class="grid-bg"></div>
 
-        <!-- 右上角系统管理入口 -->
-        <a href="admin.html" class="admin-entry" target="_blank">⚙ 系统管理</a>
-
         <!-- 页面头部 -->
         <header class="page-header">
-            <div class="header-tag">WeChat</div>
             <div class="header-top">
                 <div class="header-left">
-                    <h1 class="serif">公众号 <span class="sub">生活大于投资</span></h1>
-                    <p class="intro">记录普通投资者的退休计划思考，分享全球资产配置、长期定投与生活哲学。</p>
-                </div>
-                <div class="header-right">
-                    <div class="header-stats">
-                        <div class="stat-item">
-                            <strong id="articleCount">0</strong>
-                            原创文章
-                        </div>
-                    </div>
-                    <div class="header-qr">
-                        <div class="header-qr-img"><img src="images/qrcode.jpg" alt="公众号二维码"></div>
-                        <span>扫码关注</span>
-                        <div class="qr-popup">
-                            <div class="qr-popup-img"><img src="images/qrcode.jpg" alt="公众号二维码"></div>
-                            <div class="qr-popup-title">生活大于投资</div>
-                            <div class="qr-popup-desc">扫码关注公众号</div>
-                        </div>
-                    </div>
+                    <h1 class="page-title">文章 · 叨居</h1>
+                    <div class="page-update-time">原创文章 · <span id="articleCount">0</span> 篇</div>
+                    <p class="page-subtitle">记录普通投资者的退休计划思考，分享全球资产配置、长期定投与生活哲学。</p>
                 </div>
             </div>
         </header>
@@ -873,10 +810,6 @@
                 <!-- 右侧文章内容 -->
                 <div class="article-content">
                     <div id="tabPanels"></div>
-
-                    <div class="load-more">
-                        <button class="btn btn-outline" onclick="showToast('已加载全部文章', 'success')">查看更多 →</button>
-                    </div>
                 </div>
             </div>
         </section>
@@ -888,12 +821,21 @@
             <div class="footer-divider"></div>
             <p class="footer-disclaimer">本站所有内容仅为个人投资记录与思考，不构成任何投资建议</p>
             <p class="footer-copyright"><span class="copyright-symbol"></span> Life &gt; Investment</p>
+            <div class="footer-qr">
+                <div class="footer-qr-img"><img src="images/qrcode.jpg" alt="公众号二维码"></div>
+                <span>扫码关注</span>
+                <div class="qr-popup">
+                    <div class="qr-popup-img"><img src="images/qrcode.jpg" alt="公众号二维码"></div>
+                    <div class="qr-popup-title">叨居</div>
+                    <div class="qr-popup-desc">扫码关注公众号</div>
+                </div>
+            </div>
         </footer>
     </main>
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/splash-cursor.js?v=1"></script>
+    <script src="js/splash-cursor.js?v=2"></script>
     <script>
         (function() {
             // 从 localStorage 读取数据

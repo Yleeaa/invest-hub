@@ -381,6 +381,7 @@ table tbody tr {
     box-shadow: var(--shadow-hover);
     z-index: 3000;
     opacity: 0;
+    pointer-events: none;
     transform: translateX(20px);
     transition: all 0.3s ease;
 }
@@ -431,43 +432,6 @@ table tbody tr {
 /* ===== 响应式 ===== */
 @media (max-width: 768px) {
     html { font-size: 15px; }
-
-    .nav-container {
-        padding: 0 1rem;
-        position: relative;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #fff;
-        flex-direction: column;
-        gap: 0;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid var(--border);
-        box-shadow: var(--shadow);
-    }
-
-    .nav-menu.open {
-        display: flex;
-    }
-
-    .nav-menu a {
-        width: 100%;
-        padding: 0.85rem 1.5rem;
-        text-align: left;
-    }
-
-    .nav-menu a::after {
-        display: none;
-    }
 
     .container {
         padding: 1.25rem 1rem;

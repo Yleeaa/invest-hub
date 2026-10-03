@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="持仓明细 - 退休计划的实践记录">
     <title>持仓明细 · 生活大于投资</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -46,16 +46,34 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html, body { height: 100%; }
+        /* 隐藏滚动条 */
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { display: none; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
             background: var(--bg);
             color: var(--text);
-            display: flex;
-            flex-direction: row;
-            overflow: hidden;
+            overflow-x: hidden;
+            position: relative;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body::-webkit-scrollbar { display: none; }
+        /* 顶部渐变遮罩：避免滚动内容与固定品牌/导航重叠 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 7rem;
+            background: linear-gradient(to bottom, var(--bg) 0%, rgba(0, 0, 0, 0.88) 55%, transparent 100%);
+            z-index: 999;
+            pointer-events: none;
         }
 
         .serif { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+        .display { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
 
         body.holdings-page {
             background:
@@ -64,76 +82,58 @@
                 #000000;
             color: var(--h-text);
         }
+        /* holdings 页面顶部遮罩：用更平滑的渐变避免与径向背景断层 */
+        body.holdings-page::before {
+            height: 9rem;
+            background: linear-gradient(to bottom,
+                rgba(0, 0, 0, 0.92) 0%,
+                rgba(0, 0, 0, 0.65) 45%,
+                rgba(0, 0, 0, 0.2) 80%,
+                transparent 100%
+            );
+        }
 
-        /* ===== 左侧导航栏 ===== */
-        .navbar {
-            position: relative;
-            width: 220px;
-            min-width: 220px;
-            height: 100vh;
-            background: transparent;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(201, 169, 97, 0.08);
+        /* ===== 左上角品牌区 ===== */
+        .brand {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.75rem;
             z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-        .nav-container {
-            padding: 2.5rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            gap: 3rem;
-        }
-
-        /* Logo 区域 */
-        .nav-logo {
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
         }
-        .nav-logo .title {
-             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
-             font-weight: 900;
-             font-size: 1.9rem;
-             background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
-             -webkit-background-clip: text;
-             background-clip: text;
-             -webkit-text-fill-color: transparent;
-             color: transparent;
-             letter-spacing: 6px;
-             line-height: 1.15;
-             position: relative;
-             display: inline-block;
-             padding: 0.15rem 0 0.5rem;
-             align-self: flex-start;
-             text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
-             font-feature-settings: "palt" 1;
-         }
-        .nav-logo .title::before {
-             content: '';
-             position: absolute;
-             left: -0.85rem;
-             top: 50%;
-             transform: translateY(-50%);
-             width: 2px;
-             height: 65%;
-             background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
-             border-radius: 2px;
-             opacity: 0.7;
-         }
-        .nav-logo .title::after {
-             content: '';
-             position: absolute;
-             bottom: 0;
-             left: 0;
-             width: 48px;
-             height: 2px;
-             background: linear-gradient(90deg, var(--gold), transparent);
-             border-radius: 2px;
-         }
-        .nav-logo .subtitle {
+        .brand-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
+            font-weight: 900;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 6px;
+            line-height: 1.15;
+            position: relative;
+            display: inline-block;
+            padding: 0.15rem 0 0.5rem;
+            align-self: flex-start;
+            text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
+            font-feature-settings: "palt" 1;
+        }
+        .brand-title::before {
+            content: '';
+            position: absolute;
+            left: -0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 65%;
+            background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+        .brand-subtitle {
             font-family: 'Inter', 'Noto Sans SC', sans-serif;
             font-size: 0.6rem;
             font-weight: 400;
@@ -142,99 +142,118 @@
             text-transform: uppercase;
         }
 
-        /* 导航菜单 */
-        .nav-menu {
+        /* ===== 右上角导航 ===== */
+        .top-nav {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.75rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .top-nav-menu {
             list-style: none;
             display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            flex: 1;
+            align-items: center;
+            gap: 0;
+            margin: 0;
+            padding: 0;
         }
-        .nav-menu li { width: 100%; }
-        .nav-menu a {
-             display: flex;
-             align-items: center;
-             gap: 0.75rem;
-             color: var(--text-soft);
-             font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
-             font-size: 0.82rem;
-             font-weight: 500;
-             letter-spacing: 0.5px;
-            padding: 0.7rem 1rem;
-            border-radius: 0;
+        .top-nav-menu li {
+            list-style: none;
             position: relative;
-            transition: color 0.3s ease, padding-left 0.3s ease;
-            text-decoration: none;
         }
-        .nav-menu a::before {
+        .top-nav-menu li + li::before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 12px;
+            background: rgba(201, 169, 97, 0.25);
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+        .top-nav-menu a {
+            display: inline-block;
+            color: var(--text-soft);
+            text-decoration: none;
+            padding: 0.4rem 0.85rem;
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .top-nav-menu a::after {
             content: '';
             position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 2px;
-            height: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
             background: var(--gold);
-            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .nav-menu a .nav-num {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            font-style: italic;
-            transition: color 0.3s ease;
-            min-width: 16px;
-        }
-        .nav-menu a:hover {
+        .top-nav-menu a:hover {
             color: var(--text);
-            padding-left: 1.3rem;
         }
-        .nav-menu a:hover::before { height: 60%; }
-        .nav-menu a:hover .nav-num { color: var(--gold); }
-        .nav-menu a.active {
+        .top-nav-menu a:hover::after,
+        .top-nav-menu a.active::after {
+            width: calc(100% - 1.7rem);
+        }
+        .top-nav-menu a.active {
             color: var(--gold);
-            padding-left: 1.3rem;
         }
-        .nav-menu a.active::before { height: 60%; }
-        .nav-menu a.active .nav-num { color: var(--gold); }
-
-        /* 导航底部 */
-        .nav-footer {
-            margin-top: auto;
-            padding-top: 2rem;
-            border-top: 1px solid var(--surface-border);
+        .top-nav-toggle {
+            display: none;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            background: none;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 100px;
+            color: var(--gold);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.3s ease, background 0.3s ease;
         }
-        .nav-footer .nav-time {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            color: var(--text);
-            font-weight: 400;
-            line-height: 1;
+        .top-nav-toggle:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 97, 0.08);
         }
-        .nav-footer .nav-date {
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 0.3rem;
+        .top-nav-toggle span {
+            display: block;
+            width: 16px;
+            height: 1.5px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
+        .top-nav.open .top-nav-toggle span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+        .top-nav.open .top-nav-toggle span:nth-child(2) { opacity: 0; }
+        .top-nav.open .top-nav-toggle span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
         /* ===== 主内容区 ===== */
         .main-content {
-            flex: 1;
-            min-width: 0;
-            height: 100vh;
-            overflow-y: auto;
             position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 6rem;
+            padding-bottom: 2rem;
         }
-        .main-content::-webkit-scrollbar { width: 4px; }
-        .main-content::-webkit-scrollbar-track { background: transparent; }
-        .main-content::-webkit-scrollbar-thumb { background: rgba(201, 169, 97, 0.2); border-radius: 2px; }
 
         /* 网格背景 */
         .grid-bg {
-            position: absolute;
-            inset: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             background-image:
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
@@ -245,38 +264,94 @@
             z-index: 0;
         }
 
-        /* 右上角管理入口 */
-        .admin-entry {
-            position: fixed;
-            top: 1.25rem;
-            right: 1.5rem;
-            z-index: 999;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 1.1rem;
-            border: 1px solid rgba(201, 169, 97, 0.25);
-            border-radius: 100px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: var(--gold);
-            font-size: 0.78rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .admin-entry:hover {
-            border-color: var(--gold);
-            background: rgba(201, 169, 97, 0.1);
-        }
-
         .container {
             max-width: 1280px;
             padding: 1.5rem 1.5rem 3rem;
             position: relative;
             z-index: 1;
+        }
+
+        /* ===== 页面标题区 ===== */
+        .page-header {
+            margin-bottom: 1.75rem;
+            padding: 0.5rem 0 1rem;
+            border-bottom: 1px solid var(--h-card-border);
+        }
+        .page-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 0 32px rgba(201, 169, 97, 0.25);
+        }
+        .page-update-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--h-gold);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.85rem;
+        }
+        .page-update-time::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--h-gold);
+            box-shadow: 0 0 8px var(--h-gold);
+        }
+        .page-subtitle {
+            font-size: 0.88rem;
+            color: var(--h-text-2);
+            line-height: 1.7;
+            letter-spacing: 0.5px;
+            max-width: 680px;
+            margin-bottom: 1.25rem;
+        }
+        .page-goals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem 2rem;
+            padding: 0.85rem 1.1rem;
+            background: rgba(201, 169, 97, 0.05);
+            border: 1px solid rgba(201, 169, 97, 0.18);
+            border-radius: 10px;
+        }
+        .page-goals .goals-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--h-gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding-right: 1rem;
+            border-right: 1px solid rgba(201, 169, 97, 0.2);
+            display: inline-flex;
+            align-items: center;
+        }
+        .page-goals .goals-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.82rem;
+            color: var(--h-text);
+        }
+        .page-goals .goals-item .k {
+            color: var(--h-text-3);
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        .page-goals .goals-item .v {
+            color: var(--h-text);
+            font-weight: 500;
         }
 
         /* ===== Hero 顶部总览 ===== */
@@ -865,33 +940,48 @@
             .donut-wrap .chart-canvas-wrapper { flex: 0 0 auto; width: 100%; }
         }
         @media (max-width: 768px) {
-            html, body { height: auto; overflow: auto; }
-            .admin-entry { top: 0.5rem; right: 0.75rem; padding: 0.4rem 0.8rem; font-size: 0.7rem; }
-            body { flex-direction: column; }
-            .navbar {
-                width: 100%;
-                min-width: 0;
-                height: auto;
-                border-right: none;
-                border-bottom: 1px solid var(--surface-border);
+            .top-nav { top: 1rem; right: 1rem; }
+            .top-nav-toggle { display: flex; }
+            .top-nav-menu {
+                display: none;
+                position: absolute;
+                top: calc(100% + 0.75rem);
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 0.5rem 0;
+                border-radius: 0.5rem;
+                background: rgba(8, 8, 10, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(201, 169, 97, 0.2);
+                min-width: 140px;
             }
-            .nav-container {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                height: auto;
-                gap: 1rem;
-                padding: 0.875rem 1.5rem;
+            .top-nav.open .top-nav-menu { display: flex; }
+            .top-nav-menu li + li::before {
+                width: calc(100% - 2rem);
+                height: 1px;
+                margin: 0 1rem;
             }
-            .nav-menu {
-                flex-direction: row;
-                gap: 1rem;
-                align-items: center;
+            .top-nav-menu a {
+                display: block;
+                padding: 0.7rem 1.25rem;
+                text-align: center;
+                letter-spacing: 2px;
             }
-            .nav-menu a { padding: 0.4rem 0.5rem; }
-            .nav-menu a::before { display: none; }
-            .nav-footer { display: none; }
-            .main-content { height: auto; overflow-y: visible; }
+            .top-nav-menu a::after {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 0.3rem;
+            }
+            .top-nav-menu a:hover::after,
+            .top-nav-menu a.active::after {
+                width: calc(100% - 2.5rem);
+            }
+            .brand { top: 1rem; left: 1rem; }
+            .brand-title { font-size: 1.4rem; letter-spacing: 3px; }
+            .main-content { padding-top: 5rem; }
 
             html { font-size: 15px; }
             .container { padding: 1rem 1rem 2rem; }
@@ -901,58 +991,72 @@
             .chart-canvas-wrapper { height: 240px; }
             .action-bar { flex-direction: column; align-items: stretch; }
         }
+        @media (max-width: 480px) {
+            .container { padding: 0.75rem 0.75rem 2rem; }
+            .hero { padding: 1.25rem 1rem; }
+            .hero-value { font-size: 1.9rem; }
+            .hero-meta { gap: 1rem; }
+            .stat-card .value { font-size: 1.15rem; }
+            .chart-canvas-wrapper { height: 220px; }
+            .tabs { width: 100%; }
+            .tab { flex: 1; text-align: center; padding: 0.55rem 0.5rem; font-size: 0.82rem; }
+        }
     </style>
 </head>
 <body class="holdings-page">
-    <!-- 导航 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <span class="title">投么有度</span>
-                <span class="subtitle">Retirement Plan</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html"><span class="nav-num">01</span>首页</a></li>
-                <li><a href="holdings.html" class="active"><span class="nav-num">02</span>退休计划</a></li>
-                <li><a href="about.html"><span class="nav-num">03</span>关于我</a></li>
-                <li><a href="wechat.html"><span class="nav-num">04</span>公众号</a></li>
-            </ul>
-            <div class="nav-footer">
-                <div class="nav-time">始于 2026</div>
-                <div class="nav-date">长期投资纪实</div>
-            </div>
-        </div>
-    </nav>
+    <!-- 左上角品牌区 -->
+    <div class="brand">
+        <span class="brand-title">投么有度</span>
+        <span class="brand-subtitle">Retirement Plan</span>
+    </div>
+
+    <!-- 右上角页面切换 -->
+    <div class="top-nav" id="topNav">
+        <ul class="top-nav-menu">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="holdings.html" class="active">退休计划</a></li>
+            <li><a href="wechat.html">文章</a></li>
+            <li><a href="about.html">关于我</a></li>
+        </ul>
+        <button class="top-nav-toggle" aria-label="切换导航菜单" onclick="this.closest('.top-nav').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
 
     <!-- 主内容 -->
     <main class="main-content">
         <div id="aurora-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;"></div>
         <div class="grid-bg"></div>
 
-        <!-- 右上角系统管理入口 -->
-        <a href="admin.html" class="admin-entry" target="_blank">⚙ 系统管理</a>
-
         <div class="container">
+            <!-- 页面标题 -->
+            <div class="page-header">
+                <h1 class="page-title">退休实盘计划</h1>
+                <div class="page-update-time">数据更新：<span id="pageUpdateDate">2026-08-24</span></div>
+                <p class="page-subtitle">个人长期资产配置记录，目标为退休积累，所有内容仅作个人记录，不构成投资建议。</p>
+                <div class="page-goals">
+                    <span class="goals-label">目标与进度</span>
+                    <span class="goals-item"><span class="k">当前阶段</span><span class="v">积累期</span></span>
+                    <span class="goals-item"><span class="k">配置目标</span><span class="v">平衡收益与波动，做长期定投积累。</span></span>
+                </div>
+            </div>
+
             <!-- Hero 总览 -->
             <div class="hero">
                 <div class="hero-grid">
                     <div>
-                        <div class="hero-label">Portfolio Value · 组合总市值</div>
+                        <div class="hero-label">组合总市值</div>
                         <div class="hero-value" id="heroTotalValue">
                             <span class="currency">¥</span>0
                         </div>
                         <div class="hero-meta">
                             <div class="hero-meta-item">
-                                <span class="lbl">累计收益</span>
+                                <span class="lbl">持仓收益</span>
                                 <span class="val" id="heroProfit">+ ¥ 0</span>
                             </div>
                             <div class="hero-meta-item">
                                 <span class="lbl">收益率</span>
                                 <span class="val" id="heroRate">+ 0.00%</span>
-                            </div>
-                            <div class="hero-meta-item">
-                                <span class="lbl">持仓标的</span>
-                                <span class="val" id="heroCount">0 只</span>
                             </div>
                             <div class="hero-meta-item">
                                 <span class="lbl">最新更新</span>
@@ -975,7 +1079,7 @@
                             </svg>
                             <div class="ring-center">
                                 <div class="pct" id="ringPct">+0.0%</div>
-                                <div class="lbl">总收益率</div>
+                                <div class="lbl">收益率</div>
                             </div>
                         </div>
                     </div>
@@ -1027,14 +1131,9 @@
                         <table id="detailTable">
                             <thead>
                                 <tr>
-                                    <th>类型</th>
-                                    <th>基金代码</th>
-                                    <th>名称</th>
-                                    <th style="text-align:right;">当前市值</th>
-                                    <th style="text-align:right;">收益</th>
+                                    <th>分类名称</th>
+                                    <th style="text-align:right;">总市值</th>
                                     <th style="text-align:right;">收益率</th>
-                                    <th style="text-align:right;">持仓成本</th>
-                                    <th>备注</th>
                                     <th style="min-width:100px;">占比</th>
                                 </tr>
                             </thead>
@@ -1080,7 +1179,7 @@
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
     <script src="js/holdings.js"></script>
-    <script src="js/splash-cursor.js?v=1"></script>
+    <script src="js/splash-cursor.js?v=2"></script>
     <script>
         // Chart.js 全局主题（适配深色背景 + 中国惯例）
         if (window.Chart) {
@@ -1299,16 +1398,23 @@
                 rateEl.textContent = sign + (m.totalProfitRate * 100).toFixed(2) + '%';
                 rateEl.style.color = m.totalProfitRate >= 0 ? 'var(--up)' : 'var(--down)';
             }
-            const countEl = document.getElementById('heroCount');
-            if (countEl) countEl.textContent = m.count + ' 只';
-
             const dateEl = document.getElementById('heroDate');
-            if (dateEl) {
-                const d = new Date();
-                const yyyy = d.getFullYear();
-                const mm = String(d.getMonth() + 1).padStart(2, '0');
-                const dd = String(d.getDate()).padStart(2, '0');
-                dateEl.textContent = yyyy + '-' + mm + '-' + dd;
+            const pageDateEl = document.getElementById('pageUpdateDate');
+            if (dateEl || pageDateEl) {
+                // 优先使用后台维护的持仓数据更新日期，无则用当日
+                const upd = (typeof HOLDINGS_UPDATE !== 'undefined' && HOLDINGS_UPDATE && HOLDINGS_UPDATE.date) ? HOLDINGS_UPDATE.date : null;
+                if (upd) {
+                    if (dateEl) dateEl.textContent = upd;
+                    if (pageDateEl) pageDateEl.textContent = upd;
+                } else {
+                    const d = new Date();
+                    const yyyy = d.getFullYear();
+                    const mm = String(d.getMonth() + 1).padStart(2, '0');
+                    const dd = String(d.getDate()).padStart(2, '0');
+                    const dateStr = yyyy + '-' + mm + '-' + dd;
+                    if (dateEl) dateEl.textContent = dateStr;
+                    if (pageDateEl) pageDateEl.textContent = dateStr;
+                }
             }
 
             // 环形进度（按收益率映射为 50%-100% 显示）

@@ -6,17 +6,19 @@
     <meta name="description" content="微信公众号维护 - 文章管理">
     <title>微信公众号维护</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
-            --sidebar-bg: #0f172a;
-            --sidebar-hover: #1e293b;
+            color-scheme: dark;
+            --sidebar-bg: #131318;
+            --sidebar-hover: #1c1c24;
             --sidebar-active: #3b82f6;
-            --page-bg: #0a0f1a;
-            --page-bg-2: #0d1320;
-            --card-bg: #141b2d;
-            --card-bg-alt: #1a2236;
-            --border: #1e293b;
-            --border-light: #2a3650;
+            --page-bg: #0d0d11;
+            --page-bg-2: #111116;
+            --card-bg: #16161c;
+            --card-bg-alt: #1c1c24;
+            --border: #26262f;
+            --border-light: #33333f;
             --text: #e2e8f0;
             --text-soft: #94a3b8;
             --text-dim: #64748b;
@@ -49,7 +51,7 @@
             width: 240px;
             min-width: 240px;
             height: 100vh;
-            background: linear-gradient(180deg, #0f172a 0%, #0c1120 100%);
+            background: linear-gradient(180deg, #14141a 0%, #0b0b10 100%);
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
@@ -228,7 +230,7 @@
             margin-bottom: 1.5rem;
         }
         .stat-card {
-            background: linear-gradient(135deg, rgba(26, 34, 54, 0.8) 0%, rgba(20, 27, 45, 0.6) 100%);
+            background: linear-gradient(135deg, rgba(28, 28, 36, 0.8) 0%, rgba(22, 22, 28, 0.6) 100%);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.1rem 1.25rem;
@@ -252,7 +254,7 @@
 
         /* 面板 */
         .panel {
-            background: linear-gradient(180deg, rgba(20, 27, 45, 0.9) 0%, rgba(20, 27, 45, 0.7) 100%);
+            background: linear-gradient(180deg, rgba(22, 22, 28, 0.9) 0%, rgba(22, 22, 28, 0.7) 100%);
             border: 1px solid var(--border);
             border-radius: 12px;
             margin-bottom: 1.5rem;
@@ -264,7 +266,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(42, 54, 80, 0.4);
+            border-bottom: 1px solid rgba(51, 51, 63, 0.4);
         }
         .panel-header h3 {
             font-size: 0.95rem;
@@ -419,7 +421,7 @@
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-soft);
-            background: rgba(26, 34, 54, 0.5);
+            background: rgba(28, 28, 36, 0.5);
             border-bottom: 1px solid var(--border-light);
             white-space: nowrap;
         }
@@ -427,11 +429,11 @@
             padding: 0.7rem 1rem;
             font-size: 0.83rem;
             color: var(--text);
-            border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+            border-bottom: 1px solid rgba(38, 38, 47, 0.6);
             vertical-align: middle;
         }
         .data-table tr:last-child td { border-bottom: none; }
-        .data-table tr:hover td { background: rgba(30, 41, 59, 0.4); }
+        .data-table tr:hover td { background: rgba(38, 38, 47, 0.4); }
         .data-table .td-title { font-weight: 500; }
         .data-table .td-summary {
             max-width: 220px;
@@ -467,6 +469,12 @@
         .tag-purple { background: rgba(168, 139, 250, 0.15); color: #c4b5fd; }
         .tag-red { background: rgba(239, 68, 68, 0.15); color: #f87171; }
         .tag-cyan { background: rgba(6, 182, 212, 0.15); color: #67e8f9; }
+        .tag-pink { background: rgba(236, 72, 153, 0.15); color: #f9a8d4; }
+        .tag-teal { background: rgba(20, 184, 166, 0.15); color: #5eead4; }
+        .tag-amber { background: rgba(217, 119, 6, 0.15); color: #fcd34d; }
+        .tag-indigo { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; }
+        .tag-lime { background: rgba(132, 204, 22, 0.15); color: #bef264; }
+        .tag-rose { background: rgba(244, 63, 94, 0.15); color: #fda4af; }
 
         /* 筛选栏 */
         .filter-bar {
@@ -486,6 +494,10 @@
             outline: none;
         }
         .filter-bar select option {
+            background: var(--card-bg-alt);
+            color: var(--text);
+        }
+        #monthlyYearFilter option {
             background: var(--card-bg-alt);
             color: var(--text);
         }
@@ -509,7 +521,7 @@
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background: #1e293b;
+            background: var(--card-bg-alt);
             color: #e2e8f0;
             padding: 0.7rem 1.5rem;
             border-radius: 10px;
@@ -532,7 +544,7 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(5, 8, 15, 0.65);
+            background: rgba(4, 5, 8, 0.65);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             z-index: 2000;
@@ -545,7 +557,7 @@
         }
         .modal-overlay.show { opacity: 1; visibility: visible; }
         .modal {
-            background: linear-gradient(180deg, rgba(26, 34, 54, 0.95) 0%, rgba(20, 27, 45, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(28, 28, 36, 0.95) 0%, rgba(22, 22, 28, 0.95) 100%);
             border: 1px solid var(--border-light);
             border-radius: 14px;
             width: 560px;
@@ -559,6 +571,21 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         .modal-overlay.show .modal { transform: scale(1) translateY(0); }
+        /* 宽弹窗：用于月度收益批量录入等需要更大空间的场景 */
+        .modal.modal-wide { width: 860px; }
+        .modal.modal-wide .modal-body { padding: 1.5rem 1.75rem; overflow-x: hidden; }
+        .monthly-batch-grid .form-field input {
+            width: 100%;
+            min-width: 0;
+            padding: 0.7rem 0.85rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: right;
+        }
+        .monthly-batch-grid .form-field label {
+            font-size: 0.82rem;
+            color: var(--text-soft);
+        }
         .modal-header {
             display: flex;
             align-items: center;
@@ -618,21 +645,159 @@
                 min-width: 0;
                 height: auto;
                 flex-direction: row;
+                flex-wrap: wrap;
                 align-items: center;
                 padding: 0 1rem;
             }
-            .sidebar-header { padding: 0.75rem 0; border-bottom: none; flex: 1; }
+            .sidebar-header { order: 1; flex: 1 1 auto; padding: 0.75rem 0; border-bottom: none; }
             .sidebar-header .subtitle { display: none; }
-            .sidebar-nav { display: none; }
-            .sidebar-footer { border-top: none; padding: 0.5rem 0; }
+            .sidebar-footer { order: 2; padding: 0.5rem 0; border-top: none; }
+            .sidebar-nav {
+                order: 3;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                flex: 0 0 100%;
+                width: 100%;
+                gap: 0.5rem;
+                padding: 0 0 0.6rem;
+                overflow-x: auto;
+            }
+            .sidebar-nav .nav-label { display: none; }
+            .sidebar-nav a {
+                flex: 1;
+                justify-content: center;
+                margin-bottom: 0;
+                padding: 0.55rem 0.5rem;
+                white-space: nowrap;
+            }
             .main { height: auto; }
-            .topbar { padding: 0 1rem; }
+            .topbar {
+                flex-wrap: wrap;
+                height: auto;
+                min-height: 56px;
+                padding: 0.5rem 1rem;
+                gap: 0.5rem 0.75rem;
+            }
             .content { padding: 1rem; }
             .form-grid { grid-template-columns: 1fr; }
             .filter-bar { flex-wrap: wrap; }
             .filter-bar input { width: 100%; }
             .data-table .td-summary { max-width: 120px; }
             .modal { max-width: 95vw; border-radius: 12px; }
+        }
+        @media (max-width: 480px) {
+            .topbar .breadcrumb { font-size: 0.78rem; }
+            .topbar .btn-sm, .topbar .btn-preview { padding: 0.35rem 0.6rem; font-size: 0.75rem; }
+            .topbar-actions { gap: 0.5rem; }
+        }
+
+        /* 左树右表布局 */
+        .tree-table-layout {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .tree-panel {
+            width: 220px;
+            flex-shrink: 0;
+            background: linear-gradient(180deg, rgba(22, 22, 28, 0.9) 0%, rgba(22, 22, 28, 0.7) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+        .tree-panel .panel-header {
+            padding: 0.875rem 1rem;
+        }
+        .tree-panel .panel-header h3 svg {
+            width: 16px; height: 16px;
+        }
+        .category-tree {
+            list-style: none;
+            padding: 0.5rem;
+            margin: 0;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .category-tree .tree-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.55rem 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-soft);
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+            transition: all 0.15s;
+        }
+        .category-tree .tree-item:hover {
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--text);
+        }
+        .category-tree .tree-item.active {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .category-tree .tree-item .tree-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+        .category-tree .tree-item .tree-name .tag {
+            font-size: 0.7rem;
+            padding: 1px 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
+        }
+        .category-tree .tree-item .tree-count {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            flex-shrink: 0;
+        }
+        .category-tree .tree-item:hover .tree-count {
+            display: none;
+        }
+        .category-tree .tree-item .tree-actions {
+            display: none;
+            gap: 0.25rem;
+            flex-shrink: 0;
+        }
+        .category-tree .tree-item:hover .tree-actions {
+            display: flex;
+        }
+        .category-tree .tree-item .tree-actions button {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 0 2px;
+            font-size: 0.85rem;
+            line-height: 1;
+        }
+        .category-tree .tree-item .tree-actions button:hover {
+            color: var(--text);
+        }
+        .table-panel {
+            flex: 1;
+            min-width: 0;
+            background: linear-gradient(180deg, rgba(22, 22, 28, 0.9) 0%, rgba(22, 22, 28, 0.7) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 768px) {
+            .tree-table-layout { flex-direction: column; }
+            .tree-panel { width: 100%; }
+            .category-tree { max-height: 200px; }
         }
     </style>
 </head>
@@ -648,18 +813,34 @@
         </div>
         <nav class="sidebar-nav">
             <div class="nav-label">功能菜单</div>
-            <a href="javascript:void(0)" class="active" onclick="switchPage('articles', this)">
-                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2.5"/></svg></span>
-                微信公众号维护
-            </a>
-            <a href="javascript:void(0)" onclick="switchPage('holdings', this)">
+            <a href="javascript:void(0)" class="active" onclick="switchPage('holdings', this)">
                 <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="5" width="4" height="16" rx="1"/></svg></span>
                 持仓分布
             </a>
+            <a href="javascript:void(0)" onclick="switchPage('weekly', this)">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><path d="M10 9H8"/></svg></span>
+                实盘周记
+            </a>
+            <a href="javascript:void(0)" onclick="switchPage('indexQuote', this)">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-6"/></svg></span>
+                指数速览
+            </a>
+            <a href="javascript:void(0)" onclick="switchPage('articles', this)">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2.5"/></svg></span>
+                微信公众号维护
+            </a>
+            <a href="javascript:void(0)" onclick="switchPage('annual', this)">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></span>
+                年度汇总
+            </a>
+            <a href="javascript:void(0)" onclick="switchPage('analysis', this)">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg></span>
+                盈亏分析（待定）
+            </a>
         </nav>
         <div class="sidebar-footer">
-            <a href="wechat.html" target="_blank">
-                <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg> 返回公众号页面
+            <a href="index.html" target="_blank">
+                <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg> 返回首页
             </a>
         </div>
     </aside>
@@ -671,78 +852,86 @@
             <div class="breadcrumb">
                 <span>管理后台</span>
                 <span>/</span>
-                <span class="current" id="currentPageName">微信公众号维护</span>
+                <span class="current" id="currentPageName">持仓分布</span>
+            </div>
+            <div class="topbar-actions">
+                <button class="btn btn-secondary btn-sm" onclick="saveDataJs()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> 保存到 data.js</button>
             </div>
             <div class="topbar-actions" id="topbarActions">
-                <a href="wechat.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览公众号页面</a>
+                <a href="holdings.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览</a>
             </div>
         </div>
 
         <!-- 内容 -->
         <div class="content">
             <!-- ===== 文章管理页面 ===== -->
-            <div id="page-articles" class="page-content">
+            <div id="page-articles" class="page-content" style="display:none">
             <!-- 统计 -->
             <div class="stats-grid" id="statsGrid"></div>
 
-            <!-- 分类管理 -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> 分类管理</h3>
-                    <div class="panel-actions">
-                        <button class="btn btn-primary btn-sm" onclick="openCategoryModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增分类</button>
+            <!-- 左树右表 -->
+            <div class="tree-table-layout">
+                <!-- 左侧：分类树 -->
+                <div class="tree-panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> 分类管理</h3>
+                        <button class="btn btn-primary btn-sm" onclick="openCategoryModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
                     </div>
+                    <ul class="category-tree" id="categoryTree"></ul>
                 </div>
-                <div class="table-wrap">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>分类名称</th>
-                                <th>标签颜色</th>
-                                <th>图标</th>
-                                <th>文章数</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="categoryTbody"></tbody>
-                    </table>
-                </div>
-            </div>
 
-            <!-- 文章列表 -->
-            <div class="panel">
-                <div class="panel-header">
-                    <h3><svg viewBox="0 0 24 24"><path d="M9 2h6a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 文章列表</h3>
-                    <div class="panel-actions">
-                        <div class="filter-bar">
-                            <button class="btn btn-primary btn-sm" onclick="openModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增文章</button>
-                            <select id="filterCategory" onchange="renderArticles()">
-                                <option value="">全部分类</option>
-                            </select>
-                            <input type="text" id="filterKeyword" placeholder="搜索标题..." oninput="renderArticles()">
+                <!-- 右侧：文章列表 -->
+                <div class="table-panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M9 2h6a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 文章列表</h3>
+                        <div class="panel-actions">
+                            <div class="filter-bar">
+                                <button class="btn btn-primary btn-sm" onclick="openModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增文章</button>
+                                <input type="text" id="filterKeyword" placeholder="搜索标题..." oninput="renderArticles()">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="table-wrap">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>分类</th>
-                                <th>文章名称</th>
-                                <th>简介</th>
-                                <th>跳转链接</th>
-                                <th>日期</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="articleTbody"></tbody>
-                    </table>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>分类</th>
+                                    <th>文章名称</th>
+                                    <th>简介</th>
+                                    <th>跳转链接</th>
+                                    <th>日期</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="articleTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             </div><!-- /page-articles -->
 
             <!-- ===== 持仓分布页面 ===== -->
-            <div id="page-holdings" class="page-content" style="display:none">
+            <div id="page-holdings" class="page-content">
+                <!-- 数据更新维护 -->
+                <div class="panel" style="padding:1rem 1.25rem;">
+                    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+                        <div style="font-weight:600;display:flex;align-items:center;gap:0.5rem;">
+                            <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            持仓数据更新
+                        </div>
+                        <div style="display:flex;align-items:center;gap:0.5rem;flex:1;flex-wrap:wrap;">
+                            <label style="font-size:0.82rem;color:var(--text-soft);">更新日期</label>
+                            <input type="date" id="holdingsUpdateDate" style="padding:0.35rem 0.6rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:0.85rem;">
+                            <label style="font-size:0.82rem;color:var(--text-soft);margin-left:0.5rem;">备注</label>
+                            <input type="text" id="holdingsUpdateNote" placeholder="如：更新XX标的市值" style="padding:0.35rem 0.6rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:0.85rem;flex:1;min-width:200px;">
+                            <button class="btn btn-primary btn-sm" onclick="saveHoldingsUpdate()">保存更新记录</button>
+                        </div>
+                    </div>
+                    <div style="margin-top:0.6rem;font-size:0.78rem;color:var(--text-soft);">
+                        当前记录：<span id="holdingsUpdateDisplay">—</span>。每次更新持仓数据后，请在此填写更新日期并保存，前端持仓页面将显示该日期。
+                    </div>
+                </div>
+
                 <!-- 持仓统计 -->
                 <div class="stats-grid" id="holdingsStatsGrid"></div>
 
@@ -799,6 +988,32 @@
                     </div>
                 </div>
 
+                <!-- 投资分类管理（用于持仓明细聚合展示） -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M14 14h7v7h-7z"/><path d="M3 14h7v7H3z"/></svg> 投资分类</h3>
+                        <div class="panel-actions">
+                            <button class="btn btn-primary btn-sm" onclick="openInvCategoryModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增分类</button>
+                        </div>
+                    </div>
+                    <div style="padding: 0 1rem 0.75rem; font-size: 0.78rem; color: var(--text-soft); line-height: 1.6;">
+                        分类用于前端「持仓明细」按主题聚合展示（如债券、纳斯达克、标普500等）。每条投资标的需选择一个分类。
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>分类名称</th>
+                                    <th>标的数量</th>
+                                    <th>当前市值</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invCategoryTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- 投资标的列表 -->
                 <div class="panel">
                     <div class="panel-header">
@@ -806,9 +1021,12 @@
                         <div class="panel-actions">
                             <div class="filter-bar">
                                 <button class="btn btn-primary btn-sm" onclick="openInvTargetModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增标的</button>
-                                <button class="btn btn-secondary btn-sm" onclick="loadSampleTargets()"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> 载入示例数据</button>
+                                <button class="btn btn-secondary btn-sm" onclick="openBatchUpdateModal()"><svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 批量更新</button>
                                 <select id="filterInvType" onchange="renderInvTargets()">
                                     <option value="">全部类型</option>
+                                </select>
+                                <select id="filterInvCategory" onchange="renderInvTargets()">
+                                    <option value="">全部分类</option>
                                 </select>
                                 <input type="text" id="filterInvKeyword" placeholder="搜索名称/代码..." oninput="renderInvTargets()">
                             </div>
@@ -819,12 +1037,14 @@
                             <thead>
                                 <tr>
                                     <th>类型</th>
+                                    <th>分类</th>
                                     <th>基金代码</th>
                                     <th>名称</th>
                                     <th>当前市值</th>
                                     <th>收益</th>
                                     <th>收益率</th>
                                     <th>持仓成本</th>
+                                    <th>日定投</th>
                                     <th>备注</th>
                                     <th>操作</th>
                                 </tr>
@@ -834,6 +1054,312 @@
                     </div>
                 </div>
             </div><!-- /page-holdings -->
+
+            <!-- ===== 实盘周记页面 ===== -->
+            <div id="page-weekly" class="page-content" style="display:none">
+                <!-- 周记参数 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> 周记参数</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label>分享起始日期（开始分享的当周记为第 1 周）</label>
+                                <input type="date" id="weeklyStartDate">
+                            </div>
+                            <div class="form-field">
+                                <label>作者署名（用于正文开头问候）</label>
+                                <input type="text" id="weeklyAuthor" placeholder="如：叨居">
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn btn-primary btn-sm" onclick="saveWeeklyConfig()">保存参数</button>
+                            <span class="hint">分享期数 =（更新日期 − 分享起始日期）÷ 7 + 1，自动计算，也可在下方手动修改</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 本期编辑 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> 本期周记</h3>
+                        <div class="panel-actions"><span id="weeklyDataHint" style="font-size:0.78rem;color:var(--text-soft);"></span></div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label>文章标题（自动生成，可编辑）</label>
+                                <input type="text" id="weeklyTitle">
+                            </div>
+                            <div class="form-field">
+                                <label>期数（第几周）</label>
+                                <input type="number" id="weeklyWeek" min="1" oninput="syncWeeklyTitle()">
+                            </div>
+                            <div class="form-field">
+                                <label>账户概况更新日期</label>
+                                <input type="date" id="weeklyDate" onchange="onWeeklyDateChange()">
+                            </div>
+                            <div class="form-field">
+                                <label>封面图备注（预留：草稿箱推送用）</label>
+                                <input type="text" id="weeklyCover" placeholder="如：week36-cover.jpg（仅备注存档）">
+                            </div>
+                            <div class="form-field">
+                                <label>本周收益（元，亏损填负数）</label>
+                                <input type="number" id="weeklyProfit" step="0.01" placeholder="如：1234.56" oninput="renderWeeklyPreview()">
+                            </div>
+                            <div class="form-field">
+                                <label>本周收益率（%，亏损填负数）</label>
+                                <input type="number" id="weeklyRate" step="0.01" placeholder="如：1.25" oninput="renderWeeklyPreview()">
+                            </div>
+                            <div class="form-field full">
+                                <label>✍ 本周复盘（正文唯一需手写的部分，换行分段）</label>
+                                <textarea id="weeklyEssay" rows="7" oninput="renderWeeklyPreview()" placeholder="写下本周的思考、操作与复盘..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn btn-primary btn-sm" onclick="saveWeeklyPost()">存档本期</button>
+                            <button class="btn btn-secondary btn-sm" onclick="copyWeeklyTitle()">复制标题</button>
+                            <button class="btn btn-secondary btn-sm" onclick="copyWeeklyRich()">复制正文（粘贴到公众号）</button>
+                            <button class="btn btn-secondary btn-sm" onclick="copyWeeklyZhihu()">复制知乎版</button>
+                            <button class="btn btn-secondary btn-sm" onclick="copyWeeklyText()">复制纯文本（雪球/虎扑）</button>
+                            <span class="hint">账户概况数据实时取自持仓与现金数据；本周收益手动录入（不填则文章不显示）；存档后记得点右上角「保存到 data.js」</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 预览 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 预览（模拟公众号阅读样式）</h3>
+                        <span style="font-size:0.78rem;color:var(--text-soft);">复制后到公众号图文编辑器 Ctrl+V 粘贴，格式保留</span>
+                    </div>
+                    <div class="panel-body" style="display:flex;justify-content:center;padding:1.5rem;">
+                        <div id="weeklyPreview" style="width:100%;max-width:677px;background:#fff;border-radius:8px;padding:28px 24px;"></div>
+                    </div>
+                </div>
+
+                <!-- 存档列表 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg> 历史周记存档</h3>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>期数</th>
+                                    <th>更新日期</th>
+                                    <th>本周收益</th>
+                                    <th>标题</th>
+                                    <th>封面备注</th>
+                                    <th>草稿箱推送（预留）</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="weeklyTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /page-weekly -->
+
+            <!-- ===== 指数速览页面 ===== -->
+            <div id="page-indexQuote" class="page-content" style="display:none">
+                <!-- 数据来源说明 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-6"/></svg> 数据来源</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div style="font-size:0.85rem;color:var(--text-soft);line-height:1.8;">
+                            指数行情来自东方财富全球指数接口；跟踪基金数据来自天天基金抓取脚本。数据由云端定时任务每日自动更新（基金 01:00、指数 06:00），云端不可用时会自动回退到本地快照。
+                        </div>
+                        <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);">
+                            指数行情更新时间：<span id="indexQuoteUpdated">—</span>　基金数据更新时间：<span id="indexFundUpdated">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 本期文章 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> 本期文章</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label>文章标题（自动生成，可编辑）</label>
+                                <input type="text" id="indexTitle">
+                            </div>
+                            <div class="form-field">
+                                <label>行情日期（默认今日）</label>
+                                <input type="date" id="indexDate" onchange="renderIndexPreview()">
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn btn-primary btn-sm" onclick="copyIndexTitle()">复制标题</button>
+                            <button class="btn btn-secondary btn-sm" onclick="copyIndexRich()">复制正文（粘贴到公众号）</button>
+                            <button class="btn btn-secondary btn-sm" onclick="copyIndexText()">复制纯文本</button>
+                            <span class="hint">正文自动汇总指数行情、场内 ETF 溢价、场外限购信息；到公众号图文编辑器 Ctrl+V 粘贴即可</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 预览 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 预览（模拟公众号阅读样式）</h3>
+                        <span style="font-size:0.78rem;color:var(--text-soft);">复制后到公众号图文编辑器 Ctrl+V 粘贴，格式保留</span>
+                    </div>
+                    <div class="panel-body" style="display:flex;justify-content:center;padding:1.5rem;">
+                        <div id="indexPreview" style="width:100%;max-width:677px;background:#fff;border-radius:8px;padding:28px 24px;"></div>
+                    </div>
+                </div>
+            </div><!-- /page-indexQuote -->
+
+            <!-- ===== 年度汇总页面 ===== -->
+            <div id="page-annual" class="page-content" style="display:none">
+                <!-- 当年总收益概览 -->
+                <div class="stats-grid" id="annualStatsGrid"></div>
+
+                <!-- 年度收益汇总 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg> 年度收益汇总</h3>
+                        <div class="panel-actions">
+                            <button class="btn btn-primary btn-sm" onclick="openAnnualReturnModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增年度</button>
+                        </div>
+                    </div>
+                    <div style="padding: 0 1rem 0.75rem; font-size: 0.78rem; color: var(--text-soft); line-height: 1.6;">
+                        汇总每年的投资总收益与总收益率。由于持仓标的存在买卖，单看持仓浮盈无法反映真实年度收益。当年记录会自动叠加当前持仓浮盈；往年记录按已了结收益汇总。点击各年「月度录入」可按月录入收益，合计自动汇入该年「年度总收益（静态）」。
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>年份</th>
+                                    <th>已实现收益</th>
+                                    <th>持仓浮盈</th>
+                                    <th>年度总收益（动态）</th>
+                                    <th>年度总收益（静态）</th>
+                                    <th>投入本金</th>
+                                    <th>年度收益率</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="annualReturnTbody"></tbody>
+                            <tfoot>
+                                <tr style="font-weight:600;background:var(--bg);">
+                                    <td>累计</td>
+                                    <td id="annualRealizedTotal">—</td>
+                                    <td id="annualFloatingTotal">—</td>
+                                    <td id="annualProfitTotal">—</td>
+                                    <td id="annualStaticTotal">—</td>
+                                    <td id="annualCapitalTotal">—</td>
+                                    <td id="annualRateTotal">—</td>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 月度收益曲线 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg> 月度收益曲线</h3>
+                        <div class="panel-actions">
+                            <select id="monthlyYearFilter" onchange="renderMonthlyReturns()" style="padding:0.35rem 0.6rem;border:1px solid var(--border);border-radius:6px;background:var(--card-bg-alt);color:var(--text);font-size:0.82rem;cursor:pointer;"></select>
+                        </div>
+                    </div>
+                    <div style="padding: 0 1rem 0.75rem; font-size: 0.78rem; color: var(--text-soft); line-height: 1.6;">
+                        定期录入每月收益，自动生成曲线展示收益波动。红色为当月收益；蓝色虚线为本年累计；金色实线为截至目前累计（含往年，跨年累加）。悬停查看金额。
+                    </div>
+                    <div style="padding: 0 1rem 1rem; position: relative; height: 320px;">
+                        <canvas id="monthlyReturnChart"></canvas>
+                    </div>
+                </div>
+            </div><!-- /page-annual -->
+
+            <!-- ===== 盈亏分析页面 ===== -->
+            <div id="page-analysis" class="page-content" style="display:none">
+                <!-- 盈亏概览 -->
+                <div class="stats-grid" id="analysisStatsGrid"></div>
+
+                <!-- 现有持仓盈亏 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg> 现有持仓盈亏</h3>
+                        <div style="font-size:0.78rem;color:var(--text-soft);">数据自动取自「持仓分布」的投资标的，盈亏 = 市值 - 持仓成本</div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>类型</th>
+                                    <th>基金代码</th>
+                                    <th>名称</th>
+                                    <th>当前市值</th>
+                                    <th>持仓成本</th>
+                                    <th>持仓盈亏</th>
+                                    <th>盈亏率</th>
+                                </tr>
+                            </thead>
+                            <tbody id="holdingProfitTbody"></tbody>
+                            <tfoot>
+                                <tr style="font-weight:600;background:var(--bg);">
+                                    <td colspan="3">持仓合计</td>
+                                    <td id="holdingMarketTotal">—</td>
+                                    <td id="holdingCostTotal">—</td>
+                                    <td id="holdingProfitTotal">—</td>
+                                    <td id="holdingRateTotal">—</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 已清仓标的 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M21 4H3v16h18"/><path d="M3 10h18M8 4v6"/></svg> 已清仓标的</h3>
+                        <div class="panel-actions">
+                            <button class="btn btn-primary btn-sm" onclick="openClosedModal()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 新增清仓记录</button>
+                        </div>
+                    </div>
+                    <div style="padding: 0 1rem 0.75rem; font-size: 0.78rem; color: var(--text-soft); line-height: 1.6;">
+                        记录既往卖出清仓的标的及清仓盈亏。清仓盈亏 + 持仓盈亏 = 总收益。
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>类型</th>
+                                    <th>代码</th>
+                                    <th>名称</th>
+                                    <th>持仓成本</th>
+                                    <th>卖出所得</th>
+                                    <th>清仓盈亏</th>
+                                    <th>清仓日期</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="closedTbody"></tbody>
+                            <tfoot>
+                                <tr style="font-weight:600;background:var(--bg);">
+                                    <td colspan="3">清仓合计</td>
+                                    <td id="closedCostTotal">—</td>
+                                    <td id="closedSoldTotal">—</td>
+                                    <td id="closedProfitTotal">—</td>
+                                    <td colspan="3"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /page-analysis -->
         </div>
     </div>
 
@@ -899,10 +1425,6 @@
                             <label>标签颜色</label>
                             <select id="cTagColor"></select>
                         </div>
-                        <div class="form-field">
-                            <label>图标</label>
-                            <select id="cIcon"></select>
-                        </div>
                         <div class="form-field full">
                             <label>分类描述</label>
                             <textarea id="cDesc" placeholder="可选，分类的简短描述..."></textarea>
@@ -944,6 +1466,32 @@
         </div>
     </div>
 
+    <!-- 投资分类弹窗 -->
+    <div class="modal-overlay" id="invCategoryModal" onclick="if(event.target===this) closeInvCategoryModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="invCategoryModalTitle">新增投资分类</h3>
+                <button class="modal-close" onclick="closeInvCategoryModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="invCategoryForm" onsubmit="return false;">
+                    <input type="hidden" id="icEditOldName" value="">
+                    <div class="form-grid">
+                        <div class="form-field full">
+                            <label>分类名称 <span class="req">*</span></label>
+                            <input type="text" id="icName" placeholder="如：债券、纳斯达克、标普500等" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="invCategoryModalHint">添加后可在投资标的中选择此分类</span>
+                <button type="button" class="btn btn-secondary" onclick="closeInvCategoryModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="invCategorySubmitBtn" onclick="submitInvCategory()">添加分类</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 投资标的弹窗 -->
     <div class="modal-overlay" id="invTargetModal" onclick="if(event.target===this) closeInvTargetModal()">
         <div class="modal">
@@ -958,6 +1506,10 @@
                         <div class="form-field">
                             <label>投资标的类型 <span class="req">*</span></label>
                             <select id="invType" required></select>
+                        </div>
+                        <div class="form-field">
+                            <label>投资分类 <span class="req">*</span></label>
+                            <select id="invCategory" required></select>
                         </div>
                         <div class="form-field">
                             <label>基金代码 <span class="req">*</span></label>
@@ -983,6 +1535,14 @@
                             <label>持仓成本（自动计算）</label>
                             <input type="text" id="invCost" readonly placeholder="—" style="background:var(--card-bg);color:var(--text-soft)">
                         </div>
+                        <div class="form-field">
+                            <label>日定投金额</label>
+                            <input type="number" id="invDailyInvest" placeholder="0.00" step="0.01" min="0" oninput="updateDailyInvestPreview()">
+                        </div>
+                        <div class="form-field">
+                            <label>月定投（自动估算）</label>
+                            <input type="text" id="invMonthlyInvestPreview" readonly placeholder="—" style="background:var(--card-bg);color:var(--text-soft)">
+                        </div>
                         <div class="form-field full">
                             <label>备注</label>
                             <textarea id="invRemark" placeholder="可选备注..."></textarea>
@@ -991,9 +1551,50 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <span class="hint" id="invTargetModalHint">收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益</span>
+                <span class="hint" id="invTargetModalHint">收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益 · 月定投 = 日定投金额 × 21个工作日</span>
                 <button type="button" class="btn btn-secondary" onclick="closeInvTargetModal()">取消</button>
                 <button type="button" class="btn btn-primary" id="invTargetSubmitBtn" onclick="submitInvTarget()">添加标的</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 批量更新弹窗 -->
+    <div class="modal-overlay" id="batchUpdateModal" onclick="if(event.target===this) closeBatchUpdateModal()">
+        <div class="modal" style="width:96vw;max-width:1200px;">
+            <div class="modal-header">
+                <h3>批量更新投资标的</h3>
+                <button class="modal-close" onclick="closeBatchUpdateModal()">×</button>
+            </div>
+            <div class="modal-body" style="max-height:65vh;overflow-y:auto;padding:1rem 1.5rem;">
+                <div style="font-size:0.78rem;color:var(--text-soft);margin-bottom:0.75rem;">
+                    一次性修改所有标的的「当前市值」和「收益」，改完点击「保存全部」。收益率与持仓成本会自动计算。
+                </div>
+                <table class="data-table" style="font-size:0.85rem;table-layout:fixed;width:100%;">
+                    <colgroup>
+                        <col style="width:24%;">
+                        <col style="width:14%;">
+                        <col style="width:10%;">
+                        <col style="width:19%;">
+                        <col style="width:19%;">
+                        <col style="width:14%;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>代码</th>
+                            <th>类型</th>
+                            <th>当前市值</th>
+                            <th>收益</th>
+                            <th>收益率</th>
+                        </tr>
+                    </thead>
+                    <tbody id="batchUpdateTbody"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="batchUpdateHint">支持 Tab 键在输入框间快速切换</span>
+                <button type="button" class="btn btn-secondary" onclick="closeBatchUpdateModal()">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitBatchUpdate()">保存全部</button>
             </div>
         </div>
     </div>
@@ -1032,10 +1633,142 @@
         </div>
     </div>
 
+    <!-- 年度收益弹窗 -->
+    <div class="modal-overlay" id="annualReturnModal" onclick="if(event.target===this) closeAnnualReturnModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="annualReturnModalTitle">新增年度收益</h3>
+                <button type="button" class="modal-close" onclick="closeAnnualReturnModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="annualReturnForm" onsubmit="event.preventDefault(); submitAnnualReturn();">
+                    <input type="hidden" id="annualEditIndex" value="-1">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>年份 <span class="req">*</span></label>
+                            <input type="number" id="annualYear" placeholder="如 2026" required min="2000" max="2100">
+                        </div>
+                        <div class="form-field">
+                            <label>已实现收益</label>
+                            <input type="number" id="annualRealized" placeholder="卖出部分的收益/亏损，可填负数" step="0.01" value="0">
+                        </div>
+                        <div class="form-field">
+                            <label>年度总收益（静态）</label>
+                            <input type="number" id="annualStatic" placeholder="无月度数据时手动填写，可填负数" step="0.01">
+                        </div>
+                        <div class="form-field">
+                            <label>投入本金</label>
+                            <input type="number" id="annualCapital" placeholder="当年总投入本金（用于计算收益率）" step="0.01" value="0">
+                        </div>
+                        <div class="form-field full">
+                            <label>备注</label>
+                            <textarea id="annualNote" placeholder="可选备注..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="annualReturnModalHint">当年记录会自动叠加当前持仓浮盈计算年度总收益 · 已录入月度的年份静态总收益自动取月度合计</span>
+                <button type="button" class="btn btn-secondary" onclick="closeAnnualReturnModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="annualReturnSubmitBtn" onclick="submitAnnualReturn()">添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 月度收益批量录入弹窗 -->
+    <div class="modal-overlay" id="monthlyBatchModal" onclick="if(event.target===this) closeMonthlyBatchModal()">
+        <div class="modal modal-wide">
+            <div class="modal-header">
+                <h3>月度收益录入</h3>
+                <button type="button" class="modal-close" onclick="closeMonthlyBatchModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="monthlyBatchForm" onsubmit="event.preventDefault(); submitMonthlyBatch();">
+                    <input type="hidden" id="monthlyBatchYear" value="">
+                    <div style="font-size:0.84rem;color:var(--text-soft);margin-bottom:1rem;line-height:1.6;">
+                        录入 <strong id="monthlyBatchYearLabel" style="color:var(--text);font-size:0.95rem;"></strong> 年各月收益（可填负数，留空表示未录入）。
+                        <span style="color:var(--primary);">合计将自动汇入该年「年度总收益（静态）」。</span>
+                    </div>
+                    <div class="form-grid monthly-batch-grid" style="grid-template-columns:repeat(4,1fr);gap:0.9rem 1rem;">
+                        <div class="form-field"><label>1月</label><input type="number" id="monthlyBatchInput_1" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>2月</label><input type="number" id="monthlyBatchInput_2" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>3月</label><input type="number" id="monthlyBatchInput_3" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>4月</label><input type="number" id="monthlyBatchInput_4" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>5月</label><input type="number" id="monthlyBatchInput_5" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>6月</label><input type="number" id="monthlyBatchInput_6" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>7月</label><input type="number" id="monthlyBatchInput_7" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>8月</label><input type="number" id="monthlyBatchInput_8" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>9月</label><input type="number" id="monthlyBatchInput_9" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>10月</label><input type="number" id="monthlyBatchInput_10" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>11月</label><input type="number" id="monthlyBatchInput_11" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                        <div class="form-field"><label>12月</label><input type="number" id="monthlyBatchInput_12" step="0.01" placeholder="未录入" oninput="updateMonthlyBatchTotal()"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="monthlyBatchTotalHint" style="font-size:0.88rem;color:var(--text);">未录入</span>
+                <button type="button" class="btn btn-secondary" onclick="closeMonthlyBatchModal()">取消</button>
+                <button type="button" class="btn btn-primary" onclick="submitMonthlyBatch()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 清仓记录弹窗 -->
+    <div class="modal-overlay" id="closedModal" onclick="if(event.target===this) closeClosedModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="closedModalTitle">新增清仓记录</h3>
+                <button type="button" class="modal-close" onclick="closeClosedModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="closedForm" onsubmit="event.preventDefault(); submitClosed();">
+                    <input type="hidden" id="closedEditIndex" value="-1">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>类型 <span class="req">*</span></label>
+                            <input type="text" id="closedType" placeholder="如 A股/债券" required>
+                        </div>
+                        <div class="form-field">
+                            <label>代码</label>
+                            <input type="text" id="closedCode" placeholder="基金/股票代码">
+                        </div>
+                        <div class="form-field full">
+                            <label>名称 <span class="req">*</span></label>
+                            <input type="text" id="closedName" placeholder="标的名称" required>
+                        </div>
+                        <div class="form-field">
+                            <label>持仓成本 <span class="req">*</span></label>
+                            <input type="number" id="closedCost" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-field">
+                            <label>卖出所得 <span class="req">*</span></label>
+                            <input type="number" id="closedSold" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-field">
+                            <label>清仓日期</label>
+                            <input type="date" id="closedDate">
+                        </div>
+                        <div class="form-field full">
+                            <label>备注</label>
+                            <textarea id="closedNote" placeholder="可选备注..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="hint" id="closedModalHint">清仓盈亏 = 卖出所得 - 持仓成本，自动计算</span>
+                <button type="button" class="btn btn-secondary" onclick="closeClosedModal()">取消</button>
+                <button type="button" class="btn btn-primary" id="closedSubmitBtn" onclick="submitClosed()">添加</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <script src="js/data.js"></script>
+    <script src="js/index-quotes.js"></script>
+    <script src="js/nasdaq-funds.js"></script>
     <script>
         // Toast 提示
         function showToast(msg, type) {
@@ -1057,16 +1790,8 @@
 
         function populateCategoryDropdowns() {
             var cats = Storage.getCategories();
-            var filterSelect = document.getElementById('filterCategory');
             var formSelect = document.getElementById('fCategory');
-            var filterVal = filterSelect.value;
             var formVal = formSelect.value;
-
-            filterSelect.innerHTML = '<option value="">全部分类</option>';
-            cats.forEach(function(c) {
-                filterSelect.innerHTML += '<option value="' + c.name + '">' + c.name + '</option>';
-            });
-            if (filterVal) filterSelect.value = filterVal;
 
             formSelect.innerHTML = '';
             cats.forEach(function(c) {
@@ -1080,37 +1805,50 @@
         }
 
         /* ===== 分类管理 ===== */
+        var selectedCategory = '';
+
+        function selectCategory(catName) {
+            selectedCategory = catName || '';
+            renderCategories();
+            renderArticles();
+        }
+
         function renderCategories() {
             var cats = Storage.getCategories();
             var articles = Storage.getArticles();
-            var tbody = document.getElementById('categoryTbody');
-            if (cats.length === 0) {
-                tbody.innerHTML = '<tr class="empty-row"><td colspan="5">暂无分类，请先添加分类</td></tr>';
-                return;
-            }
-            tbody.innerHTML = cats.map(function(c, i) {
+            var tree = document.getElementById('categoryTree');
+            var allCount = articles.length;
+            var html = '<li class="tree-item' + (selectedCategory === '' ? ' active' : '') + '" onclick="selectCategory(\'\')">' +
+                '<span class="tree-name"><span class="tag tag-blue">全部分类</span></span>' +
+                '<span class="tree-count">' + allCount + '</span>' +
+                '</li>';
+            html += cats.map(function(c, i) {
                 var count = articles.filter(function(a) { return a.category === c.name; }).length;
-                return '<tr>' +
-                    '<td><span class="tag ' + (c.tagColor || 'tag-blue') + '">' + c.name + '</span></td>' +
-                    '<td style="color:var(--text-soft)">' + (c.tagColor || 'tag-blue') + '</td>' +
-                    '<td style="color:var(--text-soft)">' + (c.icon || '—') + '</td>' +
-                    '<td>' + count + '</td>' +
-                    '<td class="td-actions">' +
-                        '<button class="btn btn-secondary btn-sm" onclick="openEditCategoryModal(' + i + ')">编辑</button> ' +
-                        '<button class="btn btn-danger btn-sm" onclick="deleteCategory(' + i + ')">删除</button>' +
-                    '</td>' +
-                    '</tr>';
+                return '<li class="tree-item' + (selectedCategory === c.name ? ' active' : '') + '" onclick="selectCategory(\'' + c.name + '\')">' +
+                    '<span class="tree-name"><span class="tag ' + (c.tagColor || 'tag-blue') + '">' + c.name + '</span></span>' +
+                    '<span class="tree-count">' + count + '</span>' +
+                    '<span class="tree-actions">' +
+                        '<button onclick="event.stopPropagation(); moveCategory(' + i + ', -1)" title="上移">↑</button>' +
+                        '<button onclick="event.stopPropagation(); moveCategory(' + i + ', 1)" title="下移">↓</button>' +
+                        '<button onclick="event.stopPropagation(); openEditCategoryModal(' + i + ')" title="编辑">✎</button>' +
+                        '<button onclick="event.stopPropagation(); deleteCategory(' + i + ')" title="删除">×</button>' +
+                    '</span>' +
+                    '</li>';
             }).join('');
+            tree.innerHTML = html;
+        }
+
+        function moveCategory(index, direction) {
+            Storage.moveCategory(index, direction);
+            renderCategories();
+            renderArticles();
+            showToast(direction < 0 ? '分类已上移' : '分类已下移', 'success');
         }
 
         function populateCategoryFormDropdowns() {
             var colorSelect = document.getElementById('cTagColor');
-            var iconSelect = document.getElementById('cIcon');
             colorSelect.innerHTML = TAG_COLORS.map(function(t) {
                 return '<option value="' + t.value + '">' + t.label + '</option>';
-            }).join('');
-            iconSelect.innerHTML = Object.keys(CATEGORY_ICONS).map(function(key) {
-                return '<option value="' + key + '">' + key + '</option>';
             }).join('');
         }
 
@@ -1133,7 +1871,6 @@
             document.getElementById('cDesc').value = c.desc || '';
             populateCategoryFormDropdowns();
             document.getElementById('cTagColor').value = c.tagColor || 'tag-blue';
-            document.getElementById('cIcon').value = c.icon || 'compass';
             document.getElementById('catModalTitle').textContent = '编辑分类';
             document.getElementById('catModalHint').textContent = '修改后，使用此分类的文章将同步更新';
             document.getElementById('catModalSubmitBtn').textContent = '保存修改';
@@ -1148,7 +1885,6 @@
             var oldName = document.getElementById('cEditOldName').value;
             var name = document.getElementById('cName').value.trim();
             var tagColor = document.getElementById('cTagColor').value;
-            var icon = document.getElementById('cIcon').value;
             var desc = document.getElementById('cDesc').value.trim();
 
             if (!name) {
@@ -1163,7 +1899,7 @@
                 return;
             }
 
-            var cat = { name: name, tagColor: tagColor, icon: icon, desc: desc };
+            var cat = { name: name, tagColor: tagColor, desc: desc };
 
             if (oldName) {
                 Storage.updateCategory(oldName, cat);
@@ -1204,6 +1940,10 @@
             document.getElementById('modalTitle').textContent = '新增文章';
             document.getElementById('modalHint').textContent = '添加后在公众号页面同步显示';
             document.getElementById('modalSubmitBtn').textContent = '添加文章';
+            // 默认选中当前点击的左侧分类，支持手动修改
+            if (selectedCategory) {
+                document.getElementById('fCategory').value = selectedCategory;
+            }
             document.getElementById('articleModal').classList.add('show');
         }
 
@@ -1231,7 +1971,7 @@
 
         // ESC 关闭弹窗
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') { closeModal(); closeCategoryModal(); closeInvTypeModal(); closeInvTargetModal(); }
+            if (e.key === 'Escape') { closeModal(); closeCategoryModal(); closeInvTypeModal(); closeInvTargetModal(); closeMonthlyBatchModal(); }
         });
 
         // 渲染统计
@@ -1259,27 +1999,34 @@
             var articles = Storage.getArticles();
             var catTagMap = getCatTagMap();
 
-            // 筛选
-            var filterCat = document.getElementById('filterCategory').value;
+            // 筛选：保留原始索引，避免筛选后索引错位导致误删/误编辑
+            var filterCat = selectedCategory;
             var keyword = document.getElementById('filterKeyword').value.trim().toLowerCase();
+            var filtered = articles.map(function(a, i) { return { data: a, realIndex: i }; });
             if (filterCat) {
-                articles = articles.filter(function(a) { return a.category === filterCat; });
+                filtered = filtered.filter(function(item) { return item.data.category === filterCat; });
             }
             if (keyword) {
-                articles = articles.filter(function(a) {
-                    return a.title.toLowerCase().indexOf(keyword) >= 0;
+                filtered = filtered.filter(function(item) {
+                    return item.data.title.toLowerCase().indexOf(keyword) >= 0;
                 });
             }
+            // 按日期降序（最新在前）
+            filtered.sort(function(a, b) {
+                return (b.data.date || '').localeCompare(a.data.date || '');
+            });
 
             renderStats(Storage.getArticles());
 
             var tbody = document.getElementById('articleTbody');
-            if (articles.length === 0) {
+            if (filtered.length === 0) {
                 tbody.innerHTML = '<tr class="empty-row"><td colspan="6">暂无文章数据</td></tr>';
                 return;
             }
 
-            tbody.innerHTML = articles.map(function(a, i) {
+            tbody.innerHTML = filtered.map(function(item) {
+                var a = item.data;
+                var i = item.realIndex;
                 var tagClass = catTagMap[a.category] || 'tag-blue';
                 var linkHtml = a.link
                     ? '<a href="' + a.link + '" target="_blank">打开 <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg></a>'
@@ -1339,6 +2086,7 @@
                 showToast('文章添加成功', 'success');
             }
             renderArticles();
+            renderCategories();
             closeModal();
         }
 
@@ -1346,6 +2094,7 @@
         function deleteArticle(index) {
             if (!confirm('确认删除这篇文章？')) return;
             Storage.deleteArticle(index);
+            renderCategories();
             renderArticles();
             showToast('文章已删除', 'success');
         }
@@ -1373,16 +2122,235 @@
             el.classList.add('active');
             document.getElementById('page-articles').style.display = page === 'articles' ? '' : 'none';
             document.getElementById('page-holdings').style.display = page === 'holdings' ? '' : 'none';
-            document.getElementById('currentPageName').textContent = page === 'articles' ? '微信公众号维护' : '持仓分布';
+            document.getElementById('page-weekly').style.display = page === 'weekly' ? '' : 'none';
+            document.getElementById('page-indexQuote').style.display = page === 'indexQuote' ? '' : 'none';
+            document.getElementById('page-annual').style.display = page === 'annual' ? '' : 'none';
+            document.getElementById('page-analysis').style.display = page === 'analysis' ? '' : 'none';
+            var pageNames = { articles: '微信公众号维护', holdings: '持仓分布', weekly: '实盘周记', indexQuote: '指数速览', annual: '年度汇总（待定）', analysis: '盈亏分析（待定）' };
+            document.getElementById('currentPageName').textContent = pageNames[page] || '持仓分布';
             document.getElementById('topbarActions').innerHTML = page === 'articles'
                 ? '<a href="wechat.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览公众号页面</a>'
                 : '<a href="holdings.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览持仓页面</a>';
             if (page === 'holdings') {
                 populateInvTypeDropdowns();
+                populateInvCategoryDropdowns();
                 renderInvTypes();
+                renderInvCategories();
                 renderInvTargets();
+                loadHoldingsUpdate();
+            }
+            if (page === 'weekly') {
+                initWeeklyPage();
+            }
+            if (page === 'indexQuote') {
+                initIndexQuotePage();
+            }
+            if (page === 'annual') {
+                renderAnnualReturns();
+                renderMonthlyReturns();
+            }
+            if (page === 'analysis') {
+                renderAnalysis();
             }
         }
+
+        /* ===== 保存到 data.js：用 File System Access API 直接把最新数据写入本地 js/data.js =====
+       前提：需在 localhost 或 https 下打开 admin（File System Access API 不支持 file://）
+       首次选择 js/data.js，之后自动记住文件，直接覆盖写入。 */
+        async function saveDataJs() {
+            try {
+                if (!window.showSaveFilePicker) {
+                    throw new Error('unsupported');
+                }
+                var src = buildDataJs();
+                var handle = null;
+                try {
+                    handle = await idbGet('dataFileHandle');
+                    if (handle && typeof handle.requestPermission === 'function') {
+                        var perm = await handle.requestPermission({ mode: 'readwrite' });
+                        if (perm !== 'granted') handle = null;
+                    }
+                } catch (e) { handle = null; }
+                if (!handle) {
+                    handle = await window.showSaveFilePicker({
+                        suggestedName: 'data.js',
+                        types: [{
+                            description: 'JavaScript 数据文件',
+                            accept: { 'text/javascript': ['.js'] }
+                        }]
+                    });
+                    await idbSet('dataFileHandle', handle);
+                }
+                var writable = await handle.createWritable();
+                await writable.write(src);
+                await writable.close();
+                showToast('已写入 ' + handle.name + '，刷新前端页面即可看到更新', 'success');
+            } catch (e) {
+                // 降级：无法直接写（file:// 打开或授权取消），改为下载
+                downloadDataJs();
+                if (!window.showSaveFilePicker) {
+                    showToast('当前非 localhost/https，已改为下载，请手动覆盖 js/data.js', 'warn');
+                } else {
+                    showToast('已改为下载（可用浏览器选文件时取消所致），请手动覆盖 js/data.js', 'warn');
+                }
+            }
+        }
+        // 下载 data.js 备用
+        function downloadDataJs() {
+            var src = buildDataJs();
+            var blob = new Blob([src], { type: 'text/javascript;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        /* IndexedDB：持久化文件句柄，下次免选择 */
+        function idbSet(key, value) {
+            return new Promise(function(resolve) {
+                try {
+                    var req = indexedDB.open('pph_fs', 1);
+                    req.onupgradeneeded = function() { req.result.createObjectStore('kv'); };
+                    req.onsuccess = function() {
+                        var db = req.result;
+                        var tx = db.transaction('kv', 'readwrite');
+                        tx.objectStore('kv').put(value, key);
+                        tx.oncomplete = function() { resolve(); };
+                        tx.onerror = function() { resolve(); };
+                    };
+                    req.onerror = function() { resolve(); };
+                } catch (e) { resolve(); }
+            });
+        }
+        function idbGet(key) {
+            return new Promise(function(resolve) {
+                try {
+                    var req = indexedDB.open('pph_fs', 1);
+                    req.onupgradeneeded = function() { req.result.createObjectStore('kv'); };
+                    req.onsuccess = function() {
+                        var db = req.result;
+                        var tx = db.transaction('kv', 'readonly');
+                        var r = tx.objectStore('kv').get(key);
+                        r.onsuccess = function() { resolve(r.result || null); };
+                        r.onerror = function() { resolve(null); };
+                    };
+                    req.onerror = function() { resolve(null); };
+                } catch (e) { resolve(null); }
+            });
+        }
+        // 拼接完整 data.js 源码：数据数组用当前全局数据序列化，代码部分用固定模板
+        function buildDataJs() {
+            var parts = [
+                '/* ===== 示例数据（实际使用时由后台录入） ===== */',
+                'const SAMPLE_HOLDINGS = ' + JSON.stringify(SAMPLE_HOLDINGS, null, 4) + ';',
+                '',
+                '/* ===== 交易记录示例 ===== */',
+                'const SAMPLE_TRADES = ' + JSON.stringify(SAMPLE_TRADES, null, 4) + ';',
+                '',
+                '/* ===== 收益历史数据（用于绘制曲线） ===== */',
+                'const SAMPLE_RETURNS = ' + JSON.stringify(SAMPLE_RETURNS, null, 4) + ';',
+                '',
+                '/* ===== 投资标的类型 ===== */',
+                'const INV_TYPES = ' + JSON.stringify(Storage.getInvTypes(), null, 4) + ';',
+                '',
+                '/* ===== 投资分类（用于持仓明细聚合展示） ===== */',
+                'const INV_CATEGORIES = ' + JSON.stringify(Storage.getInvCategories(), null, 4) + ';',
+                '',
+                '/* ===== 持仓数据更新记录 ===== */',
+                'const HOLDINGS_UPDATE = ' + JSON.stringify(Storage.getHoldingsUpdate(), null, 4) + ';',
+                '',
+                '/* ===== 投资标的数据 ===== */',
+                'const INV_TARGETS = ' + JSON.stringify(Storage.getInvTargets(), null, 4) + ';',
+                '',
+                '/* ===== 现金数据 ===== */',
+                'const CASH = ' + JSON.stringify(Storage.getCash(), null, 4) + ';',
+                '',
+                '/* ===== 年度收益汇总数据 ===== */',
+                'const ANNUAL_RETURNS = ' + JSON.stringify(Storage.getAnnualReturns(), null, 4) + ';',
+                '',
+                '/* ===== 月度收益数据（用于绘制收益波动曲线） ===== */',
+                'const MONTHLY_RETURNS = ' + JSON.stringify(Storage.getMonthlyReturns(), null, 4) + ';',
+                '',
+                '/* ===== 已清仓标的记录 ===== */',
+                'const CLOSED_POSITIONS = ' + JSON.stringify(Storage.getClosedPositions(), null, 4) + ';',
+                '',
+                '/* ===== 实盘周记配置 ===== */',
+                'const WEEKLY_CONFIG = ' + JSON.stringify(Storage.getWeeklyConfig(), null, 4) + ';',
+                '',
+                '/* ===== 实盘周记存档（coverUrl/pushedAt/draftMediaId 为草稿箱推送预留字段） ===== */',
+                'const WEEKLY_POSTS = ' + JSON.stringify(Storage.getWeeklyPosts(), null, 4) + ';',
+                '',
+                '/* ===== 公众号文章数据 ===== */',
+                'const ARTICLES = ' + JSON.stringify(Storage.getArticles(), null, 4) + ';',
+                '',
+                '/* ===== 文章分类数据 ===== */',
+                'const CATEGORIES = ' + JSON.stringify(Storage.getCategories(), null, 4) + ';',
+                '',
+                '/* ===== 分类图标（SVG） ===== */',
+                'const CATEGORY_ICONS = ' + JSON.stringify(CATEGORY_ICONS, null, 4) + ';',
+                '',
+                '/* ===== 标签颜色选项 ===== */',
+                'const TAG_COLORS = ' + JSON.stringify(TAG_COLORS, null, 4) + ';',
+                '',
+                STORAGE_SRC
+            ];
+            return parts.join('\n');
+        }
+        // Storage 代码模板（固定不变）
+        const STORAGE_SRC = '/* ===== 数据源工具：以 data.js 数组为唯一数据源 ===== */\n' +
+            'const Storage = {\n' +
+            '    getHoldings() { return SAMPLE_HOLDINGS; },\n' +
+            '    getTrades() { return SAMPLE_TRADES; },\n' +
+            '    getArticles() { return ARTICLES; },\n' +
+            '    addArticle(a) { ARTICLES.unshift(a); return ARTICLES; },\n' +
+            '    deleteArticle(i) { if (i >= 0 && i < ARTICLES.length) ARTICLES.splice(i, 1); return ARTICLES; },\n' +
+            '    updateArticle(i, a) { if (i >= 0 && i < ARTICLES.length) ARTICLES[i] = a; return ARTICLES; },\n' +
+            '    getCategories() { return CATEGORIES; },\n' +
+            '    addCategory(c) { CATEGORIES.push(c); return CATEGORIES; },\n' +
+            '    updateCategory(old, c) { var i = CATEGORIES.findIndex(function(x) { return x.name === old; }); if (i >= 0) { CATEGORIES[i] = c; if (old !== c.name) ARTICLES.forEach(function(a) { if (a.category === old) a.category = c.name; }); } return CATEGORIES; },\n' +
+            '    deleteCategory(n) { var i = CATEGORIES.findIndex(function(x) { return x.name === n; }); if (i >= 0) CATEGORIES.splice(i, 1); return CATEGORIES; },\n' +
+            '    moveCategory(i, d) { var ni = i + d; if (ni < 0 || ni >= CATEGORIES.length) return CATEGORIES; var t = CATEGORIES[i]; CATEGORIES[i] = CATEGORIES[ni]; CATEGORIES[ni] = t; return CATEGORIES; },\n' +
+            '    getInvTypes() { return INV_TYPES; },\n' +
+            '    addInvType(n) { INV_TYPES.push(n); return INV_TYPES; },\n' +
+            '    updateInvType(old, n) { var i = INV_TYPES.indexOf(old); if (i >= 0) { INV_TYPES[i] = n; INV_TARGETS.forEach(function(t) { if (t.type === old) t.type = n; }); } return INV_TYPES; },\n' +
+            '    deleteInvType(n) { var i = INV_TYPES.indexOf(n); if (i >= 0) INV_TYPES.splice(i, 1); return INV_TYPES; },\n' +
+            '    getInvCategories() { return INV_CATEGORIES; },\n' +
+            '    addInvCategory(n) { INV_CATEGORIES.push(n); return INV_CATEGORIES; },\n' +
+            '    updateInvCategory(old, n) { var i = INV_CATEGORIES.indexOf(old); if (i >= 0) { INV_CATEGORIES[i] = n; INV_TARGETS.forEach(function(t) { if (t.category === old) t.category = n; }); } return INV_CATEGORIES; },\n' +
+            '    deleteInvCategory(n) { var i = INV_CATEGORIES.indexOf(n); if (i >= 0) INV_CATEGORIES.splice(i, 1); return INV_CATEGORIES; },\n' +
+            '    getHoldingsUpdate() { return HOLDINGS_UPDATE; },\n' +
+            '    setHoldingsUpdate(x) { HOLDINGS_UPDATE.date = x.date; HOLDINGS_UPDATE.note = x.note || \'\'; return HOLDINGS_UPDATE; },\n' +
+            '    getInvTargets() { return INV_TARGETS; },\n' +
+            '    addInvTarget(t) { INV_TARGETS.push(t); return INV_TARGETS; },\n' +
+            '    updateInvTarget(i, t) { if (i >= 0 && i < INV_TARGETS.length) INV_TARGETS[i] = t; return INV_TARGETS; },\n' +
+            '    deleteInvTarget(i) { if (i >= 0 && i < INV_TARGETS.length) INV_TARGETS.splice(i, 1); return INV_TARGETS; },\n' +
+            '    getCash() { return CASH; },\n' +
+            '    addCash(x) { CASH.push(x); return CASH; },\n' +
+            '    updateCash(i, x) { if (i >= 0 && i < CASH.length) CASH[i] = x; return CASH; },\n' +
+            '    deleteCash(i) { if (i >= 0 && i < CASH.length) CASH.splice(i, 1); return CASH; },\n' +
+            '    getAnnualReturns() { return ANNUAL_RETURNS; },\n' +
+            '    addAnnualReturn(x) { ANNUAL_RETURNS.push(x); return ANNUAL_RETURNS; },\n' +
+            '    updateAnnualReturn(i, x) { if (i >= 0 && i < ANNUAL_RETURNS.length) ANNUAL_RETURNS[i] = x; return ANNUAL_RETURNS; },\n' +
+            '    deleteAnnualReturn(i) { if (i >= 0 && i < ANNUAL_RETURNS.length) ANNUAL_RETURNS.splice(i, 1); return ANNUAL_RETURNS; },\n' +
+            '    getMonthlyReturns() { return MONTHLY_RETURNS; },\n' +
+            '    addMonthlyReturn(x) { MONTHLY_RETURNS.push(x); return MONTHLY_RETURNS; },\n' +
+            '    updateMonthlyReturn(i, x) { if (i >= 0 && i < MONTHLY_RETURNS.length) MONTHLY_RETURNS[i] = x; return MONTHLY_RETURNS; },\n' +
+            '    deleteMonthlyReturn(i) { if (i >= 0 && i < MONTHLY_RETURNS.length) MONTHLY_RETURNS.splice(i, 1); return MONTHLY_RETURNS; },\n' +
+            '    getClosedPositions() { return CLOSED_POSITIONS; },\n' +
+            '    addClosedPosition(x) { CLOSED_POSITIONS.push(x); return CLOSED_POSITIONS; },\n' +
+            '    updateClosedPosition(i, x) { if (i >= 0 && i < CLOSED_POSITIONS.length) CLOSED_POSITIONS[i] = x; return CLOSED_POSITIONS; },\n' +
+            '    deleteClosedPosition(i) { if (i >= 0 && i < CLOSED_POSITIONS.length) CLOSED_POSITIONS.splice(i, 1); return CLOSED_POSITIONS; },\n' +
+            '    getWeeklyConfig() { return WEEKLY_CONFIG; },\n' +
+            '    setWeeklyConfig(x) { WEEKLY_CONFIG.startDate = x.startDate; WEEKLY_CONFIG.author = x.author || \'\'; return WEEKLY_CONFIG; },\n' +
+            '    getWeeklyPosts() { return WEEKLY_POSTS; },\n' +
+            '    addWeeklyPost(p) { WEEKLY_POSTS.unshift(p); return WEEKLY_POSTS; },\n' +
+            '    updateWeeklyPost(i, p) { if (i >= 0 && i < WEEKLY_POSTS.length) WEEKLY_POSTS[i] = p; return WEEKLY_POSTS; },\n' +
+            '    deleteWeeklyPost(i) { if (i >= 0 && i < WEEKLY_POSTS.length) WEEKLY_POSTS.splice(i, 1); return WEEKLY_POSTS; },\n' +
+            '    resetData() {}\n' +
+            '};';
 
         /* ===== 持仓分布 - 工具函数 ===== */
         function formatMoney(num) {
@@ -1543,25 +2511,950 @@
             showToast('类型已删除', 'success');
         }
 
+        /* ===== 投资分类管理 ===== */
+        function getInvCategoryTagColor(catName) {
+            var cats = Storage.getInvCategories();
+            var idx = cats.indexOf(catName);
+            if (idx < 0) idx = 0;
+            return INV_TYPE_TAG_COLORS[idx % INV_TYPE_TAG_COLORS.length];
+        }
+
+        function populateInvCategoryDropdowns() {
+            var cats = Storage.getInvCategories();
+            var filterSelect = document.getElementById('filterInvCategory');
+            var formSelect = document.getElementById('invCategory');
+            var filterVal = filterSelect ? filterSelect.value : '';
+            var formVal = formSelect ? formSelect.value : '';
+
+            if (filterSelect) {
+                filterSelect.innerHTML = '<option value="">全部分类</option>';
+                cats.forEach(function(c) {
+                    filterSelect.innerHTML += '<option value="' + c + '">' + c + '</option>';
+                });
+                if (filterVal) filterSelect.value = filterVal;
+            }
+
+            if (formSelect) {
+                formSelect.innerHTML = '';
+                cats.forEach(function(c) {
+                    formSelect.innerHTML += '<option value="' + c + '">' + c + '</option>';
+                });
+                if (formVal && cats.indexOf(formVal) >= 0) {
+                    formSelect.value = formVal;
+                } else if (cats.length > 0) {
+                    formSelect.value = cats[0];
+                }
+            }
+        }
+
+        function renderInvCategories() {
+            var cats = Storage.getInvCategories();
+            var targets = Storage.getInvTargets();
+            var tbody = document.getElementById('invCategoryTbody');
+            if (cats.length === 0) {
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="4">暂无分类，请先添加分类</td></tr>';
+                return;
+            }
+            tbody.innerHTML = cats.map(function(c, i) {
+                var catTargets = targets.filter(function(item) { return item.category === c; });
+                var totalAmount = catTargets.reduce(function(sum, item) {
+                    return sum + (parseFloat(item.marketValue) || 0);
+                }, 0);
+                return '<tr>' +
+                    '<td><span class="tag ' + INV_TYPE_TAG_COLORS[i % INV_TYPE_TAG_COLORS.length] + '">' + c + '</span></td>' +
+                    '<td>' + catTargets.length + '</td>' +
+                    '<td>' + formatMoney(totalAmount) + '</td>' +
+                    '<td class="td-actions">' +
+                        '<button class="btn btn-secondary btn-sm" onclick="openEditInvCategoryModal(' + i + ')">编辑</button> ' +
+                        '<button class="btn btn-danger btn-sm" onclick="deleteInvCategory(' + i + ')">删除</button>' +
+                    '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+
+        function openInvCategoryModal() {
+            document.getElementById('invCategoryForm').reset();
+            document.getElementById('icEditOldName').value = '';
+            document.getElementById('invCategoryModalTitle').textContent = '新增投资分类';
+            document.getElementById('invCategoryModalHint').textContent = '添加后可在投资标的中选择此分类';
+            document.getElementById('invCategorySubmitBtn').textContent = '添加分类';
+            document.getElementById('invCategoryModal').classList.add('show');
+        }
+
+        function openEditInvCategoryModal(index) {
+            var cats = Storage.getInvCategories();
+            var name = cats[index];
+            if (!name) return;
+            document.getElementById('icEditOldName').value = name;
+            document.getElementById('icName').value = name;
+            document.getElementById('invCategoryModalTitle').textContent = '编辑投资分类';
+            document.getElementById('invCategoryModalHint').textContent = '修改后，使用此分类的投资标的将同步更新';
+            document.getElementById('invCategorySubmitBtn').textContent = '保存修改';
+            document.getElementById('invCategoryModal').classList.add('show');
+        }
+
+        function closeInvCategoryModal() {
+            document.getElementById('invCategoryModal').classList.remove('show');
+        }
+
+        function submitInvCategory() {
+            var oldName = document.getElementById('icEditOldName').value;
+            var name = document.getElementById('icName').value.trim();
+            if (!name) {
+                showToast('请输入分类名称', 'error');
+                return;
+            }
+            var cats = Storage.getInvCategories();
+            if (cats.indexOf(name) >= 0 && name !== oldName) {
+                showToast('分类名称已存在', 'error');
+                return;
+            }
+            if (oldName) {
+                Storage.updateInvCategory(oldName, name);
+                showToast('分类修改成功，相关标的已同步更新', 'success');
+            } else {
+                Storage.addInvCategory(name);
+                showToast('分类添加成功', 'success');
+            }
+            populateInvCategoryDropdowns();
+            renderInvCategories();
+            renderInvTargets();
+            closeInvCategoryModal();
+        }
+
+        function deleteInvCategory(index) {
+            var cats = Storage.getInvCategories();
+            var name = cats[index];
+            if (!name) return;
+            var targets = Storage.getInvTargets();
+            var count = targets.filter(function(t) { return t.category === name; }).length;
+            var msg = count > 0
+                ? '分类「' + name + '」下有 ' + count + ' 个投资标的，删除后这些标的的分类将变为空。确认删除？'
+                : '确认删除分类「' + name + '」？';
+            if (!confirm(msg)) return;
+            Storage.deleteInvCategory(name);
+            populateInvCategoryDropdowns();
+            renderInvCategories();
+            renderInvTargets();
+            showToast('分类已删除', 'success');
+        }
+
+        /* ===== 持仓数据更新记录 ===== */
+        function loadHoldingsUpdate() {
+            var info = Storage.getHoldingsUpdate();
+            var dateInput = document.getElementById('holdingsUpdateDate');
+            var noteInput = document.getElementById('holdingsUpdateNote');
+            var display = document.getElementById('holdingsUpdateDisplay');
+            if (!dateInput) return;
+            if (!info || !info.date) {
+                // 默认填今日
+                var d = new Date();
+                var today = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                dateInput.value = today;
+                noteInput.value = '';
+                display.textContent = '未设置';
+                return;
+            }
+            dateInput.value = info.date;
+            noteInput.value = info.note || '';
+            display.textContent = info.date + (info.note ? '（' + info.note + '）' : '');
+        }
+
+        function saveHoldingsUpdate() {
+            var date = document.getElementById('holdingsUpdateDate').value;
+            var note = document.getElementById('holdingsUpdateNote').value.trim();
+            if (!date) {
+                showToast('请填写更新日期', 'error');
+                return;
+            }
+            Storage.setHoldingsUpdate({ date: date, note: note });
+            loadHoldingsUpdate();
+            showToast('持仓数据更新记录已保存，记得点击「保存到 data.js」持久化', 'success');
+        }
+
+        /* ===== 实盘周记 ===== */
+        var weeklyInited = false;
+        var DEFAULT_WEEKLY_ESSAY = '刚刚踏上系统化投资之路，过去一段时间，我也曾陷入频繁盯盘、被市场热点裹挟的状态。后来慢慢意识到，如果投资占据了生活大部分精力，反而本末倒置。\n比起短期收益率的高低，我更希望建立一套可以长期坚持、不影响日常工作与生活的投资体系。';
+
+        function weeklyTodayStr() {
+            var d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+
+        // 期数 =（更新日期 - 起始日期）÷ 7 + 1
+        function calcWeekNumber(dateStr, startDateStr) {
+            var d = new Date(dateStr + 'T00:00:00');
+            var s = new Date(startDateStr + 'T00:00:00');
+            if (isNaN(d.getTime()) || isNaN(s.getTime())) return 1;
+            var diff = Math.floor((d - s) / 86400000);
+            if (diff < 0) diff = 0;
+            return Math.floor(diff / 7) + 1;
+        }
+
+        // 从持仓与现金数据实时计算周记账户概况（口径与持仓页一致）
+        function getWeeklyMetrics() {
+            var targets = Storage.getInvTargets();
+            var cashList = Storage.getCash();
+            var totalMarket = 0, totalProfit = 0, bondTotal = 0, equityTotal = 0;
+            targets.forEach(function(t) {
+                var mv = parseFloat(t.marketValue) || 0;
+                totalMarket += mv;
+                totalProfit += parseFloat(t.profit) || 0;
+                if (t.type === '债券' || t.type === '偏债') bondTotal += mv;
+                else if (['A股', '港股', '美股', '日股'].indexOf(t.type) !== -1) equityTotal += mv;
+            });
+            var totalCash = cashList.reduce(function(s, c) { return s + (parseFloat(c.amount) || 0); }, 0);
+            var totalAsset = totalMarket + totalCash;
+            return {
+                totalMarket: totalMarket,
+                totalProfit: totalProfit,
+                totalCash: totalCash,
+                totalAsset: totalAsset,
+                totalProfitRate: totalMarket > 0 ? totalProfit / totalMarket : 0,
+                bondPct: totalAsset > 0 ? bondTotal / totalAsset * 100 : 0,
+                equityPct: totalAsset > 0 ? equityTotal / totalAsset * 100 : 0,
+                targetCount: targets.length
+            };
+        }
+
+        function weeklyTitleText(week) {
+            return '实盘周记｜第' + week + '周｜自建网站丨10万本金退休投资记录';
+        }
+
+        function escWeekly(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // 生成文章富文本 HTML 与纯文本
+        function buildWeeklyArticleHtml() {
+            var cfg = Storage.getWeeklyConfig();
+            var author = (cfg.author || '').trim() || '叨居';
+            var week = parseInt(document.getElementById('weeklyWeek').value) || 1;
+            var date = document.getElementById('weeklyDate').value || '—';
+            var essay = (document.getElementById('weeklyEssay').value || '').replace(/\r/g, '');
+            var m = getWeeklyMetrics();
+            var fmt = function(n) { return n.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+            var sign = function(n) { return n >= 0 ? '+' : ''; };
+            var profitStr = sign(m.totalProfit) + fmt(m.totalProfit);
+            var rateStr = sign(m.totalProfitRate) + (m.totalProfitRate * 100).toFixed(2) + '%';
+            var profitColor = m.totalProfit >= 0 ? '#c00000' : '#0a7d48';
+
+            // 本周收益（手动录入，未填则文章不显示）
+            var weeklyProfitVal = parseFloat(document.getElementById('weeklyProfit').value);
+            var weeklyRateVal = parseFloat(document.getElementById('weeklyRate').value);
+            var hasWeekProfit = !isNaN(weeklyProfitVal);
+            var hasWeekRate = !isNaN(weeklyRateVal);
+            var weekLoss = hasWeekProfit && weeklyProfitVal < 0;
+            var weekColor = weekLoss ? '#0a7d48' : '#c00000';
+            var weekProfitStr = hasWeekProfit ? (sign(weeklyProfitVal) + '¥ ' + fmt(weeklyProfitVal)) : '';
+            var weekRateStr = hasWeekRate ? (sign(weeklyRateVal) + weeklyRateVal.toFixed(2) + '%') : '';
+            var weekBlock = '';
+            if (hasWeekProfit || hasWeekRate) {
+                var weekInner = '<span style="font-size:13px;color:#7a6a45;">本 周 收 益</span><br>' +
+                    (weekProfitStr ? '<strong style="font-size:24px;line-height:1.5;color:' + weekColor + ';">' + weekProfitStr + '</strong>' : '') +
+                    (weekProfitStr && weekRateStr ? '<span style="font-size:15px;color:' + weekColor + ';">（' + weekRateStr + '）</span>' : '') +
+                    (!weekProfitStr && weekRateStr ? '<strong style="font-size:22px;line-height:1.6;color:' + weekColor + ';">' + weekRateStr + '</strong>' : '');
+                weekBlock = '<section style="margin:14px 0 18px;padding:16px 12px;background:' + (weekLoss ? '#f5faf5' : '#fdf6f6') + ';border:1px solid ' + (weekLoss ? '#d8ecd8' : '#f2d9d9') + ';border-radius:8px;text-align:center;">' + weekInner + '</section>';
+            }
+            var weekTextLine = '';
+            if (hasWeekProfit || hasWeekRate) {
+                weekTextLine = '★ 本周收益：' + (weekProfitStr || '') + (weekProfitStr && weekRateStr ? '（' + weekRateStr + '）' : (!weekProfitStr ? weekRateStr : '')) + '\n';
+            }
+
+            var P = 'margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;';
+            var H = 'display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;';
+            var Q = 'margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;';
+            var W = 'margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;';
+            var F = 'margin:26px 0 0;font-size:13px;line-height:1.8;color:#999;';
+            var G = 'margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;';
+            var K = 'color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;';
+
+            var essayParas = essay.split(/\n+/).map(function(line) {
+                line = line.trim();
+                if (!line) return '';
+                return '<p style="' + P + '">' + escWeekly(line) + '</p>';
+            }).join('');
+
+            var html =
+                '<p style="' + P + '">大家好，这里是<strong style="' + K + '">' + escWeekly(author) + '</strong>，欢迎来到我的投资纪实记录。</p>' +
+                '<p style="' + P + '">经过一段时间准备，我的个人记录网站「<strong style="' + K + '">投么有度</strong>」开启长期实盘更新。<br>从2026年开始，我计划用二十年时间，慢慢实践属于自己的退休积累计划。<br>投资对于我而言，永远只是生活的附属，<strong style="' + K + '">生活大于投资</strong>，也是我一直坚持的核心理念。</p>' +
+                '<p style="' + P + '">这是开始分享实盘周记的<strong style="' + K + '">第' + week + '周</strong>。</p>' +
+                '<section style="' + H + '">本周账户概况（更新日期：' + date + '）</section>' +
+                weekBlock +
+                '<p style="' + P + '">初始本金：<strong>¥ 100,000.00</strong></p>' +
+                '<p style="' + P + '">总资产：<strong>¥ ' + fmt(m.totalAsset) + '</strong></p>' +
+                '<p style="' + P + '">组合总市值：<strong>¥ ' + fmt(m.totalMarket) + '</strong></p>' +
+                '<p style="' + P + '">现金：<strong>¥ ' + fmt(m.totalCash) + '</strong></p>' +
+                '<p style="' + P + '">累计持仓收益：<strong style="color:' + profitColor + ';">¥ ' + profitStr + '</strong></p>' +
+                '<p style="' + P + '">累计持仓收益率：<strong style="color:' + profitColor + ';">' + rateStr + '</strong></p>' +
+                '<p style="' + P + '">当前资产配比：</p>' +
+                '<section style="' + Q + '">债券类占比：' + m.bondPct.toFixed(1) + '%</section>' +
+                '<section style="' + Q + '">权益类占比：' + m.equityPct.toFixed(1) + '%</section>' +
+                '<p style="' + P + '">现阶段处于<strong>积累期</strong>，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。</p>' +
+                '<section style="' + H + '">本周复盘</section>' +
+                (essayParas || '<p style="' + P + 'color:#bbb;">（本周复盘待填写）</p>') +
+                '<section style="' + H + '">重要声明</section>' +
+                '<section style="' + W + '">所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。</section>' +
+                '<p style="' + F + '">更多长期投资思考与复盘笔记，会持续更新于此。</p>' +
+                '<section style="' + G + '"><strong style="font-size:15px;">每周更新实盘周记，欢迎关注</strong><br>' +
+                '<span style="font-size:13px;">公众号：叨居　|　B站：投么有度</span><br>' +
+                '<span style="font-size:13px;color:#8a7a55;">往后每周，我都会在这里同步账户最新情况，记录一路上的思考、犯错与成长。<br>完整的数据演示页面，可访问个人网站【投么有度】查看。<br>视频版本同步更新在B站，搜索「投么有度」即可观看。</span></section>';
+
+            var text =
+                '大家好，这里是' + author + '，欢迎来到我的投资纪实记录。\n\n' +
+                '经过一段时间准备，我的个人记录网站「投么有度」开启长期实盘更新。\n从今年开始，我计划用二十年时间，慢慢实践属于自己的退休积累计划。\n投资对于我而言，永远只是生活的附属，生活大于投资，也是我一直坚持的核心理念。\n\n' +
+                '本周，是我开始分享实盘周记的第' + week + '周。\n\n' +
+                '【本周账户概况】更新日期：' + date + '\n' +
+                weekTextLine +
+                '- 初始本金：¥ 100,000.00\n' +
+                '- 总资产：¥ ' + fmt(m.totalAsset) + '\n' +
+                '- 组合总市值：¥ ' + fmt(m.totalMarket) + '\n' +
+                '- 现金：¥ ' + fmt(m.totalCash) + '\n' +
+                '- 累计持仓收益：¥ ' + profitStr + '\n' +
+                '- 累计收益率：' + rateStr + '\n\n' +
+                '当前资产配比：\n' +
+                '> 债券类占比：' + m.bondPct.toFixed(1) + '%\n' +
+                '> 权益类占比：' + m.equityPct.toFixed(1) + '%\n\n' +
+                '现阶段处于积累期，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。\n\n' +
+                '【本周复盘】\n' + (essay.trim() || '（待填写）') + '\n\n' +
+                '【重要声明】\n所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。\n\n' +
+                '更多长期投资思考与复盘笔记，会持续更新于此。\n\n每周更新实盘周记，欢迎关注：\n公众号：叨居\nB站：投么有度\n\n往后每周，我都会在这里同步账户最新情况，记录一路上的思考、犯错与成长。\n完整的数据演示页面，可访问个人网站【投么有度】查看；\n视频版本同步更新在B站，搜索「投么有度」即可观看。';
+            return { html: html, text: text };
+        }
+
+        // 进入周记页签：首次填充表单，每次刷新预览与存档列表
+        function initWeeklyPage() {
+            if (!weeklyInited) {
+                weeklyInited = true;
+                var cfg = Storage.getWeeklyConfig();
+                document.getElementById('weeklyStartDate').value = cfg.startDate || '2026-09-01';
+                document.getElementById('weeklyAuthor').value = cfg.author || '';
+                populateWeeklyForm();
+            }
+            var m = getWeeklyMetrics();
+            document.getElementById('weeklyDataHint').textContent =
+                '概况数据实时取自持仓与现金数据（当前 ' + m.targetCount + ' 个标的）';
+            renderWeeklyPreview();
+            renderWeeklyArchive();
+        }
+
+        // 新一期：自动算期数与日期；若本期已存档则载入
+        function populateWeeklyForm() {
+            var cfg = Storage.getWeeklyConfig();
+            var startDate = cfg.startDate || '2026-09-01';
+            var posts = Storage.getWeeklyPosts();
+            var defaultDate = weeklyTodayStr();
+            var week = calcWeekNumber(defaultDate, startDate);
+            var existing = null;
+            posts.forEach(function(p) { if (parseInt(p.week) === week) existing = p; });
+            if (existing) {
+                document.getElementById('weeklyWeek').value = existing.week;
+                document.getElementById('weeklyDate').value = defaultDate;
+                document.getElementById('weeklyTitle').value = existing.title || weeklyTitleText(existing.week);
+                document.getElementById('weeklyCover').value = existing.coverUrl || '';
+                document.getElementById('weeklyProfit').value = existing.weeklyProfit != null ? existing.weeklyProfit : '';
+                document.getElementById('weeklyRate').value = existing.weeklyRate != null ? existing.weeklyRate : '';
+                document.getElementById('weeklyEssay').value = existing.essay || '';
+            } else {
+                document.getElementById('weeklyWeek').value = week;
+                document.getElementById('weeklyDate').value = defaultDate;
+                document.getElementById('weeklyTitle').value = weeklyTitleText(week);
+                document.getElementById('weeklyCover').value = '';
+                document.getElementById('weeklyProfit').value = '';
+                document.getElementById('weeklyRate').value = '';
+                document.getElementById('weeklyEssay').value = DEFAULT_WEEKLY_ESSAY;
+            }
+        }
+
+        function syncWeeklyTitle() {
+            var week = parseInt(document.getElementById('weeklyWeek').value) || 1;
+            document.getElementById('weeklyTitle').value = weeklyTitleText(week);
+            renderWeeklyPreview();
+        }
+
+        function onWeeklyDateChange() {
+            var cfg = Storage.getWeeklyConfig();
+            var date = document.getElementById('weeklyDate').value;
+            if (date) {
+                document.getElementById('weeklyWeek').value = calcWeekNumber(date, cfg.startDate || '2026-09-01');
+                document.getElementById('weeklyTitle').value = weeklyTitleText(document.getElementById('weeklyWeek').value);
+            }
+            renderWeeklyPreview();
+        }
+
+        function renderWeeklyPreview() {
+            var out = buildWeeklyArticleHtml();
+            document.getElementById('weeklyPreview').innerHTML = out.html;
+        }
+
+        function saveWeeklyConfig() {
+            var startDate = document.getElementById('weeklyStartDate').value;
+            if (!startDate) { showToast('请选择起始日期', 'error'); return; }
+            Storage.setWeeklyConfig({
+                startDate: startDate,
+                author: document.getElementById('weeklyAuthor').value.trim()
+            });
+            showToast('周记参数已保存，记得点右上角「保存到 data.js」', 'success');
+            onWeeklyDateChange();
+        }
+
+        // 存档本期（同期数覆盖，保留草稿箱推送预留字段）
+        function saveWeeklyPost() {
+            var week = parseInt(document.getElementById('weeklyWeek').value);
+            if (!week || week < 1) { showToast('请填写有效期数', 'error'); return; }
+            var date = document.getElementById('weeklyDate').value;
+            if (!date) { showToast('请填写账户概况更新日期', 'error'); return; }
+            var out = buildWeeklyArticleHtml();
+            var m = getWeeklyMetrics();
+            var posts = Storage.getWeeklyPosts();
+            var old = null;
+            posts.forEach(function(p) { if (parseInt(p.week) === week) old = p; });
+            var post = {
+                week: week,
+                date: date,
+                title: document.getElementById('weeklyTitle').value.trim() || weeklyTitleText(week),
+                essay: document.getElementById('weeklyEssay').value,
+                weeklyProfit: isNaN(parseFloat(document.getElementById('weeklyProfit').value)) ? null : parseFloat(document.getElementById('weeklyProfit').value),
+                weeklyRate: isNaN(parseFloat(document.getElementById('weeklyRate').value)) ? null : parseFloat(document.getElementById('weeklyRate').value),
+                snapshot: {
+                    totalAsset: m.totalAsset,
+                    totalMarket: m.totalMarket,
+                    totalCash: m.totalCash,
+                    totalProfit: m.totalProfit,
+                    totalProfitRate: m.totalProfitRate,
+                    bondPct: m.bondPct,
+                    equityPct: m.equityPct,
+                    targetCount: m.targetCount
+                },
+                html: out.html,
+                coverUrl: document.getElementById('weeklyCover').value.trim(),
+                pushedAt: old ? (old.pushedAt || '') : '',
+                draftMediaId: old ? (old.draftMediaId || '') : ''
+            };
+            var idx = -1;
+            posts.forEach(function(p, i) { if (parseInt(p.week) === week) idx = i; });
+            if (idx >= 0) Storage.updateWeeklyPost(idx, post);
+            else Storage.addWeeklyPost(post);
+            renderWeeklyArchive();
+            showToast('第' + week + '期已存档，记得点右上角「保存到 data.js」', 'success');
+        }
+
+        function renderWeeklyArchive() {
+            var posts = Storage.getWeeklyPosts();
+            var tbody = document.getElementById('weeklyTbody');
+            if (!posts.length) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-dim);">暂无存档，编辑完本期内容后点「存档本期」</td></tr>';
+                return;
+            }
+            tbody.innerHTML = posts.map(function(p, i) {
+                var pushState = p.pushedAt
+                    ? '<span style="color:var(--success);">' + escWeekly(p.pushedAt) + '</span>'
+                    : '<span style="color:var(--text-dim);">未推送</span>';
+                var wp = '—';
+                if (p.weeklyProfit != null) {
+                    var loss = p.weeklyProfit < 0;
+                    var pf = (loss ? '' : '+') + '¥' + Number(p.weeklyProfit).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    if (p.weeklyRate != null) pf += '（' + (p.weeklyRate < 0 ? '' : '+') + Number(p.weeklyRate).toFixed(2) + '%）';
+                    wp = '<span style="color:' + (loss ? '#0a7d48' : '#c00000') + ';font-weight:600;">' + pf + '</span>';
+                } else if (p.weeklyRate != null) {
+                    wp = '<span style="color:' + (p.weeklyRate < 0 ? '#0a7d48' : '#c00000') + ';font-weight:600;">' + (p.weeklyRate < 0 ? '' : '+') + Number(p.weeklyRate).toFixed(2) + '%</span>';
+                }
+                return '<tr>' +
+                    '<td>第' + p.week + '周</td>' +
+                    '<td>' + escWeekly(p.date || '—') + '</td>' +
+                    '<td>' + wp + '</td>' +
+                    '<td>' + escWeekly(p.title || '—') + '</td>' +
+                    '<td>' + escWeekly(p.coverUrl || '—') + '</td>' +
+                    '<td>' + pushState + '</td>' +
+                    '<td>' +
+                        '<button class="btn btn-secondary btn-sm" onclick="loadWeeklyPost(' + i + ')">载入</button> ' +
+                        '<button class="btn btn-danger btn-sm" onclick="deleteWeeklyPost(' + i + ')">删除</button>' +
+                    '</td>' +
+                '</tr>';
+            }).join('');
+        }
+
+        function loadWeeklyPost(i) {
+            var posts = Storage.getWeeklyPosts();
+            if (i < 0 || i >= posts.length) return;
+            var p = posts[i];
+            document.getElementById('weeklyWeek').value = p.week;
+            document.getElementById('weeklyDate').value = p.date || '';
+            document.getElementById('weeklyTitle').value = p.title || weeklyTitleText(p.week);
+            document.getElementById('weeklyCover').value = p.coverUrl || '';
+            document.getElementById('weeklyProfit').value = p.weeklyProfit != null ? p.weeklyProfit : '';
+            document.getElementById('weeklyRate').value = p.weeklyRate != null ? p.weeklyRate : '';
+            document.getElementById('weeklyEssay').value = p.essay || '';
+            renderWeeklyPreview();
+            showToast('已载入第' + p.week + '期，修改后点「存档本期」覆盖', 'success');
+        }
+
+        function deleteWeeklyPost(i) {
+            var posts = Storage.getWeeklyPosts();
+            if (i < 0 || i >= posts.length) return;
+            if (!confirm('确认删除第' + posts[i].week + '期周记存档？')) return;
+            Storage.deleteWeeklyPost(i);
+            renderWeeklyArchive();
+            showToast('存档已删除', 'success');
+        }
+
+        /* ===== 周记复制 ===== */
+        function execCopyText(text, okMsg) {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            document.body.removeChild(ta);
+            showToast(ok ? okMsg : '复制失败，请手动复制', ok ? 'success' : 'error');
+        }
+
+        function copyPlainToClipboard(text, okMsg) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function() {
+                    showToast(okMsg, 'success');
+                }, function() { execCopyText(text, okMsg); });
+            } else execCopyText(text, okMsg);
+        }
+
+        function requireWeeklyEssay() {
+            var essay = (document.getElementById('weeklyEssay').value || '').trim();
+            if (!essay) {
+                showToast('请先填写「本周复盘」再复制', 'error');
+                return false;
+            }
+            return true;
+        }
+
+        function copyWeeklyTitle() {
+            var title = document.getElementById('weeklyTitle').value.trim();
+            if (!title) { showToast('标题为空', 'error'); return; }
+            copyPlainToClipboard(title, '标题已复制');
+        }
+
+        function copyWeeklyRich() {
+            if (!requireWeeklyEssay()) return;
+            var out = buildWeeklyArticleHtml();
+            // 公众号会把 HTML 中的换行符转成空段落，压缩为单行；去掉 meta/外层 div 避免首行空段
+            var html = out.html.replace(/[\r\n]+/g, '');
+            var okMsg = '已复制富文本，到公众号图文编辑器 Ctrl+V 粘贴';
+            if (navigator.clipboard && window.ClipboardItem) {
+                try {
+                    navigator.clipboard.write([new ClipboardItem({
+                        'text/html': new Blob([html], { type: 'text/html' }),
+                        'text/plain': new Blob([out.text], { type: 'text/plain' })
+                    })]).then(function() {
+                        showToast(okMsg, 'success');
+                    }, function() { richCopyFallback(html, out.text, okMsg); });
+                    return;
+                } catch (e) { /* 环境不支持，走兜底 */ }
+            }
+            richCopyFallback(html, out.text, okMsg);
+        }
+
+        // 兜底：拦截 copy 事件写入精确内容，避免浏览器选区序列化产生多余 <br>（公众号空段落的来源）
+        function richCopyFallback(html, text, okMsg) {
+            var done = false;
+            var listener = function(e) {
+                e.clipboardData.setData('text/html', html);
+                e.clipboardData.setData('text/plain', text);
+                e.preventDefault();
+                done = true;
+            };
+            document.addEventListener('copy', listener);
+            var node = document.getElementById('weeklyPreview');
+            var range = document.createRange();
+            range.selectNodeContents(node);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            document.removeEventListener('copy', listener);
+            sel.removeAllRanges();
+            showToast(ok && done ? okMsg : '复制失败，请在预览区手动全选复制', ok && done ? 'success' : 'error');
+        }
+
+        function copyWeeklyText() {
+            if (!requireWeeklyEssay()) return;
+            var out = buildWeeklyArticleHtml();
+            // 雪球长文编辑器只把空行（双换行）当成换行，单换行会被吞成同一行；
+            // 统一把换行补齐成空行，确保粘贴到雪球/虎扑后每行都正常换行
+            var text = out.text.replace(/\r\n?/g, '\n').replace(/\n+/g, '\n\n');
+            copyPlainToClipboard(text, '纯文本已复制，可直接发雪球/虎扑');
+        }
+
+        // 知乎版：Markdown 格式。知乎是自研 Markdown 编辑器，粘贴后可自动识别标题/列表/加粗，列表行距比普通段落紧凑
+        function buildWeeklyZhihuText() {
+            var cfg = Storage.getWeeklyConfig();
+            var author = (cfg.author || '').trim() || '叨居';
+            var week = parseInt(document.getElementById('weeklyWeek').value) || 1;
+            var date = document.getElementById('weeklyDate').value || '—';
+            var essay = (document.getElementById('weeklyEssay').value || '').replace(/\r/g, '').trim();
+            var m = getWeeklyMetrics();
+            var fmt = function(n) { return n.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+            var sign = function(n) { return n >= 0 ? '+' : ''; };
+            var profitStr = sign(m.totalProfit) + fmt(m.totalProfit);
+            var rateStr = sign(m.totalProfitRate) + (m.totalProfitRate * 100).toFixed(2) + '%';
+
+            var weeklyProfitVal = parseFloat(document.getElementById('weeklyProfit').value);
+            var weeklyRateVal = parseFloat(document.getElementById('weeklyRate').value);
+            var hasWeekProfit = !isNaN(weeklyProfitVal);
+            var hasWeekRate = !isNaN(weeklyRateVal);
+            var weekProfitStr = hasWeekProfit ? (sign(weeklyProfitVal) + '¥ ' + fmt(weeklyProfitVal)) : '';
+            var weekRateStr = hasWeekRate ? (sign(weeklyRateVal) + weeklyRateVal.toFixed(2) + '%') : '';
+            var weekLine = '';
+            if (hasWeekProfit || hasWeekRate) {
+                weekLine = '**本周收益：' + (weekProfitStr || '') + (weekProfitStr && weekRateStr ? '（' + weekRateStr + '）' : (!weekProfitStr ? weekRateStr : '')) + '**\n\n';
+            }
+
+            var essayParas = essay.split(/\n+/).map(function(line) { return line.trim(); }).filter(function(line) { return line; }).join('\n\n');
+
+            return '大家好，这里是**' + author + '**，欢迎来到我的投资纪实记录。\n\n' +
+                '经过一段时间准备，我的个人记录网站「**投么有度**」开启长期实盘更新。\n从2026年开始，我计划用二十年时间，慢慢实践属于自己的退休积累计划。\n投资对于我而言，永远只是生活的附属，**生活大于投资**，也是我一直坚持的核心理念。\n\n' +
+                '本周，是我开始分享实盘周记的**第' + week + '周**。\n\n' +
+                '## 本周账户概况（更新日期：' + date + '）\n\n' +
+                weekLine +
+                '- 初始本金：**¥ 100,000.00**\n' +
+                '- 总资产：**¥ ' + fmt(m.totalAsset) + '**\n' +
+                '- 组合总市值：**¥ ' + fmt(m.totalMarket) + '**\n' +
+                '- 现金：**¥ ' + fmt(m.totalCash) + '**\n' +
+                '- 累计持仓收益：**¥ ' + profitStr + '**\n' +
+                '- 累计持仓收益率：**' + rateStr + '**\n' +
+                '- 债券类占比：**' + m.bondPct.toFixed(1) + '%**\n' +
+                '- 权益类占比：**' + m.equityPct.toFixed(1) + '%**\n\n' +
+                '现阶段处于**积累期**，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。\n\n' +
+                '## 本周复盘\n\n' + essayParas + '\n\n' +
+                '## 重要声明\n\n' +
+                '> 所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。\n\n' +
+                '更多长期投资思考与复盘笔记，会持续更新于此。\n\n' +
+                '每周更新实盘周记，欢迎关注：\n公众号：叨居\nB站：投么有度\n\n往后每周，我都会在这里同步账户最新情况，记录一路上的思考、犯错与成长。\n完整的数据演示页面，可访问个人网站【投么有度】查看；\n视频版本同步更新在B站，搜索「投么有度」即可观看。';
+        }
+
+        function copyWeeklyZhihu() {
+            if (!requireWeeklyEssay()) return;
+            copyPlainToClipboard(buildWeeklyZhihuText(), '知乎版已复制，到知乎编辑器 Ctrl+V 粘贴');
+        }
+
+        /* ===== 指数速览 ===== */
+        var indexQuoteInited = false;
+
+        // 云端接口（部署到 CloudBase 后每日自动更新）：优先读取，失败则回退本地 js 快照
+        var INDEX_API_URL = 'https://ceshi-1-d1g0czdaa999081f4-1470950321.ap-shanghai.app.tcloudbase.com/get-index-quotes';
+        var FUNDS_API_URL = 'https://ceshi-1-d1g0czdaa999081f4-1470950321.ap-shanghai.app.tcloudbase.com/get-nasdaq-funds';
+        var cloudIndexQuotes = null;
+        var cloudIndexQuotesUpdated = '';
+        var cloudIndexFunds = null;
+        var cloudIndexFundsUpdated = '';
+        var cloudIndexLoadStarted = false;
+
+        function loadIndexCloudData() {
+            if (cloudIndexLoadStarted) return;
+            cloudIndexLoadStarted = true;
+
+            var quoteP = INDEX_API_URL
+                ? fetch(INDEX_API_URL).then(function (r) { return r.json(); }).then(function (json) {
+                    if (json && json.code === 0 && json.data && json.data.length) {
+                        var q = {};
+                        json.data.forEach(function (x) { if (x && x.code) q[x.code] = x; });
+                        cloudIndexQuotes = q;
+                        cloudIndexQuotesUpdated = json.updated || '';
+                    }
+                }).catch(function () { /* 拉取失败，回退本地 */ })
+                : Promise.resolve();
+
+            var fundP = FUNDS_API_URL
+                ? fetch(FUNDS_API_URL).then(function (r) { return r.json(); }).then(function (json) {
+                    if (json && json.code === 0 && json.data && json.data.length) {
+                        cloudIndexFunds = json.data.map(function (f) { return f; });
+                        cloudIndexFundsUpdated = json.updated || '';
+                    }
+                }).catch(function () { /* 拉取失败，回退本地 */ })
+                : Promise.resolve();
+
+            Promise.all([quoteP, fundP]).then(function () {
+                var qEl = document.getElementById('indexQuoteUpdated');
+                var fEl = document.getElementById('indexFundUpdated');
+                if (qEl) qEl.textContent = getIndexQuotes().updated || '未生成';
+                if (fEl) fEl.textContent = getIndexFundsUpdated() || '未生成';
+                var page = document.getElementById('page-indexQuote');
+                if (page && page.style.display !== 'none') renderIndexPreview();
+            });
+        }
+
+        function getIndexFundsUpdated() {
+            return cloudIndexFundsUpdated || window.NASDAQ_FUNDS_UPDATED || '';
+        }
+
+        function indexTodayStr() {
+            var d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+
+        function indexDefaultTitle(date) {
+            return '纳指标普收盘速览｜' + date;
+        }
+
+        // 指数行情：优先云端（get-index-quotes），回退本地 window.INDEX_QUOTES（js/index-quotes.js）
+        function getIndexQuotes() {
+            var q = cloudIndexQuotes || (typeof window !== 'undefined' && window.INDEX_QUOTES) || {};
+            var updated = cloudIndexQuotesUpdated || window.INDEX_QUOTES_UPDATED || '';
+            var order = ['NDX', 'SPX', 'DJIA'];
+            var list = [];
+            order.forEach(function (k) {
+                var it = q[k];
+                if (it && typeof it.price === 'number') list.push(it);
+            });
+            Object.keys(q).forEach(function (k) {
+                if (order.indexOf(k) !== -1) return;
+                var it = q[k];
+                if (it && typeof it.price === 'number') list.push(it);
+            });
+            return { quotes: list, updated: updated };
+        }
+
+        // 跟踪基金：优先云端（get-nasdaq-funds），回退本地 window.NASDAQ_FUNDS（js/nasdaq-funds.js）
+        function getIndexFunds() {
+            var funds = cloudIndexFunds || (typeof window !== 'undefined' && window.NASDAQ_FUNDS) || [];
+            var etfs = [];
+            var limited = [];
+            funds.forEach(function (f) {
+                if (f.cat === 'ETF') {
+                    var premium = (f.premium === '' || f.premium == null) ? null : parseFloat(f.premium);
+                    etfs.push({ name: f.name, code: f.code, index: f.index, premium: (isNaN(premium) ? null : premium) });
+                } else {
+                    var st = String(f.purchaseStatus || '');
+                    if (st.indexOf('暂停') !== -1 || st.indexOf('限') !== -1) {
+                        limited.push({ name: f.name, code: f.code, index: f.index, status: st });
+                    }
+                }
+            });
+            etfs.sort(function (a, b) {
+                var av = a.premium == null ? -1 : Math.abs(a.premium);
+                var bv = b.premium == null ? -1 : Math.abs(b.premium);
+                return bv - av;
+            });
+            return { etfs: etfs, limited: limited };
+        }
+
+        function buildIndexArticleHtml() {
+            var date = document.getElementById('indexDate').value || indexTodayStr();
+            var q = getIndexQuotes();
+            var f = getIndexFunds();
+
+            var P = 'margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;';
+            var H = 'display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;';
+            var Q = 'margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;';
+            var W = 'margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;';
+            var G = 'margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;';
+            var K = 'color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;';
+
+            var fmt = function (n) {
+                if (n == null || isNaN(n)) return '—';
+                return Number(n).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            };
+            var sign = function (n) { return n >= 0 ? '+' : ''; };
+            var chgColor = function (n) {
+                if (n == null || isNaN(n) || n === 0) return '#3f3f3f';
+                return n > 0 ? '#c00000' : '#0a7d48';
+            };
+
+            // 1) 指数行情
+            var quoteHtml = '';
+            if (q.quotes.length) {
+                q.quotes.forEach(function (it) {
+                    var c = chgColor(it.change);
+                    quoteHtml += '<section style="' + Q + '">' + escWeekly(it.name) +
+                        '：<strong style="color:' + c + ';">' + fmt(it.price) + '</strong>' +
+                        '　涨跌 <strong style="color:' + c + ';">' + sign(it.change) + fmt(it.change) + '（' + sign(it.pct) + fmt(it.pct) + '%）</strong></section>';
+                });
+            } else {
+                quoteHtml = '<section style="' + Q + '">未读取到指数行情，请稍后重试，或在本地运行 node scripts/run-fetch-index.js 生成本地快照。</section>';
+            }
+
+            // 2) 场内 ETF 溢价
+            var etfHtml = '';
+            if (f.etfs.length) {
+                f.etfs.slice(0, 6).forEach(function (e) {
+                    var premStr = e.premium == null ? '—' : (sign(e.premium) + e.premium.toFixed(2) + '%');
+                    var c = e.premium == null ? '#999' : (e.premium >= 0 ? '#c00000' : '#0a7d48');
+                    var highTag = (e.premium != null && e.premium >= 2) ? ' <span style="' + K + '">高溢价</span>' : '';
+                    etfHtml += '<section style="' + Q + '">' + escWeekly(e.name) + '（' + e.code + '）溢价率：<strong style="color:' + c + ';">' + premStr + '</strong>' + highTag + '</section>';
+                });
+            } else {
+                etfHtml = '<section style="' + Q + '">未读取到场内 ETF 数据。</section>';
+            }
+
+            // 3) 场外限购
+            var limitedHtml = '';
+            if (f.limited.length) {
+                f.limited.slice(0, 5).forEach(function (l) {
+                    limitedHtml += '<section style="' + Q + '">' + escWeekly(l.name) + '：' + escWeekly(l.status) + '</section>';
+                });
+            } else {
+                limitedHtml = '<section style="' + Q + '">暂无暂停/限额申购的场外基金。</section>';
+            }
+
+            var html =
+                '<p style="' + P + '">大家好，这里是<strong style="' + K + '">叨居</strong>，带来今日美股主要指数的一览速递。</p>' +
+                '<section style="' + H + '">美股主要指数（收盘行情 · ' + escWeekly(date) + '）</section>' +
+                quoteHtml +
+                '<section style="' + H + '">场内 ETF 溢价速览</section>' +
+                '<p style="' + P + '">以下为跟踪纳指100 / 标普500 的基金中，溢价率居前的场内 ETF；<strong>溢价过高需留意回落风险</strong>。</p>' +
+                etfHtml +
+                '<section style="' + H + '">场外限购速览</section>' +
+                limitedHtml +
+                '<section style="' + H + '">重要声明</section>' +
+                '<section style="' + W + '">以上内容仅为个人记录与数据整理，不构成任何投资建议。市场有风险，入市需谨慎。</section>' +
+                '<section style="' + G + '"><strong style="font-size:15px;">每日美股速览，欢迎关注</strong><br>' +
+                '<span style="font-size:13px;">公众号：叨居　|　B站：投么有度</span><br>' +
+                '<span style="font-size:13px;color:#8a7a55;">完整数据与更多投资记录，可访问个人网站【投么有度】查看。</span></section>';
+
+            var textLines = [];
+            textLines.push('大家好，这里是叨居，带来今日美股主要指数的一览速递。');
+            textLines.push('');
+            textLines.push('【美股主要指数】收盘行情 · ' + date);
+            q.quotes.forEach(function (it) {
+                textLines.push('- ' + it.name + '：' + fmt(it.price) + '　涨跌 ' + sign(it.change) + fmt(it.change) + '（' + sign(it.pct) + fmt(it.pct) + '%）');
+            });
+            textLines.push('');
+            textLines.push('【场内 ETF 溢价速览】');
+            f.etfs.slice(0, 6).forEach(function (e) {
+                textLines.push('- ' + e.name + '（' + e.code + '）溢价率：' + (e.premium == null ? '—' : sign(e.premium) + e.premium.toFixed(2) + '%'));
+            });
+            textLines.push('');
+            textLines.push('【场外限购速览】');
+            f.limited.slice(0, 5).forEach(function (l) {
+                textLines.push('- ' + l.name + '：' + l.status);
+            });
+            if (!f.limited.length) textLines.push('- 暂无暂停/限额申购的场外基金');
+            textLines.push('');
+            textLines.push('【重要声明】以上内容仅为个人记录与数据整理，不构成任何投资建议。市场有风险，入市需谨慎。');
+            textLines.push('');
+            textLines.push('每日美股速览，欢迎关注：公众号：叨居　B站：投么有度');
+
+            return { html: html, text: textLines.join('\n') };
+        }
+
+        function renderIndexPreview() {
+            var date = document.getElementById('indexDate').value || indexTodayStr();
+            document.getElementById('indexTitle').value = document.getElementById('indexTitle').value.trim() || indexDefaultTitle(date);
+            var out = buildIndexArticleHtml();
+            document.getElementById('indexPreview').innerHTML = out.html;
+        }
+
+        function initIndexQuotePage() {
+            if (!indexQuoteInited) {
+                indexQuoteInited = true;
+                document.getElementById('indexDate').value = indexTodayStr();
+            }
+            document.getElementById('indexQuoteUpdated').textContent = getIndexQuotes().updated || '未生成';
+            document.getElementById('indexFundUpdated').textContent = getIndexFundsUpdated() || '未生成';
+            loadIndexCloudData();
+            renderIndexPreview();
+        }
+
+        function copyIndexTitle() {
+            var title = (document.getElementById('indexTitle').value || '').trim();
+            if (!title) { showToast('标题为空', 'error'); return; }
+            copyPlainToClipboard(title, '标题已复制');
+        }
+
+        function copyIndexRich() {
+            var out = buildIndexArticleHtml();
+            var html = out.html.replace(/[\r\n]+/g, '');
+            var okMsg = '已复制富文本，到公众号图文编辑器 Ctrl+V 粘贴';
+            if (navigator.clipboard && window.ClipboardItem) {
+                try {
+                    navigator.clipboard.write([new ClipboardItem({
+                        'text/html': new Blob([html], { type: 'text/html' }),
+                        'text/plain': new Blob([out.text], { type: 'text/plain' })
+                    })]).then(function () {
+                        showToast(okMsg, 'success');
+                    }, function () { indexRichCopyFallback(html, out.text, okMsg); });
+                    return;
+                } catch (e) { /* 环境不支持，走兜底 */ }
+            }
+            indexRichCopyFallback(html, out.text, okMsg);
+        }
+
+        function indexRichCopyFallback(html, text, okMsg) {
+            var done = false;
+            var listener = function (e) {
+                e.clipboardData.setData('text/html', html);
+                e.clipboardData.setData('text/plain', text);
+                e.preventDefault();
+                done = true;
+            };
+            document.addEventListener('copy', listener);
+            var node = document.getElementById('indexPreview');
+            var range = document.createRange();
+            range.selectNodeContents(node);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            document.removeEventListener('copy', listener);
+            sel.removeAllRanges();
+            showToast(ok && done ? okMsg : '复制失败，请在预览区手动全选复制', ok && done ? 'success' : 'error');
+        }
+
+        function copyIndexText() {
+            var out = buildIndexArticleHtml();
+            var text = out.text.replace(/\r\n?/g, '\n').replace(/\n+/g, '\n\n');
+            copyPlainToClipboard(text, '纯文本已复制');
+        }
+
         /* ===== 持仓统计 ===== */
         function renderHoldingsStats() {
             var targets = Storage.getInvTargets();
             var cashList = Storage.getCash();
-            var totalMarket = 0, totalProfit = 0, totalCost = 0;
+            var totalMarket = 0, totalProfit = 0, totalCost = 0, totalDailyInvest = 0, dcaCount = 0;
             targets.forEach(function(t) {
                 totalMarket += parseFloat(t.marketValue) || 0;
                 totalProfit += parseFloat(t.profit) || 0;
                 totalCost += parseFloat(t.cost) || 0;
+                var di = parseFloat(t.dailyInvest) || 0;
+                if (di > 0) { totalDailyInvest += di; dcaCount++; }
             });
             var totalCash = cashList.reduce(function(s, c) { return s + (parseFloat(c.amount) || 0); }, 0);
             var totalAsset = totalMarket + totalCash;
             var totalRate = totalMarket !== 0 ? (totalProfit / totalMarket * 100) : 0;
+            // 月定投规划 = 日定投合计 × 21（按每月约21个工作日估算）
+            var monthlyInvest = totalDailyInvest * 21;
+            // 资金规划净额 = 现金合计 - 月定投规划（判断现金是否覆盖下月定投）
+            var planNet = totalCash - monthlyInvest;
+            var planNetColor = planNet >= 0 ? 'var(--success)' : 'var(--danger)';
             var html = '<div class="stat-card"><div class="stat-label">总资产</div><div class="stat-num primary">' + formatMoney(totalAsset) + '</div></div>';
             html += '<div class="stat-card"><div class="stat-label">总市值</div><div class="stat-num">' + formatMoney(totalMarket) + '</div></div>';
-            html += '<div class="stat-card"><div class="stat-label">现金合计</div><div class="stat-num">' + formatMoney(totalCash) + '</div></div>';
             html += '<div class="stat-card"><div class="stat-label">总收益</div><div class="stat-num" style="color:' + profitColor(totalProfit) + '">' + formatProfit(totalProfit) + '</div></div>';
             html += '<div class="stat-card"><div class="stat-label">总收益率</div><div class="stat-num" style="color:' + profitColor(totalProfit) + '">' + (totalRate > 0 ? '+' : '') + totalRate.toFixed(2) + '%</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">持仓标的数量</div><div class="stat-num primary">' + targets.length + ' <span style="font-size:0.7rem;color:var(--text-soft);font-weight:normal;">个</span></div></div>';
+            html += '<div class="stat-card"><div class="stat-label">资金规划</div>' +
+                '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:0.3rem;">' +
+                    '<span style="font-size:0.75rem;color:var(--text-soft);">现金合计</span>' +
+                    '<span style="font-size:1.15rem;font-weight:700;color:var(--text);white-space:nowrap;">' + formatMoney(totalCash) + '</span>' +
+                '</div>' +
+                '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:0.4rem;">' +
+                    '<span style="font-size:0.75rem;color:var(--text-soft);">月定投规划</span>' +
+                    '<span style="font-size:1.15rem;font-weight:700;color:var(--primary);white-space:nowrap;">' + formatMoney(monthlyInvest) + '</span>' +
+                '</div>' +
+                '<div style="border-top:1px solid var(--border);margin-top:0.6rem;padding-top:0.5rem;display:flex;justify-content:space-between;align-items:baseline;font-size:0.72rem;">' +
+                    '<span style="color:var(--text-soft);">净额（现金−月定投）</span>' +
+                    '<span style="color:' + planNetColor + ';font-weight:600;white-space:nowrap;">' + formatProfit(planNet) + '</span>' +
+                '</div>' +
+            '</div>';
             document.getElementById('holdingsStatsGrid').innerHTML = html;
+            // 同步刷新年度收益汇总（当年持仓浮盈会随之变化）
+            if (typeof renderAnnualReturns === 'function') renderAnnualReturns();
+            // 同步刷新盈亏分析（持仓盈亏会随之变化）
+            if (typeof renderAnalysis === 'function') renderAnalysis();
         }
 
         /* ===== 投资标的管理 ===== */
@@ -1570,13 +3463,26 @@
             renderHoldingsStats();
 
             var filterType = document.getElementById('filterInvType').value;
+            var filterCategory = document.getElementById('filterInvCategory').value;
             var keyword = document.getElementById('filterInvKeyword').value.trim().toLowerCase();
 
             var filtered = targets.map(function(t, i) {
                 return { target: t, realIndex: i };
             });
+            // 按类型排序
+            var typeOrder = Storage.getInvTypes();
+            filtered.sort(function(a, b) {
+                var idxA = typeOrder.indexOf(a.target.type);
+                var idxB = typeOrder.indexOf(b.target.type);
+                if (idxA === -1) idxA = 999;
+                if (idxB === -1) idxB = 999;
+                return idxA - idxB;
+            });
             if (filterType) {
                 filtered = filtered.filter(function(item) { return item.target.type === filterType; });
+            }
+            if (filterCategory) {
+                filtered = filtered.filter(function(item) { return item.target.category === filterCategory; });
             }
             if (keyword) {
                 filtered = filtered.filter(function(item) {
@@ -1587,7 +3493,7 @@
 
             var tbody = document.getElementById('invTargetTbody');
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr class="empty-row"><td colspan="9">暂无投资标的数据</td></tr>';
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="11">暂无投资标的数据</td></tr>';
                 return;
             }
 
@@ -1595,16 +3501,19 @@
                 var t = item.target;
                 var idx = item.realIndex;
                 var tagClass = getInvTypeTagColor(t.type);
+                var catTagClass = getInvCategoryTagColor(t.category);
                 var profitVal = parseFloat(t.profit) || 0;
                 var marketVal = parseFloat(t.marketValue) || 0;
                 return '<tr>' +
                     '<td><span class="tag ' + tagClass + '">' + (t.type || '—') + '</span></td>' +
+                    '<td><span class="tag ' + catTagClass + '">' + (t.category || '—') + '</span></td>' +
                     '<td>' + (t.code || '—') + '</td>' +
                     '<td class="td-title">' + (t.name || '—') + '</td>' +
                     '<td>' + formatMoney(t.marketValue) + '</td>' +
                     '<td style="color:' + profitColor(profitVal) + ';font-weight:500">' + formatProfit(t.profit) + '</td>' +
                     '<td style="color:' + rateColor(profitVal, marketVal) + ';font-weight:500">' + formatRate(t.profit, t.marketValue) + '</td>' +
                     '<td>' + formatMoney(t.cost) + '</td>' +
+                    '<td>' + (parseFloat(t.dailyInvest) > 0 ? formatMoney(t.dailyInvest) : '—') + '</td>' +
                     '<td class="td-summary" title="' + (t.remark || '').replace(/"/g, '&quot;') + '">' + (t.remark || '—') + '</td>' +
                     '<td class="td-actions">' +
                         '<button class="btn btn-secondary btn-sm" onclick="openEditInvTargetModal(' + idx + ')">编辑</button> ' +
@@ -1633,15 +3542,96 @@
             rateEl.style.color = profit > 0 ? '#f87171' : (profit < 0 ? '#4ade80' : 'var(--text-soft)');
         }
 
+        // 日定投金额 → 月定投预览（按30天/月估算）
+        function updateDailyInvestPreview() {
+            var daily = parseFloat(document.getElementById('invDailyInvest').value) || 0;
+            var el = document.getElementById('invMonthlyInvestPreview');
+            if (!el) return;
+            el.value = daily > 0 ? (daily * 21).toFixed(2) : '';
+        }
+
+        /* ===== 批量更新 ===== */
+        function openBatchUpdateModal() {
+            var targets = Storage.getInvTargets();
+            var tbody = document.getElementById('batchUpdateTbody');
+            if (targets.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-tip">暂无投资标的</td></tr>';
+            } else {
+                tbody.innerHTML = targets.map(function(t, i) {
+                    return '<tr>' +
+                        '<td class="td-title" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + (t.name || '').replace(/"/g, '&quot;') + '">' + (t.name || '—') + '</td>' +
+                        '<td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + (t.code || '—') + '</td>' +
+                        '<td>' + (t.type || '—') + '</td>' +
+                        '<td><input type="number" class="batch-input" data-idx="' + i + '" data-field="marketValue" value="' + (t.marketValue || 0) + '" step="0.01" style="width:100%;padding:0.3rem 0.5rem;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:0.85rem;box-sizing:border-box;" oninput="updateBatchRate(' + i + ')"></td>' +
+                        '<td><input type="number" class="batch-input" data-idx="' + i + '" data-field="profit" value="' + (t.profit || 0) + '" step="0.01" style="width:100%;padding:0.3rem 0.5rem;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font-size:0.85rem;box-sizing:border-box;" oninput="updateBatchRate(' + i + ')"></td>' +
+                        '<td id="batchRate_' + i + '" style="color:var(--text-soft);">—</td>' +
+                    '</tr>';
+                }).join('');
+                // 初始化收益率显示
+                targets.forEach(function(t, i) { updateBatchRate(i); });
+            }
+            document.getElementById('batchUpdateModal').classList.add('show');
+        }
+
+        function updateBatchRate(i) {
+            var marketInput = document.querySelector('.batch-input[data-idx="' + i + '"][data-field="marketValue"]');
+            var profitInput = document.querySelector('.batch-input[data-idx="' + i + '"][data-field="profit"]');
+            var rateCell = document.getElementById('batchRate_' + i);
+            if (!marketInput || !profitInput || !rateCell) return;
+            var market = parseFloat(marketInput.value) || 0;
+            var profit = parseFloat(profitInput.value) || 0;
+            if (market > 0) {
+                var rate = profit / market * 100;
+                rateCell.textContent = (rate > 0 ? '+' : '') + rate.toFixed(2) + '%';
+                rateCell.style.color = profit > 0 ? '#f87171' : (profit < 0 ? '#4ade80' : 'var(--text-soft)');
+            } else {
+                rateCell.textContent = '—';
+                rateCell.style.color = 'var(--text-soft)';
+            }
+        }
+
+        function closeBatchUpdateModal() {
+            document.getElementById('batchUpdateModal').classList.remove('show');
+        }
+
+        function submitBatchUpdate() {
+            var targets = Storage.getInvTargets();
+            var inputs = document.querySelectorAll('.batch-input');
+            var changed = 0;
+            inputs.forEach(function(input) {
+                var idx = parseInt(input.dataset.idx);
+                var field = input.dataset.field;
+                var val = parseFloat(input.value);
+                if (isNaN(val)) val = 0;
+                if (idx >= 0 && idx < targets.length) {
+                    targets[idx][field] = val;
+                    changed++;
+                }
+            });
+            // 重新保存所有标的（更新市值/收益后，成本自动重算）
+            targets.forEach(function(t, i) {
+                var market = parseFloat(t.marketValue) || 0;
+                var profit = parseFloat(t.profit) || 0;
+                t.cost = market - profit;
+                Storage.updateInvTarget(i, t);
+            });
+            closeBatchUpdateModal();
+            renderInvTypes();
+            renderInvTargets();
+            showToast('已批量更新 ' + targets.length + ' 个标的，记得点击「保存到 data.js」持久化', 'success');
+        }
+
         function openInvTargetModal() {
             document.getElementById('invTargetForm').reset();
             document.getElementById('invEditIndex').value = '-1';
             document.getElementById('invProfitRate').value = '';
             document.getElementById('invProfitRate').style.color = 'var(--text-soft)';
             document.getElementById('invCost').value = '';
+            updateDailyInvestPreview();
             populateInvTypeDropdowns();
+            populateInvCategoryDropdowns();
             document.getElementById('invTargetModalTitle').textContent = '新增投资标的';
-            document.getElementById('invTargetModalHint').textContent = '收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益';
+            document.getElementById('invTargetModalHint').textContent = '收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益 · 月定投 = 日定投金额 × 21个工作日';
             document.getElementById('invTargetSubmitBtn').textContent = '添加标的';
             document.getElementById('invTargetModal').classList.add('show');
         }
@@ -1651,14 +3641,18 @@
             var t = targets[index];
             if (!t) return;
             populateInvTypeDropdowns();
+            populateInvCategoryDropdowns();
             document.getElementById('invEditIndex').value = index;
             document.getElementById('invType').value = t.type || '';
+            document.getElementById('invCategory').value = t.category || '';
             document.getElementById('invCode').value = t.code || '';
             document.getElementById('invName').value = t.name || '';
             document.getElementById('invMarketValue').value = t.marketValue || '';
             document.getElementById('invProfit').value = t.profit || '';
             document.getElementById('invRemark').value = t.remark || '';
+            document.getElementById('invDailyInvest').value = t.dailyInvest || '';
             updateProfitRatePreview();
+            updateDailyInvestPreview();
             document.getElementById('invTargetModalTitle').textContent = '编辑投资标的';
             document.getElementById('invTargetModalHint').textContent = '修改后自动更新统计数据';
             document.getElementById('invTargetSubmitBtn').textContent = '保存修改';
@@ -1672,14 +3666,20 @@
         function submitInvTarget() {
             var editIndex = parseInt(document.getElementById('invEditIndex').value);
             var type = document.getElementById('invType').value;
+            var category = document.getElementById('invCategory').value;
             var code = document.getElementById('invCode').value.trim();
             var name = document.getElementById('invName').value.trim();
             var marketValue = document.getElementById('invMarketValue').value;
             var profit = document.getElementById('invProfit').value;
             var remark = document.getElementById('invRemark').value.trim();
+            var dailyInvest = document.getElementById('invDailyInvest').value;
 
             if (!type) {
                 showToast('请先添加至少一个投资类型', 'error');
+                return;
+            }
+            if (!category) {
+                showToast('请先添加至少一个投资分类', 'error');
                 return;
             }
             if (!code || !name || !marketValue || profit === '') {
@@ -1694,11 +3694,13 @@
 
             var target = {
                 type: type,
+                category: category,
                 code: code,
                 name: name,
                 marketValue: mv,
                 profit: pf,
                 cost: cost,
+                dailyInvest: parseFloat(dailyInvest) || 0,
                 remark: remark
             };
 
@@ -1710,6 +3712,7 @@
                 showToast('投资标的添加成功', 'success');
             }
             renderInvTypes();
+            renderInvCategories();
             renderInvTargets();
             closeInvTargetModal();
         }
@@ -1723,19 +3726,6 @@
             renderInvTypes();
             renderInvTargets();
             showToast('投资标的已删除', 'success');
-        }
-
-        /* ===== 载入示例数据 ===== */
-        function loadSampleTargets() {
-            if (!confirm('将载入 15 个示例投资标的、默认类型及示例现金，覆盖当前数据，确认吗？')) return;
-            Storage.setInvTypes(SAMPLE_INV_TYPES.slice());
-            Storage.setInvTargets(JSON.parse(JSON.stringify(SAMPLE_INV_TARGETS)));
-            Storage.setCash(JSON.parse(JSON.stringify(SAMPLE_CASH)));
-            populateInvTypeDropdowns();
-            renderInvTypes();
-            renderInvTargets();
-            renderCash();
-            showToast('示例数据已载入', 'success');
         }
 
         /* ===== 现金管理 ===== */
@@ -1829,34 +3819,590 @@
             showToast('现金记录已删除', 'success');
         }
 
+        /* ===== 年度收益汇总 ===== */
+        // 当前持仓浮盈（未实现收益），取自投资标的 profit 之和
+        function getCurrentHoldingsProfit() {
+            var list = Storage.getInvTargets();
+            return list.reduce(function(s, t) { return s + (parseFloat(t.profit) || 0); }, 0);
+        }
+
+        // 某年是否有月度收益记录
+        function hasMonthlyForYear(year) {
+            return Storage.getMonthlyReturns().some(function(r) { return String(r.year) === String(year); });
+        }
+        // 某年月度收益合计
+        function getMonthlyTotalByYear(year) {
+            return Storage.getMonthlyReturns()
+                .filter(function(r) { return String(r.year) === String(year); })
+                .reduce(function(s, r) { return s + (parseFloat(r.profit) || 0); }, 0);
+        }
+        // 年度总收益（静态）：有月度记录则取月度合计（月度录入自动汇总），否则回退手动 staticProfit
+        function getStaticTotal(item) {
+            if (hasMonthlyForYear(item.year)) return getMonthlyTotalByYear(item.year);
+            var v = parseFloat(item.staticProfit);
+            return isNaN(v) ? null : v;
+        }
+
+        // 所有年份总收益概览卡片：总收益 = 已实现收益 + 持仓浮盈，总收益率 = 总收益 / 投入本金
+        function renderAnnualStats() {
+            var list = Storage.getAnnualReturns();
+            var currentYear = String(new Date().getFullYear());
+            var grid = document.getElementById('annualStatsGrid');
+            if (!grid) return;
+            if (list.length === 0) {
+                grid.innerHTML = '<div class="stat-card"><div class="stat-label">年度总收益</div><div class="stat-num">未录入</div><div class="stat-sub" style="font-size:0.78rem;color:var(--text-soft);">点击「新增年度」录入年度记录</div></div>';
+                return;
+            }
+            var floating = getCurrentHoldingsProfit();
+            var sumRealized = 0, sumTotal = 0, sumCapital = 0;
+            list.forEach(function(item) {
+                var isCurrent = String(item.year) === currentYear;
+                var realized = parseFloat(item.realizedProfit) || 0;
+                var staticVal = getStaticTotal(item);
+                // 当年：已实现 + 持仓浮盈；往年：静态总收益（月度合计优先，否则手动）否则已实现收益
+                var yearTotal = isCurrent ? (realized + floating) : (staticVal !== null ? staticVal : realized);
+                sumRealized += realized;
+                sumTotal += yearTotal;
+                sumCapital += parseFloat(item.capital) || 0;
+            });
+            var rate = sumCapital !== 0 ? (sumTotal / sumCapital * 100) : 0;
+            var html = '<div class="stat-card"><div class="stat-label">已实现收益（所有年份）</div><div class="stat-num" style="color:' + profitColor(sumRealized) + '">' + formatProfit(sumRealized) + '</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">持仓浮盈（当年）</div><div class="stat-num" style="color:' + profitColor(floating) + '">' + formatProfit(floating) + '</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">总收益（所有年份）</div><div class="stat-num" style="color:' + profitColor(sumTotal) + '">' + formatProfit(sumTotal) + '</div><div class="stat-sub" style="font-size:0.78rem;color:var(--text-soft);">已实现 + 持仓浮盈</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">总收益率（所有年份）</div><div class="stat-num" style="color:' + profitColor(sumTotal) + '">' + (sumCapital !== 0 ? ((sumTotal > 0 ? '+' : '') + rate.toFixed(2) + '%') : '—') + '</div><div class="stat-sub" style="font-size:0.78rem;color:var(--text-soft);">总收益 / 投入本金</div></div>';
+            grid.innerHTML = html;
+        }
+
+        function renderAnnualReturns() {
+            var raw = Storage.getAnnualReturns();
+            var list = raw.slice().sort(function(a, b) {
+                return parseInt(b.year, 10) - parseInt(a.year, 10);
+            });
+            var currentYear = String(new Date().getFullYear());
+            var holdingsProfit = getCurrentHoldingsProfit();
+            // 同步刷新顶部概览卡片
+            renderAnnualStats();
+            var tbody = document.getElementById('annualReturnTbody');
+            if (list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="empty-tip">暂无年度收益记录，点击「新增年度」录入</td></tr>';
+            } else {
+                tbody.innerHTML = list.map(function(item) {
+                    var realIdx = raw.indexOf(item);
+                    var isCurrent = String(item.year) === currentYear;
+                    var realized = parseFloat(item.realizedProfit) || 0;
+                    var floating = isCurrent ? holdingsProfit : 0;
+                    var total = isCurrent ? (realized + floating) : realized;
+                    var staticVal = getStaticTotal(item);
+                    var fromMonthly = hasMonthlyForYear(item.year);
+                    var staticCell = staticVal !== null
+                        ? formatProfit(staticVal) + (fromMonthly ? ' <span style="font-size:0.62rem;color:var(--primary);border:1px solid var(--primary);padding:0 5px;border-radius:100px;margin-left:4px;">月度汇总</span>' : '')
+                        : '—';
+                    var capital = parseFloat(item.capital) || 0;
+                    var badge = isCurrent ? '<span style="font-size:0.68rem;color:var(--primary);margin-left:6px;border:1px solid var(--primary);padding:0 6px;border-radius:100px;">当年</span>' : '';
+                    return '<tr>' +
+                        '<td class="td-title">' + item.year + badge + '</td>' +
+                        '<td style="color:' + profitColor(realized) + ';">' + formatProfit(realized) + '</td>' +
+                        '<td style="color:' + profitColor(floating) + ';">' + (isCurrent ? formatProfit(floating) : '—') + '</td>' +
+                        '<td style="color:' + profitColor(total) + ';font-weight:600;">' + (isCurrent ? formatProfit(total) : '—') + '</td>' +
+                        '<td style="color:' + (staticVal !== null ? profitColor(staticVal) : 'var(--text-soft)') + ';font-weight:600;">' + staticCell + '</td>' +
+                        '<td>' + formatMoney(capital) + '</td>' +
+                        '<td style="color:' + profitColor(total) + ';">' + (isCurrent ? formatRate(total, capital) : '—') + '</td>' +
+                        '<td class="td-summary" title="' + (item.note || '').replace(/"/g, '&quot;') + '">' + (item.note || '—') + '</td>' +
+                        '<td class="td-actions">' +
+                            '<button class="btn btn-secondary btn-sm" onclick="openMonthlyBatchModal(' + realIdx + ')">月度录入</button> ' +
+                            '<button class="btn btn-secondary btn-sm" onclick="openEditAnnualReturnModal(' + realIdx + ')">编辑</button> ' +
+                            '<button class="btn btn-danger btn-sm" onclick="deleteAnnualReturn(' + realIdx + ')">删除</button>' +
+                        '</td>' +
+                    '</tr>';
+                }).join('');
+            }
+            // 累计行
+            var sumRealized = 0, sumFloating = 0, sumProfit = 0, sumCapital = 0, sumStatic = 0, hasStatic = false;
+            var currentCapital = 0, hasCurrent = false;
+            list.forEach(function(item) {
+                var isCurrent = String(item.year) === currentYear;
+                var realized = parseFloat(item.realizedProfit) || 0;
+                var floating = isCurrent ? holdingsProfit : 0;
+                var total = isCurrent ? (realized + floating) : 0;
+                var staticVal = getStaticTotal(item);
+                sumRealized += realized;
+                sumFloating += floating;
+                sumProfit += total;
+                sumCapital += parseFloat(item.capital) || 0;
+                if (staticVal !== null) { sumStatic += staticVal; hasStatic = true; }
+                if (isCurrent) { currentCapital = parseFloat(item.capital) || 0; hasCurrent = true; }
+            });
+            document.getElementById('annualRealizedTotal').textContent = formatProfit(sumRealized);
+            document.getElementById('annualFloatingTotal').textContent = formatProfit(sumFloating);
+            document.getElementById('annualProfitTotal').textContent = hasCurrent ? formatProfit(sumProfit) : '—';
+            document.getElementById('annualStaticTotal').textContent = hasStatic ? formatProfit(sumStatic) : '—';
+            document.getElementById('annualCapitalTotal').textContent = formatMoney(sumCapital);
+            document.getElementById('annualRateTotal').textContent = hasCurrent ? formatRate(sumProfit, currentCapital) : '—';
+        }
+
+        function openAnnualReturnModal() {
+            document.getElementById('annualReturnForm').reset();
+            document.getElementById('annualEditIndex').value = '-1';
+            document.getElementById('annualYear').value = new Date().getFullYear();
+            document.getElementById('annualRealized').value = '0';
+            document.getElementById('annualStatic').value = '';
+            document.getElementById('annualCapital').value = '0';
+            document.getElementById('annualReturnModalTitle').textContent = '新增年度收益';
+            document.getElementById('annualReturnModalHint').textContent = '当年记录会自动叠加当前持仓浮盈计算年度总收益 · 已录入月度的年份静态总收益自动取月度合计';
+            document.getElementById('annualReturnSubmitBtn').textContent = '添加';
+            document.getElementById('annualReturnModal').classList.add('show');
+        }
+
+        function openEditAnnualReturnModal(index) {
+            var list = Storage.getAnnualReturns();
+            var item = list[index];
+            if (!item) return;
+            document.getElementById('annualEditIndex').value = index;
+            document.getElementById('annualYear').value = item.year || '';
+            document.getElementById('annualRealized').value = item.realizedProfit || 0;
+            document.getElementById('annualStatic').value = (item.staticProfit !== undefined && item.staticProfit !== null && item.staticProfit !== '') ? item.staticProfit : '';
+            document.getElementById('annualCapital').value = item.capital || 0;
+            document.getElementById('annualNote').value = item.note || '';
+            document.getElementById('annualReturnModalTitle').textContent = '编辑年度收益';
+            document.getElementById('annualReturnModalHint').textContent = (String(item.year) === String(new Date().getFullYear())) ? '当年记录会自动叠加当前持仓浮盈 · 已录入月度的年份静态总收益自动取月度合计' : '往年记录静态总收益优先取月度合计，无月度数据时用手动填写值';
+            document.getElementById('annualReturnSubmitBtn').textContent = '保存修改';
+            document.getElementById('annualReturnModal').classList.add('show');
+        }
+
+        function closeAnnualReturnModal() {
+            document.getElementById('annualReturnModal').classList.remove('show');
+        }
+
+        function submitAnnualReturn() {
+            var editIndex = parseInt(document.getElementById('annualEditIndex').value);
+            var year = document.getElementById('annualYear').value.trim();
+            var realized = document.getElementById('annualRealized').value;
+            var capital = document.getElementById('annualCapital').value;
+            var note = document.getElementById('annualNote').value.trim();
+            var staticInput = document.getElementById('annualStatic').value;
+
+            if (!year) {
+                showToast('请填写年份', 'error');
+                return;
+            }
+            var exists = Storage.getAnnualReturns().some(function(r, i) {
+                return String(r.year) === String(year) && i !== editIndex;
+            });
+            if (exists) {
+                showToast('该年份已存在记录', 'error');
+                return;
+            }
+
+            var item = {
+                year: year,
+                realizedProfit: parseFloat(realized) || 0,
+                capital: parseFloat(capital) || 0,
+                note: note
+            };
+            // 静态总收益：未填写则不写入该字段（表格显示「—」）
+            if (staticInput !== '' && !isNaN(parseFloat(staticInput))) {
+                item.staticProfit = parseFloat(staticInput);
+            }
+
+            if (editIndex >= 0) {
+                Storage.updateAnnualReturn(editIndex, item);
+                showToast('年度收益已更新', 'success');
+            } else {
+                Storage.addAnnualReturn(item);
+                showToast('年度收益已添加', 'success');
+            }
+            closeAnnualReturnModal();
+            renderAnnualReturns();
+        }
+
+        function deleteAnnualReturn(index) {
+            var list = Storage.getAnnualReturns();
+            var item = list[index];
+            if (!item) return;
+            if (!confirm('确认删除「' + item.year + '」年度收益记录？')) return;
+            Storage.deleteAnnualReturn(index);
+            renderAnnualReturns();
+            showToast('年度收益已删除', 'success');
+        }
+
+        /* ===== 月度收益曲线 ===== */
+        var monthlyChart = null;
+        function getMonthlyYearList() {
+            var list = Storage.getMonthlyReturns();
+            var seen = {};
+            var years = [];
+            list.forEach(function(r) {
+                var y = String(r.year);
+                if (!seen[y]) { seen[y] = true; years.push(y); }
+            });
+            years.sort(function(a, b) { return parseInt(b, 10) - parseInt(a, 10); });
+            return years;
+        }
+        function populateMonthlyYearFilter() {
+            var sel = document.getElementById('monthlyYearFilter');
+            if (!sel) return;
+            var years = getMonthlyYearList();
+            var current = sel.value;
+            if (years.indexOf(current) < 0) current = years[0] || '';
+            sel.innerHTML = years.map(function(y) {
+                return '<option value="' + y + '"' + (y === current ? ' selected' : '') + '>' + y + '年</option>';
+            }).join('');
+        }
+        function renderMonthlyReturns() {
+            populateMonthlyYearFilter();
+            var list = Storage.getMonthlyReturns();
+            var year = document.getElementById('monthlyYearFilter').value || String(new Date().getFullYear());
+            var yearRecords = list.filter(function(r) { return String(r.year) === String(year); });
+            // 12 个月数据，未录入为 null
+            var monthData = [];
+            for (var i = 0; i < 12; i++) monthData.push(null);
+            yearRecords.forEach(function(r) {
+                var m = parseInt(r.month, 10);
+                if (m >= 1 && m <= 12) monthData[m - 1] = parseFloat(r.profit) || 0;
+            });
+            // 曲线图（仅在页面可见时渲染，避免隐藏容器尺寸为 0）
+            var annualVisible = document.getElementById('page-annual').style.display !== 'none';
+            if (annualVisible) {
+                renderMonthlyChart(monthData, year);
+            } else if (monthlyChart) {
+                monthlyChart.destroy();
+                monthlyChart = null;
+            }
+        }
+        function renderMonthlyChart(monthData, year) {
+            var ctx = document.getElementById('monthlyReturnChart');
+            if (!ctx || typeof Chart === 'undefined') return;
+            if (monthlyChart) { monthlyChart.destroy(); monthlyChart = null; }
+            var labels = [];
+            for (var i = 1; i <= 12; i++) labels.push(i + '月');
+            // 截至所选年份之前的所有月度收益合计（跨年累计基准）
+            var priorTotal = Storage.getMonthlyReturns()
+                .filter(function(r) { return parseInt(r.year, 10) < parseInt(year, 10); })
+                .reduce(function(s, r) { return s + (parseFloat(r.profit) || 0); }, 0);
+            // 本年累计：所选年份内逐月累加（仅在已录入月份落点，未录入留空断点）
+            var yearCum = 0;
+            var yearCumData = monthData.map(function(v) { if (v !== null) yearCum += v; return v === null ? null : yearCum; });
+            // 截至目前累计 = 往年合计 + 本年逐月累计
+            var allCum = priorTotal;
+            var allCumData = monthData.map(function(v) { if (v !== null) allCum += v; return v === null ? null : allCum; });
+            monthlyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '当月收益',
+                            data: monthData,
+                            borderColor: '#f87171',
+                            backgroundColor: 'rgba(248,113,113,0.15)',
+                            tension: 0.35,
+                            fill: true,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            borderWidth: 2,
+                            spanGaps: false
+                        },
+                        {
+                            label: '本年累计',
+                            data: yearCumData,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'transparent',
+                            tension: 0.35,
+                            fill: false,
+                            pointRadius: 3,
+                            pointHoverRadius: 5,
+                            borderWidth: 2,
+                            borderDash: [4, 4]
+                        },
+                        {
+                            label: '截至目前累计',
+                            data: allCumData,
+                            borderColor: '#d4b56a',
+                            backgroundColor: 'transparent',
+                            tension: 0.35,
+                            fill: false,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            borderWidth: 2.5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { labels: { color: '#94a3b8', boxWidth: 14, padding: 14 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(c) {
+                                    var v = c.parsed.y;
+                                    if (v === null) return c.dataset.label + '：未录入';
+                                    return c.dataset.label + '：' + formatProfit(v);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.08)' } },
+                        y: {
+                            ticks: { color: '#94a3b8', callback: function(v) { return formatMoney(v); } },
+                            grid: { color: 'rgba(148,163,184,0.08)' }
+                        }
+                    }
+                }
+            });
+        }
+        /* ===== 月度收益批量录入（入口在年度收益汇总表） ===== */
+        function openMonthlyBatchModal(index) {
+            var list = Storage.getAnnualReturns();
+            var item = list[index];
+            if (!item) return;
+            var year = String(item.year);
+            document.getElementById('monthlyBatchYear').value = year;
+            document.getElementById('monthlyBatchYearLabel').textContent = year;
+            // 回填该年已录入的月度数据
+            var monthly = {};
+            Storage.getMonthlyReturns().forEach(function(r) {
+                if (String(r.year) === year) monthly[parseInt(r.month, 10)] = r.profit;
+            });
+            for (var m = 1; m <= 12; m++) {
+                var el = document.getElementById('monthlyBatchInput_' + m);
+                if (el) el.value = (monthly[m] !== undefined) ? monthly[m] : '';
+            }
+            updateMonthlyBatchTotal();
+            document.getElementById('monthlyBatchModal').classList.add('show');
+        }
+        function closeMonthlyBatchModal() {
+            document.getElementById('monthlyBatchModal').classList.remove('show');
+        }
+        // 弹窗内实时合计：已录入月数 + 合计金额；金额正红负绿（与全站盈亏配色一致）
+        function updateMonthlyBatchTotal() {
+            var total = 0, count = 0;
+            for (var m = 1; m <= 12; m++) {
+                var el = document.getElementById('monthlyBatchInput_' + m);
+                if (!el) continue;
+                var raw = el.value.trim();
+                var v = parseFloat(raw);
+                var has = raw !== '' && !isNaN(v);
+                el.style.color = has ? (v > 0 ? '#f87171' : (v < 0 ? '#4ade80' : 'var(--text)')) : 'var(--text)';
+                if (has) { total += v; count++; }
+            }
+            var hint = document.getElementById('monthlyBatchTotalHint');
+            hint.textContent = count > 0 ? ('已录入 ' + count + ' 个月 · 合计 ' + formatProfit(total)) : '未录入';
+            hint.style.color = count > 0 ? (total > 0 ? '#f87171' : (total < 0 ? '#4ade80' : 'var(--text)')) : 'var(--text)';
+        }
+        function submitMonthlyBatch() {
+            var year = document.getElementById('monthlyBatchYear').value;
+            if (!year) return;
+            var list = Storage.getMonthlyReturns();
+            // 保留该年原有各月备注
+            var existing = {};
+            list.forEach(function(r) { if (String(r.year) === year) existing[parseInt(r.month, 10)] = r.note || ''; });
+            // 清空该年记录后按输入重写
+            for (var i = list.length - 1; i >= 0; i--) {
+                if (String(list[i].year) === year) list.splice(i, 1);
+            }
+            var added = 0;
+            for (var m = 1; m <= 12; m++) {
+                var el = document.getElementById('monthlyBatchInput_' + m);
+                var v = el ? el.value.trim() : '';
+                if (v !== '' && !isNaN(parseFloat(v))) {
+                    list.push({ year: year, month: m, profit: parseFloat(v), note: existing[m] || '' });
+                    added++;
+                }
+            }
+            closeMonthlyBatchModal();
+            // 同步刷新月度曲线（切到该年）与年度收益汇总（静态列自动汇总）
+            var yearSel = document.getElementById('monthlyYearFilter');
+            if (yearSel) yearSel.value = year;
+            renderMonthlyReturns();
+            renderAnnualReturns();
+            showToast(year + '年月度收益已保存（' + added + '个月），合计已汇入年度总收益（静态）', 'success');
+        }
+
+        /* ===== 盈亏分析 ===== */
+        function renderAnalysis() {
+            // 现有持仓盈亏
+            var targets = Storage.getInvTargets();
+            var tbody = document.getElementById('holdingProfitTbody');
+            if (targets.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="empty-tip">暂无持仓标的，请在「持仓分布」中录入</td></tr>';
+            } else {
+                tbody.innerHTML = targets.map(function(t) {
+                    var market = parseFloat(t.marketValue) || 0;
+                    var cost = parseFloat(t.cost) || 0;
+                    var profit = market - cost;
+                    var rate = cost !== 0 ? (profit / cost * 100) : 0;
+                    return '<tr>' +
+                        '<td>' + (t.type || '—') + '</td>' +
+                        '<td>' + (t.code || '—') + '</td>' +
+                        '<td class="td-title">' + (t.name || '—') + '</td>' +
+                        '<td>' + formatMoney(market) + '</td>' +
+                        '<td>' + formatMoney(cost) + '</td>' +
+                        '<td style="color:' + profitColor(profit) + ';font-weight:500;">' + formatProfit(profit) + '</td>' +
+                        '<td style="color:' + profitColor(profit) + ';">' + (cost !== 0 ? ((rate > 0 ? '+' : '') + rate.toFixed(2) + '%') : '—') + '</td>' +
+                    '</tr>';
+                }).join('');
+            }
+            var sumMarket = 0, sumCost = 0;
+            targets.forEach(function(t) {
+                sumMarket += parseFloat(t.marketValue) || 0;
+                sumCost += parseFloat(t.cost) || 0;
+            });
+            var sumProfit = sumMarket - sumCost;
+            var sumRate = sumCost !== 0 ? (sumProfit / sumCost * 100) : 0;
+            document.getElementById('holdingMarketTotal').textContent = formatMoney(sumMarket);
+            document.getElementById('holdingCostTotal').textContent = formatMoney(sumCost);
+            document.getElementById('holdingProfitTotal').textContent = formatProfit(sumProfit);
+            document.getElementById('holdingProfitTotal').style.color = profitColor(sumProfit);
+            document.getElementById('holdingRateTotal').textContent = sumCost !== 0 ? ((sumRate > 0 ? '+' : '') + sumRate.toFixed(2) + '%') : '—';
+            document.getElementById('holdingRateTotal').style.color = profitColor(sumProfit);
+
+            // 已清仓标的
+            var closed = Storage.getClosedPositions();
+            var cTbody = document.getElementById('closedTbody');
+            if (closed.length === 0) {
+                cTbody.innerHTML = '<tr><td colspan="9" class="empty-tip">暂无清仓记录，点击「新增清仓记录」录入</td></tr>';
+            } else {
+                cTbody.innerHTML = closed.map(function(item, idx) {
+                    var cost = parseFloat(item.cost) || 0;
+                    var sold = parseFloat(item.soldValue) || 0;
+                    var profit = parseFloat(item.profit);
+                    if (isNaN(profit)) profit = sold - cost;
+                    return '<tr>' +
+                        '<td>' + (item.type || '—') + '</td>' +
+                        '<td>' + (item.code || '—') + '</td>' +
+                        '<td class="td-title">' + (item.name || '—') + '</td>' +
+                        '<td>' + formatMoney(cost) + '</td>' +
+                        '<td>' + formatMoney(sold) + '</td>' +
+                        '<td style="color:' + profitColor(profit) + ';font-weight:500;">' + formatProfit(profit) + '</td>' +
+                        '<td>' + (item.closeDate || '—') + '</td>' +
+                        '<td class="td-summary" title="' + (item.note || '').replace(/"/g, '&quot;') + '">' + (item.note || '—') + '</td>' +
+                        '<td class="td-actions">' +
+                            '<button class="btn btn-secondary btn-sm" onclick="openEditClosedModal(' + idx + ')">编辑</button> ' +
+                            '<button class="btn btn-danger btn-sm" onclick="deleteClosed(' + idx + ')">删除</button>' +
+                        '</td>' +
+                    '</tr>';
+                }).join('');
+            }
+            var sumClosedCost = 0, sumClosedSold = 0, sumClosedProfit = 0;
+            closed.forEach(function(item) {
+                var cost = parseFloat(item.cost) || 0;
+                var sold = parseFloat(item.soldValue) || 0;
+                var profit = parseFloat(item.profit);
+                if (isNaN(profit)) profit = sold - cost;
+                sumClosedCost += cost;
+                sumClosedSold += sold;
+                sumClosedProfit += profit;
+            });
+            document.getElementById('closedCostTotal').textContent = formatMoney(sumClosedCost);
+            document.getElementById('closedSoldTotal').textContent = formatMoney(sumClosedSold);
+            document.getElementById('closedProfitTotal').textContent = formatProfit(sumClosedProfit);
+            document.getElementById('closedProfitTotal').style.color = profitColor(sumClosedProfit);
+
+            // 概览卡片：总收益 = 持仓盈亏 + 清仓盈亏
+            var totalProfit = sumProfit + sumClosedProfit;
+            var grid = document.getElementById('analysisStatsGrid');
+            var html = '<div class="stat-card"><div class="stat-label">持仓盈亏</div><div class="stat-num" style="color:' + profitColor(sumProfit) + '">' + formatProfit(sumProfit) + '</div><div class="stat-sub" style="font-size:0.78rem;color:var(--text-soft);">现有持仓未实现收益</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">清仓盈亏</div><div class="stat-num" style="color:' + profitColor(sumClosedProfit) + '">' + formatProfit(sumClosedProfit) + '</div><div class="stat-sub" style="font-size:0.78rem;color:var(--text-soft);">既往已清仓标的盈亏</div></div>';
+            html += '<div class="stat-card"><div class="stat-label">总收益</div><div class="stat-num" style="color:' + profitColor(totalProfit) + '">' + formatProfit(totalProfit) + '</div><div class="stat-sub" style="font-size:0.78rem;color:var(--text-soft);">持仓盈亏 + 清仓盈亏</div></div>';
+            grid.innerHTML = html;
+        }
+
+        function openClosedModal() {
+            document.getElementById('closedForm').reset();
+            document.getElementById('closedEditIndex').value = '-1';
+            document.getElementById('closedModalTitle').textContent = '新增清仓记录';
+            document.getElementById('closedModalHint').textContent = '清仓盈亏 = 卖出所得 - 持仓成本，自动计算';
+            document.getElementById('closedSubmitBtn').textContent = '添加';
+            document.getElementById('closedModal').classList.add('show');
+        }
+
+        function openEditClosedModal(index) {
+            var list = Storage.getClosedPositions();
+            var item = list[index];
+            if (!item) return;
+            document.getElementById('closedEditIndex').value = index;
+            document.getElementById('closedType').value = item.type || '';
+            document.getElementById('closedCode').value = item.code || '';
+            document.getElementById('closedName').value = item.name || '';
+            document.getElementById('closedCost').value = item.cost || '';
+            document.getElementById('closedSold').value = item.soldValue || '';
+            document.getElementById('closedDate').value = item.closeDate || '';
+            document.getElementById('closedNote').value = item.note || '';
+            document.getElementById('closedModalTitle').textContent = '编辑清仓记录';
+            document.getElementById('closedModalHint').textContent = '清仓盈亏 = 卖出所得 - 持仓成本，自动计算';
+            document.getElementById('closedSubmitBtn').textContent = '保存修改';
+            document.getElementById('closedModal').classList.add('show');
+        }
+
+        function closeClosedModal() {
+            document.getElementById('closedModal').classList.remove('show');
+        }
+
+        function submitClosed() {
+            var editIndex = parseInt(document.getElementById('closedEditIndex').value);
+            var type = document.getElementById('closedType').value.trim();
+            var code = document.getElementById('closedCode').value.trim();
+            var name = document.getElementById('closedName').value.trim();
+            var cost = document.getElementById('closedCost').value;
+            var sold = document.getElementById('closedSold').value;
+            var closeDate = document.getElementById('closedDate').value;
+            var note = document.getElementById('closedNote').value.trim();
+
+            if (!type || !name || !cost || !sold) {
+                showToast('请填写必填项', 'error');
+                return;
+            }
+            var costVal = parseFloat(cost) || 0;
+            var soldVal = parseFloat(sold) || 0;
+            var item = {
+                type: type,
+                code: code,
+                name: name,
+                cost: costVal,
+                soldValue: soldVal,
+                profit: soldVal - costVal,
+                closeDate: closeDate,
+                note: note
+            };
+            if (editIndex >= 0) {
+                Storage.updateClosedPosition(editIndex, item);
+                showToast('清仓记录已更新', 'success');
+            } else {
+                Storage.addClosedPosition(item);
+                showToast('清仓记录已添加', 'success');
+            }
+            closeClosedModal();
+            renderAnalysis();
+        }
+
+        function deleteClosed(index) {
+            var list = Storage.getClosedPositions();
+            var item = list[index];
+            if (!item) return;
+            if (!confirm('确认删除清仓记录「' + (item.name || '') + '」？')) return;
+            Storage.deleteClosedPosition(index);
+            renderAnalysis();
+            showToast('清仓记录已删除', 'success');
+        }
+
         // 初始化
         populateCategoryDropdowns();
         renderCategories();
         renderArticles();
-
-        // 持仓分布初始化：若投资标的为空（含 localStorage 缓存的空数组），自动载入示例数据
-        (function initHoldingsData() {
-            var stored = localStorage.getItem(Storage.KEY_INV_TARGETS);
-            var targets = Storage.getInvTargets();
-            if (!targets || targets.length === 0) {
-                Storage.setInvTypes(SAMPLE_INV_TYPES.slice());
-                Storage.setInvTargets(JSON.parse(JSON.stringify(SAMPLE_INV_TARGETS)));
-            } else if (!stored) {
-                // 从未存储过，但 getInvTargets 返回了示例数据，持久化一次
-                Storage.setInvTypes(SAMPLE_INV_TYPES.slice());
-                Storage.setInvTargets(JSON.parse(JSON.stringify(SAMPLE_INV_TARGETS)));
-            }
-            // 现金数据初始化
-            var storedCash = localStorage.getItem(Storage.KEY_CASH);
-            if (!storedCash) {
-                Storage.setCash(JSON.parse(JSON.stringify(SAMPLE_CASH)));
-            }
-        })();
-
         populateInvTypeDropdowns();
+        populateInvCategoryDropdowns();
         renderInvTypes();
+        renderInvCategories();
         renderInvTargets();
         renderCash();
+        renderAnnualReturns();
+        renderMonthlyReturns();
+        renderAnalysis();
+        loadHoldingsUpdate();
     </script>
 </body>
+</html>
 </html>

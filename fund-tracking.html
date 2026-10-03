@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="美股被动指数基金（纳指100 · 标普500）：基本信息与限购情况">
+    <title>基金跟踪 · 生活大于投资</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a961;
+            --gold-bright: #d4b56a;
+            --gold-soft: rgba(201, 169, 97, 0.15);
+            --bg: #000000;
+            --bg-soft: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text: #f0f0f0;
+            --text-soft: #888888;
+            --text-dim: #555555;
+            --ok: #3ddc84;
+            --warn: #e8b64c;
+            --stop: #ff6b6b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-y: auto;
+            position: relative;
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== 品牌 + 导航 ===== */
+        .brand {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.75rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .brand-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
+            font-weight: 900;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 6px;
+            line-height: 1.15;
+        }
+        .brand-subtitle {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .top-nav { position: fixed; top: 1.5rem; right: 1.75rem; z-index: 1000; }
+        .top-nav-menu { list-style: none; display: flex; align-items: center; gap: 1.5rem; }
+        .top-nav-menu a {
+            color: var(--text-soft);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.25s;
+        }
+        .top-nav-menu a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: all 0.25s;
+            transform: translateX(-50%);
+        }
+        .top-nav-menu a:hover, .top-nav-menu a.active { color: var(--gold-bright); }
+        .top-nav-menu a:hover::after, .top-nav-menu a.active::after { width: 100%; }
+
+        /* ===== 页面主体 ===== */
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 7.5rem 2rem 4rem;
+        }
+        .page h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 55%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+        .page .sub {
+            margin-top: 0.7rem;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+        .page .updated {
+            margin-top: 0.5rem;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+        .page .updated b { color: var(--gold-bright); font-weight: 500; }
+
+        /* ===== 统计 ===== */
+        .stats { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.8rem 0 1.2rem; }
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 10px;
+            padding: 0.7rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            min-width: 92px;
+        }
+        .stat .k { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 1px; }
+        .stat .v { font-size: 1.25rem; font-weight: 700; }
+        .stat .v.gold { color: var(--gold-bright); }
+        .stat .v.red { color: var(--stop); }
+        .stat .v.green { color: var(--ok); }
+
+        /* ===== 筛选 ===== */
+        .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+        .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-group .g-label { font-size: 0.75rem; color: var(--text-dim); align-self: center; letter-spacing: 1px; }
+        .chip {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            color: var(--text-soft);
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .chip:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .chip.on { background: var(--gold-soft); border-color: var(--gold); color: var(--gold-bright); }
+        #search {
+            margin-left: auto;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            color: var(--text);
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            outline: none;
+            width: 220px;
+            transition: border-color 0.2s;
+        }
+        #search:focus { border-color: var(--gold); }
+
+        /* ===== 顶部标签页 ===== */
+        .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.6rem 0 0; }
+        .tab {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            color: var(--text-soft);
+            padding: 0.55rem 1.6rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .tab:hover { border-color: var(--gold); color: var(--gold-bright); }
+        .tab.on { background: var(--gold-soft); border-color: var(--gold); color: var(--gold-bright); font-weight: 700; }
+
+        /* ===== 表格 ===== */
+        .table-wrap {
+            overflow: hidden;
+            border: 1px solid var(--surface-border);
+            border-radius: 14px;
+            background: var(--bg-soft);
+        }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.78rem; }
+        thead th {
+            position: sticky;
+            top: 0;
+            background: #101010;
+            color: var(--text-soft);
+            font-weight: 500;
+            letter-spacing: 1px;
+            padding: 0.75rem 0.5rem;
+            text-align: left;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--surface-border);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        thead th.sortable { cursor: pointer; user-select: none; }
+        thead th.sortable:hover { color: var(--gold-bright); }
+        thead th .arrow { color: var(--gold); margin-left: 2px; font-size: 0.7rem; }
+        tbody td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            white-space: normal;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+        tbody tr:hover { background: rgba(201, 169, 97, 0.05); }
+        td.code { font-family: 'Inter', monospace; color: var(--text-soft); letter-spacing: 1px; white-space: nowrap; }
+        td.name { max-width: 300px; white-space: normal; line-height: 1.45; }
+        td.name a { color: var(--text); text-decoration: none; }
+        td.name a:hover { color: var(--gold-bright); }
+        td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 5px; font-size: 0.72rem; letter-spacing: 1px; }
+        .tag.etf { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
+        .tag.conn { background: rgba(90, 180, 255, 0.13); color: #7fc4ff; }
+        .tag.idx { background: rgba(61, 220, 132, 0.12); color: #3ddc84; }
+        .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.74rem; font-weight: 600; letter-spacing: 1px; }
+        .badge.ok { background: rgba(61, 220, 132, 0.14); color: var(--ok); }
+        .badge.warn { background: rgba(232, 182, 76, 0.16); color: var(--warn); }
+        .badge.stop { background: rgba(255, 107, 107, 0.15); color: var(--stop); }
+        .badge.closed { background: rgba(136, 136, 136, 0.16); color: #aaa; }
+        .badge.plain { background: rgba(255,255,255,0.06); color: var(--text-soft); }
+        .muted { color: var(--text-dim); }
+        .limit-zero { color: var(--stop); }
+
+        .note { margin-top: 1.2rem; color: var(--text-dim); font-size: 0.78rem; line-height: 1.7; }
+        .note a { color: var(--gold-bright); text-decoration: none; }
+        .empty-tip { padding: 3rem 1rem; text-align: center; color: var(--text-dim); }
+
+        @media (max-width: 720px) {
+            .brand-title { font-size: 1.4rem; letter-spacing: 4px; }
+            .top-nav-menu { gap: 1rem; }
+            .top-nav-menu a { font-size: 0.78rem; letter-spacing: 1px; }
+            .page { padding: 6.5rem 1rem 3rem; }
+            .page h1 { font-size: 1.7rem; }
+            #search { width: 100%; margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="brand">
+        <span class="brand-title">投么有度</span>
+        <span class="brand-subtitle">Life Beyond Investment</span>
+    </div>
+    <div class="top-nav" id="topNav">
+        <ul class="top-nav-menu">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="holdings.html">退休计划</a></li>
+            <li><a href="fund-tracking.html" class="active">基金跟踪</a></li>
+            <li><a href="wechat.html">文章</a></li>
+            <li><a href="about.html">关于我</a></li>
+        </ul>
+    </div>
+
+    <main class="page">
+        <h1>纳指100 · 标普500 指数基金全景</h1>
+        <p class="sub">场内 ETF / 场外 QDII 指数与联接 —— 基本信息与限购情况</p>
+        <p class="updated">数据更新：<b id="updated">—</b> · <span id="source">本地数据</span> · 数据来源：天天基金</p>
+
+        <div class="tabs" id="indexTabs">
+            <button class="tab on" data-idx="NDX">纳指100</button>
+            <button class="tab" data-idx="SPX">标普500</button>
+        </div>
+
+        <div class="stats" id="stats"></div>
+
+        <div class="filters">
+            <div class="filter-group" id="catGroup"><span class="g-label">类别</span></div>
+            <input id="search" type="text" placeholder="搜索代码 / 名称">
+        </div>
+
+        <div class="table-wrap">
+            <table id="tbl">
+                <colgroup>
+                    <col style="width:8%"><col style="width:16%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:7%"><col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="sortable" data-key="code">代码<span class="arrow"></span></th>
+                        <th>基金简称</th>
+                        <th>类别</th>
+                        <th class="sortable" data-key="establishDate">成立日<span class="arrow"></span></th>
+                        <th class="sortable" data-key="nav">单位净值<span class="arrow"></span></th>
+                        <th class="sortable" data-key="scale">规模<span class="arrow"></span></th>
+                        <th>限购状态</th>
+                        <th class="sortable" data-key="dailyLimit">单日限额<span class="arrow"></span></th>
+                        <th>申购起点</th>
+                        <th class="sortable" data-key="mgmtFee">管理费<span class="arrow"></span></th>
+                        <th class="sortable" data-key="custodyFee">托管费<span class="arrow"></span></th>
+                        <th class="sortable" data-key="trackingError">跟踪误差<span class="arrow"></span></th>
+                        <th class="sortable" data-key="premium">溢价率<span class="arrow"></span></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+
+        <p class="note">
+            说明：① 场内 ETF 通过证券账户在二级市场自由买卖，其“限购状态”标为<b>场内交易</b>；部分 ETF 的一级申赎可能暂停，不影响二级市场交易。② “限大额”表示单日申购有金额上限（受 QDII 外汇额度影响，美股指数基金普遍限购）。③ 默认按「暂停申购置底、单日限额降序」排列，场内 ETF 视为不限额排最前。④ <b>跟踪误差</b>为年化跟踪误差（来源：天天基金特色数据）；<b>溢价率</b> = (最新价 - IOPV)/IOPV，仅场内 ETF 展示（来源：东方财富行情）。数据每日自动更新，具体请以基金公司公告及<a href="http://fund.eastmoney.com/" target="_blank" rel="noopener">天天基金</a>为准。
+        </p>
+    </main>
+
+    <script src="js/nasdaq-funds.js"></script>
+    <script>
+        (function () {
+            // 部署到 CloudBase 后填入你的 HTTP 接口地址，即可自动读取每日更新的云端数据
+            var API_URL = 'https://ceshi-1-d1g0czdaa999081f4-1470950321.ap-shanghai.app.tcloudbase.com/get-nasdaq-funds';
+            var DATA = (window.NASDAQ_FUNDS || []).map(function (f) { return f; });
+            var UPDATED = window.NASDAQ_FUNDS_UPDATED || '';
+            var SOURCE = '本地数据';
+            var state = { cat: '全部', q: '', key: null, dir: 1, idx: 'NDX' };
+
+            function num(v) {
+                if (v == null || v === '' || v === '---') return null;
+                var m = String(v).match(/-?[\d.]+/);
+                return m ? parseFloat(m[0]) : null;
+            }
+            function feeText(v) { return v ? String(v).replace('（每年）', '') : '—'; }
+
+            function badge(f) {
+                if (f.cat === 'ETF') return { cls: 'ok', text: '场内交易' };
+                var s = f.purchaseStatus;
+                if (s === '限大额') return { cls: 'warn', text: '限大额' };
+                if (s === '暂停申购') return { cls: 'stop', text: '暂停申购' };
+                if (s === '开放申购') return { cls: 'ok', text: '开放申购' };
+                if (s === '封闭期') return { cls: 'closed', text: '封闭期' };
+                return { cls: 'plain', text: s || '—' };
+            }
+            function catTag(cat) {
+                if (cat === 'ETF') return '<span class="tag etf">场内</span>';
+                return '<span class="tag idx">场外</span>';
+            }
+            function limitCell(f) {
+                if (f.cat === 'ETF') return '<span class="muted">—</span>';
+                if (f.purchaseStatus === '暂停申购') return '<span class="muted">—</span>';
+                var v = f.dailyLimit;
+                if (!v || v === '---') return '<span class="muted">—</span>';
+                var zero = num(v) === 0;
+                return zero ? '<span class="limit-zero">' + v + '</span>' : v;
+            }
+            function trackCell(f) {
+                if (!f.trackingError) return '<span class="muted">—</span>';
+                return f.trackingError;
+            }
+            function premiumCell(f) {
+                if (f.cat !== 'ETF') return '<span class="muted">—</span>';
+                var p = f.premium;
+                if (p == null || p === '') return '<span class="muted">—</span>';
+                var cls = p > 0 ? 'limit-zero' : 'ok';
+                return '<span class="' + cls + '">' + (p > 0 ? '+' : '') + p + '%</span>';
+            }
+            function isSuspended(f) {
+                return f.cat !== 'ETF' && f.purchaseStatus === '暂停申购';
+            }
+            function limitRank(f) {
+                if (isSuspended(f)) return { suspended: true, limit: 0 };
+                if (f.cat === 'ETF') return { suspended: false, limit: Infinity };
+                var n = num(f.dailyLimit);
+                return { suspended: false, limit: n == null ? Infinity : n };
+            }
+            function defaultSort(list) {
+                return list.slice().sort(function (a, b) {
+                    var ra = limitRank(a), rb = limitRank(b);
+                    if (ra.suspended !== rb.suspended) return ra.suspended ? 1 : -1;
+                    return rb.limit - ra.limit;
+                });
+            }
+            function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+            function renderStats(list) {
+                var stat = function (k, v, cls) {
+                    return '<div class="stat"><span class="k">' + k + '</span><span class="v ' + (cls || '') + '">' + v + '</span></div>';
+                };
+                var onEx = list.filter(function (f) { return f.cat === 'ETF'; }).length;
+                var offEx = list.length - onEx;
+                var limited = list.filter(function (f) { return f.cat !== 'ETF' && f.purchaseStatus === '限大额'; }).length;
+                var stopped = list.filter(function (f) { return f.cat !== 'ETF' && f.purchaseStatus === '暂停申购'; }).length;
+                var closed = list.filter(function (f) { return f.cat !== 'ETF' && f.purchaseStatus === '封闭期'; }).length;
+                document.getElementById('stats').innerHTML =
+                    stat('基金总数', list.length, 'gold') +
+                    stat('场内', onEx) +
+                    stat('场外', offEx) +
+                    stat('限大额', limited, '') +
+                    stat('暂停申购', stopped, 'red') +
+                    stat('封闭期', closed, '');
+            }
+
+            function sortList(list) {
+                if (!state.key) return list;
+                var key = state.key;
+                var dir = state.dir;
+                return list.slice().sort(function (a, b) {
+                    var sa = isSuspended(a) ? 1 : 0;
+                    var sb = isSuspended(b) ? 1 : 0;
+                    if (sa !== sb) return sa - sb;
+                    var va, vb;
+                    if (key === 'code' || key === 'establishDate') { va = a[key] || ''; vb = b[key] || ''; return va < vb ? -dir : va > vb ? dir : 0; }
+                    va = num(a[key]); vb = num(b[key]);
+                    if (va == null && vb == null) return 0;
+                    if (va == null) return 1;
+                    if (vb == null) return -1;
+                    return (va - vb) * dir;
+                });
+            }
+
+            function fundIndex(f) { return f.index || 'NDX'; }
+
+            function filtered() {
+                var list = DATA.filter(function (f) {
+                    if (f.ccy !== '人民币') return false; // 调试中：只显示国内人民币份额
+                    if (state.idx && state.idx !== fundIndex(f)) return false;
+                    if (state.cat === '场内' && f.cat !== 'ETF') return false;
+                    if (state.cat === '场外' && f.cat === 'ETF') return false;
+                    if (state.q) {
+                        var q = state.q.toLowerCase();
+                        var hay = (f.code + ' ' + f.name).toLowerCase();
+                        if (hay.indexOf(q) < 0) return false;
+                    }
+                    return true;
+                });
+                return state.key ? sortList(list) : defaultSort(list);
+            }
+
+            function render() {
+                document.getElementById('updated').textContent = UPDATED || '—';
+                document.getElementById('source').textContent = SOURCE;
+                var list = filtered();
+                renderStats(list);
+                var tbody = document.getElementById('tbody');
+                if (!list.length) {
+                    tbody.innerHTML = '<tr><td colspan="13" class="empty-tip">没有符合条件的结果</td></tr>';
+                    return;
+                }
+                var html = '';
+                list.forEach(function (f) {
+                    var b = badge(f);
+                    html += '<tr>' +
+                        '<td class="code">' + f.code + '</td>' +
+                        '<td class="name"><a href="http://fund.eastmoney.com/' + f.code + '.html" target="_blank" rel="noopener">' + esc(f.name) + '</a></td>' +
+                        '<td>' + catTag(f.cat) + '</td>' +
+                        '<td class="muted">' + (f.establishDate || '—') + '</td>' +
+                        '<td class="num">' + (f.nav || '<span class="muted">—</span>') + '<div class="muted" style="font-size:0.68rem">' + (f.navDate || '') + '</div></td>' +
+                        '<td class="num">' + (f.scale || '—') + '</td>' +
+                        '<td><span class="badge ' + b.cls + '">' + b.text + '</span></td>' +
+                        '<td>' + limitCell(f) + '</td>' +
+                        '<td class="num">' + (f.purchaseMin || '—') + '</td>' +
+                        '<td class="num">' + (feeText(f.mgmtFee) || '—') + '</td>' +
+                        '<td class="num">' + (feeText(f.custodyFee) || '—') + '</td>' +
+                        '<td class="num">' + trackCell(f) + '</td>' +
+                        '<td class="num">' + premiumCell(f) + '</td>' +
+                        '</tr>';
+                });
+                tbody.innerHTML = html;
+            }
+
+            function makeChips(groupId, key, options, value) {
+                var g = document.getElementById(groupId);
+                options.forEach(function (opt) {
+                    var el = document.createElement('span');
+                    el.className = 'chip' + (opt === value ? ' on' : '');
+                    el.textContent = opt;
+                    el.onclick = function () {
+                        state[key] = opt;
+                        g.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('on'); });
+                        el.classList.add('on');
+                        render();
+                    };
+                    g.appendChild(el);
+                });
+            }
+
+            document.getElementById('tbl').addEventListener('click', function (e) {
+                var th = e.target.closest('th.sortable');
+                if (!th) return;
+                var key = th.getAttribute('data-key');
+                if (state.key === key) { state.dir = -state.dir; } else { state.key = key; state.dir = 1; }
+                document.querySelectorAll('th.sortable .arrow').forEach(function (a) { a.textContent = ''; });
+                th.querySelector('.arrow').textContent = state.dir === 1 ? '▲' : '▼';
+                render();
+            });
+
+            document.getElementById('search').addEventListener('input', function (e) {
+                state.q = e.target.value.trim();
+                render();
+            });
+
+            makeChips('catGroup', 'cat', ['全部', '场内', '场外'], '全部');
+
+            var tabs = document.querySelectorAll('#indexTabs .tab');
+            tabs.forEach(function (t) {
+                t.addEventListener('click', function () {
+                    if (state.idx === t.getAttribute('data-idx')) return;
+                    state.idx = t.getAttribute('data-idx');
+                    tabs.forEach(function (x) { x.classList.remove('on'); });
+                    t.classList.add('on');
+                    render();
+                });
+            });
+
+            render();
+
+            // 若配置了云端 HTTP 接口，优先拉取最新数据；失败则沿用本地兜底数据
+            if (API_URL) {
+                fetch(API_URL)
+                    .then(function (r) { return r.json(); })
+                    .then(function (json) {
+                        if (json && json.code === 0 && json.data && json.data.length) {
+                            DATA = json.data.map(function (f) { return f; });
+                            UPDATED = json.updated || UPDATED;
+                            SOURCE = '云端数据（每日自动更新）';
+                            render();
+                        }
+                    })
+                    .catch(function () { /* 拉取失败，沿用本地兜底数据 */ });
+            }
+        })();
+    </script>
+</body>
+</html>

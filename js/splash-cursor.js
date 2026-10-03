@@ -657,6 +657,8 @@
 
     if (typeof document !== 'undefined') {
         function init() {
+            // 手机端不启动 WebGL 流体光标特效：移动端无鼠标光标，且全屏 canvas 与 window 级 touch 监听会干扰触摸交互（如导航菜单点击不响应）
+            if (window.innerWidth <= 768) return;
             initSplashCursor({
                 SIM_RESOLUTION: 128,
                 DYE_RESOLUTION: 1440,

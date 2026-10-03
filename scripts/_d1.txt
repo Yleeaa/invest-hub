@@ -1,0 +1,15 @@
+﻿CloudBase CLI 3.8.0
+璇曡瘯 tcb ai 鍛戒护锛屽紑鍚?AI 鍘熺敓寮€鍙?- 鏁版嵁鍔犺浇涓?..
+- 鍑嗗涓婁紶涓?..
+node.exe : 
+所在位置 C:\Users\Ylee\AppData\Roaming\npm\tcb.ps1:24 字符: 5
++     & "node$exe"  "$basedir/node_modules/@cloudbase/cli/bin/tcb" $arg ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+鈭?鏂囦欢閮ㄧ讲鎴愬姛锛?鉁?鏂囦欢涓婁紶澶辫触锛?脳 闈欐€佹枃浠朵笂浼犲け璐? The requested bucket name is not available.
+
+Solution:
+  - 妫€鏌ョ綉缁滆繛鎺ユ槸鍚︾ǔ瀹?  - 濡傛灉浣跨敤浜嗕唬鐞嗭紝纭浠ｇ悊 idle timeout 瓒冲闀匡紙寤鸿 > 5 鍒嗛挓锛?  - 灏濊瘯鍏堜笂浼犲崟涓枃浠舵祴璇曪細tcb hosting deploy index.html
+  - 妫€鏌ヨ涓婁紶鐨勭洰褰曟槸鍚﹀寘鍚繃澶氭枃浠讹紝鍙垎鎵逛笂浼?

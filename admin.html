@@ -1172,10 +1172,14 @@
                     </div>
                     <div class="panel-body">
                         <div style="font-size:0.85rem;color:var(--text-soft);line-height:1.8;">
-                            指数行情来自东方财富全球指数接口；跟踪基金数据来自天天基金抓取脚本。数据由云端定时任务每日自动更新（基金 01:00、指数 06:00），云端不可用时会自动回退到本地快照。
+                            指数行情来自东方财富全球指数接口；跟踪基金数据来自天天基金抓取脚本。数据由 GitHub Actions 每日 6:00（北京时间）自动抓取并更新到仓库，点击下方按钮可手动拉取 GitHub 最新数据，失败时自动回退到本地快照。
                         </div>
                         <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);">
                             指数行情更新时间：<span id="indexQuoteUpdated">—</span>　基金数据更新时间：<span id="indexFundUpdated">—</span>
+                        </div>
+                        <div style="margin-top:0.7rem;">
+                            <button class="btn btn-primary btn-sm" id="btnFetchGithub" onclick="fetchGithubData()">从 GitHub 拉取最新数据</button>
+                            <span class="hint" style="margin-left:0.6rem;">手动获取 GitHub 上每日更新后的指数行情与基金数据，用于生成本期文章</span>
                         </div>
                     </div>
                 </div>
@@ -3153,6 +3157,14 @@
         var cloudIndexFundsUpdated = '';
         var cloudIndexLoadStarted = false;
 
+        // GitHub 手动拉取：指数行情与跟踪基金由 GitHub Actions 每日抓取后写入仓库
+        var GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/Yleeaa/invest-hub/main';
+        var githubIndexQuotes = null;
+        var githubIndexQuotesUpdated = '';
+        var githubIndexFunds = null;
+        var githubIndexFundsUpdated = '';
+        var githubFetching = false;
+
         function loadIndexCloudData() {
             if (cloudIndexLoadStarted) return;
             cloudIndexLoadStarted = true;
@@ -3188,7 +3200,55 @@
         }
 
         function getIndexFundsUpdated() {
-            return cloudIndexFundsUpdated || window.NASDAQ_FUNDS_UPDATED || '';
+            return githubIndexFundsUpdated || cloudIndexFundsUpdated || window.NASDAQ_FUNDS_UPDATED || '';
+        }
+
+        // 从 GitHub raw 手动拉取每日自动更新后的指数行情与基金数据
+        function fetchGithubData() {
+            if (githubFetching) return;
+            githubFetching = true;
+            var btn = document.getElementById('btnFetchGithub');
+
+            function evalWindow(src) {
+                var sandbox = {};
+                new Function('window', src + '\nreturn window;')(sandbox);
+                return sandbox;
+            }
+            function loadScript(path) {
+                return fetch(GITHUB_RAW_BASE + path, { cache: 'no-store' }).then(function (r) {
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    return r.text();
+                });
+            }
+
+            if (btn) btn.textContent = '拉取中…';
+
+            var quoteP = loadScript('/js/index-quotes.js').then(function (src) {
+                var w = evalWindow(src);
+                if (w && w.INDEX_QUOTES) {
+                    githubIndexQuotes = w.INDEX_QUOTES;
+                    githubIndexQuotesUpdated = w.INDEX_QUOTES_UPDATED || '';
+                }
+            });
+            var fundP = loadScript('/js/nasdaq-funds.js').then(function (src) {
+                var w = evalWindow(src);
+                if (w && w.NASDAQ_FUNDS) {
+                    githubIndexFunds = w.NASDAQ_FUNDS;
+                    githubIndexFundsUpdated = w.NASDAQ_FUNDS_UPDATED || '';
+                }
+            });
+
+            Promise.all([quoteP, fundP]).then(function () {
+                document.getElementById('indexQuoteUpdated').textContent = getIndexQuotes().updated || '未生成';
+                document.getElementById('indexFundUpdated').textContent = getIndexFundsUpdated() || '未生成';
+                renderIndexPreview();
+                showToast('已获取 GitHub 最新数据', 'success');
+            }).catch(function (e) {
+                showToast('拉取失败：' + (e && e.message ? e.message : '网络错误'), 'error');
+            }).finally(function () {
+                githubFetching = false;
+                if (btn) btn.textContent = '从 GitHub 拉取最新数据';
+            });
         }
 
         function indexTodayStr() {
@@ -3202,8 +3262,8 @@
 
         // 指数行情：优先云端（get-index-quotes），回退本地 window.INDEX_QUOTES（js/index-quotes.js）
         function getIndexQuotes() {
-            var q = cloudIndexQuotes || (typeof window !== 'undefined' && window.INDEX_QUOTES) || {};
-            var updated = cloudIndexQuotesUpdated || window.INDEX_QUOTES_UPDATED || '';
+            var q = githubIndexQuotes || cloudIndexQuotes || (typeof window !== 'undefined' && window.INDEX_QUOTES) || {};
+            var updated = githubIndexQuotesUpdated || cloudIndexQuotesUpdated || window.INDEX_QUOTES_UPDATED || '';
             var order = ['NDX', 'SPX', 'DJIA'];
             var list = [];
             order.forEach(function (k) {
@@ -3218,28 +3278,72 @@
             return { quotes: list, updated: updated };
         }
 
+        // 解析单日限额字符串，如 "100.00元" / "1.00万元" / "无限额" / 空
+        function parseDailyLimit(s) {
+            s = String(s == null ? '' : s).trim();
+            if (!s || s === '—') return null;
+            if (s.indexOf('无限额') !== -1) return Infinity;
+            var m = s.match(/(\d+(?:\.\d+)?)\s*(万)?/);
+            if (!m) return null;
+            var v = parseFloat(m[1]);
+            if (m[2]) v *= 10000;
+            return v;
+        }
+
         // 跟踪基金：优先云端（get-nasdaq-funds），回退本地 window.NASDAQ_FUNDS（js/nasdaq-funds.js）
         function getIndexFunds() {
-            var funds = cloudIndexFunds || (typeof window !== 'undefined' && window.NASDAQ_FUNDS) || [];
-            var etfs = [];
-            var limited = [];
-            funds.forEach(function (f) {
-                if (f.cat === 'ETF') {
-                    var premium = (f.premium === '' || f.premium == null) ? null : parseFloat(f.premium);
-                    etfs.push({ name: f.name, code: f.code, index: f.index, premium: (isNaN(premium) ? null : premium) });
-                } else {
-                    var st = String(f.purchaseStatus || '');
-                    if (st.indexOf('暂停') !== -1 || st.indexOf('限') !== -1) {
-                        limited.push({ name: f.name, code: f.code, index: f.index, status: st });
-                    }
-                }
+            var funds = githubIndexFunds || cloudIndexFunds || (typeof window !== 'undefined' && window.NASDAQ_FUNDS) || [];
+            // 只保留人民币份额，排除美元/港币现汇份额
+            var list = funds.filter(function (f) { return f.ccy !== '美元' && f.ccy !== '港币'; });
+
+            // 场外基金：同产品存在 A/C/D/I/E/F 等多个份额时，只保留 A 类
+            var groups = {};
+            list.forEach(function (f) {
+                if (f.cat === 'ETF') return;
+                var idx = f.index || 'NDX';
+                var key = f.company + '|' + idx + '|' + f.cat;
+                (groups[key] = groups[key] || []).push(f);
             });
+            var keepA = {};
+            Object.keys(groups).forEach(function (k) {
+                if (groups[k].some(function (f) { return f.cls === 'A'; })) keepA[k] = true;
+            });
+            list = list.filter(function (f) {
+                if (f.cat === 'ETF') return true;
+                var idx = f.index || 'NDX';
+                var key = f.company + '|' + idx + '|' + f.cat;
+                return keepA[key] ? f.cls === 'A' : true;
+            });
+
+            var etfs = [];
+            var offmarket = [];
+            list.forEach(function (f) {
+                var premium = (f.premium === '' || f.premium == null) ? null : parseFloat(f.premium);
+                if (isNaN(premium)) premium = null;
+                var limitText = String(f.dailyLimit || '').trim();
+                var prevLimitText = String(f.prevDailyLimit || '').trim();
+                var item = { name: f.name, code: f.code, index: (f.index || 'NDX'), premium: premium, status: String(f.purchaseStatus || ''), limitText: limitText, limitVal: parseDailyLimit(limitText), prevStatus: String(f.prevPurchaseStatus || ''), prevLimitText: prevLimitText, prevLimitVal: parseDailyLimit(prevLimitText), trackingError: String(f.trackingError || '') };
+                if (f.cat === 'ETF') etfs.push(item);
+                else offmarket.push(item);
+            });
+
+            // 场内 ETF 按溢价率从低到高（无溢价值排最后）
             etfs.sort(function (a, b) {
-                var av = a.premium == null ? -1 : Math.abs(a.premium);
-                var bv = b.premium == null ? -1 : Math.abs(b.premium);
+                var av = a.premium == null ? Infinity : a.premium;
+                var bv = b.premium == null ? Infinity : b.premium;
+                return av - bv;
+            });
+            // 场外：暂停申购排最后，其余按单日限额从高到低（无限额最大、无数据排最后）
+            offmarket.sort(function (a, b) {
+                var pa = a.status.indexOf('暂停') !== -1 ? 1 : 0;
+                var pb = b.status.indexOf('暂停') !== -1 ? 1 : 0;
+                if (pa !== pb) return pa - pb;
+                var av = a.limitVal == null ? -Infinity : a.limitVal;
+                var bv = b.limitVal == null ? -Infinity : b.limitVal;
                 return bv - av;
             });
-            return { etfs: etfs, limited: limited };
+
+            return { etfs: etfs, offmarket: offmarket };
         }
 
         function buildIndexArticleHtml() {
@@ -3253,10 +3357,17 @@
             var W = 'margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;';
             var G = 'margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;';
             var K = 'color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;';
+            var TBL = 'width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px;color:#3f3f3f;';
+            var TH = 'border:1px solid #e3d9c0;background:#f3ecdc;color:#7a5c28;padding:7px 10px;text-align:left;font-weight:700;';
+            var TD = 'border:1px solid #e8e0cd;padding:7px 10px;color:#3f3f3f;';
 
             var fmt = function (n) {
                 if (n == null || isNaN(n)) return '—';
                 return Number(n).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            };
+            var fmtMoney = function (n) {
+                if (n == null || isNaN(n)) return '—';
+                return Number(n).toLocaleString('zh-CN', { maximumFractionDigits: 2 });
             };
             var sign = function (n) { return n >= 0 ? '+' : ''; };
             var chgColor = function (n) {
@@ -3277,43 +3388,122 @@
                 quoteHtml = '<section style="' + Q + '">未读取到指数行情，请稍后重试，或在本地运行 node scripts/run-fetch-index.js 生成本地快照。</section>';
             }
 
-            // 2) 场内 ETF 溢价
-            var etfHtml = '';
-            if (f.etfs.length) {
-                f.etfs.slice(0, 6).forEach(function (e) {
+            // 2) 基金全景：按 指数 × 场内/场外 四组展示所有标的
+            function byIdx(list, idx) { return list.filter(function (x) { return x.index === idx; }); }
+            function summarizeOff(list) {
+                var total = 0, unlimited = 0, paused = 0;
+                list.forEach(function (l) {
+                    if (l.status.indexOf('暂停') !== -1) { paused++; return; }
+                    if (l.limitVal === Infinity) { unlimited++; return; }
+                    if (l.limitVal != null && !isNaN(l.limitVal)) total += l.limitVal;
+                });
+                var text;
+                if (unlimited > 0) {
+                    text = '可申购总额：' + (total > 0 ? fmtMoney(total) + ' 元 + ' : '') + unlimited + ' 只无限额' + (paused > 0 ? '（另有 ' + paused + ' 只暂停申购）' : '');
+                } else {
+                    text = '可申购总额：' + fmtMoney(total) + ' 元' + (paused > 0 ? '（另有 ' + paused + ' 只暂停申购）' : '');
+                }
+                return { total: total, unlimited: unlimited, paused: paused, text: text };
+            }
+            function limitCell(l) {
+                if (l.status.indexOf('暂停') !== -1) return '暂停申购';
+                if (l.limitText) return l.limitText;
+                if (l.limitVal === Infinity) return '无限额';
+                return '—';
+            }
+            function limitCellHtml(l) {
+                if (l.status.indexOf('暂停') !== -1) return '<span style="color:#c00000;">暂停申购</span>';
+                if (l.limitText) return '<strong>' + escWeekly(l.limitText) + '</strong>';
+                if (l.limitVal === Infinity) return '<strong>无限额</strong>';
+                return '—';
+            }
+            function limitCellPlain(l) {
+                if (l.status.indexOf('暂停') !== -1) return '暂停申购';
+                if (l.limitText) return l.limitText;
+                if (l.limitVal === Infinity) return '无限额';
+                return '—';
+            }
+            function prevCellHtml(l) {
+                if (!l.prevStatus && !l.prevLimitText) return '—';
+                if (l.prevStatus.indexOf('暂停') !== -1) return '<span style="color:#c00000;">暂停申购</span>';
+                if (l.prevLimitText) return '<strong>' + escWeekly(l.prevLimitText) + '</strong>';
+                if (l.prevLimitVal === Infinity) return '<strong>无限额</strong>';
+                return '—';
+            }
+            function prevCellPlain(l) {
+                if (!l.prevStatus && !l.prevLimitText) return '—';
+                if (l.prevStatus.indexOf('暂停') !== -1) return '暂停申购';
+                if (l.prevLimitText) return l.prevLimitText;
+                if (l.prevLimitVal === Infinity) return '无限额';
+                return '—';
+            }
+            function etfBlock(title, list) {
+                var s = '<section style="' + H + '">' + title + '（共 ' + list.length + ' 只）</section>';
+                if (!list.length) return s + '<section style="' + Q + '">暂无该分组标的。</section>';
+                s += '<table style="' + TBL + '"><thead><tr>' +
+                    '<th style="' + TH + '">基金名称</th>' +
+                    '<th style="' + TH + '">代码</th>' +
+                    '<th style="' + TH + '">溢价率</th>' +
+                    '<th style="' + TH + '">跟踪误差</th>' +
+                    '</tr></thead><tbody>';
+                list.forEach(function (e) {
                     var premStr = e.premium == null ? '—' : (sign(e.premium) + e.premium.toFixed(2) + '%');
                     var c = e.premium == null ? '#999' : (e.premium >= 0 ? '#c00000' : '#0a7d48');
                     var highTag = (e.premium != null && e.premium >= 2) ? ' <span style="' + K + '">高溢价</span>' : '';
-                    etfHtml += '<section style="' + Q + '">' + escWeekly(e.name) + '（' + e.code + '）溢价率：<strong style="color:' + c + ';">' + premStr + '</strong>' + highTag + '</section>';
+                    s += '<tr>' +
+                        '<td style="' + TD + '">' + escWeekly(e.name) + '</td>' +
+                        '<td style="' + TD + '">' + e.code + '</td>' +
+                        '<td style="' + TD + '"><strong style="color:' + c + ';">' + premStr + '</strong>' + highTag + '</td>' +
+                        '<td style="' + TD + '">' + (e.trackingError || '—') + '</td>' +
+                        '</tr>';
                 });
-            } else {
-                etfHtml = '<section style="' + Q + '">未读取到场内 ETF 数据。</section>';
+                s += '</tbody></table>';
+                return s;
+            }
+            function offBlock(title, list) {
+                var s = '<section style="' + H + '">' + title + '（共 ' + list.length + ' 只）</section>';
+                if (!list.length) return s + '<section style="' + Q + '">暂无该分组标的。</section>';
+                var sum = summarizeOff(list);
+                s += '<section style="' + Q + '"><strong>汇总：' + sum.text + '</strong></section>';
+                s += '<table style="' + TBL + '"><thead><tr>' +
+                    '<th style="' + TH + '">基金名称</th>' +
+                    '<th style="' + TH + '">代码</th>' +
+                    '<th style="' + TH + '">今日限购</th>' +
+                    '<th style="' + TH + '">昨日限购</th>' +
+                    '</tr></thead><tbody>';
+                list.forEach(function (l) {
+                    s += '<tr>' +
+                        '<td style="' + TD + '">' + escWeekly(l.name) + '</td>' +
+                        '<td style="' + TD + '">' + l.code + '</td>' +
+                        '<td style="' + TD + '">' + limitCellHtml(l) + '</td>' +
+                        '<td style="' + TD + '">' + prevCellHtml(l) + '</td>' +
+                        '</tr>';
+                });
+                s += '</tbody></table>';
+                return s;
             }
 
-            // 3) 场外限购
-            var limitedHtml = '';
-            if (f.limited.length) {
-                f.limited.slice(0, 5).forEach(function (l) {
-                    limitedHtml += '<section style="' + Q + '">' + escWeekly(l.name) + '：' + escWeekly(l.status) + '</section>';
-                });
-            } else {
-                limitedHtml = '<section style="' + Q + '">暂无暂停/限额申购的场外基金。</section>';
-            }
+            var ndxEtf = byIdx(f.etfs, 'NDX');
+            var spxEtf = byIdx(f.etfs, 'SPX');
+            var ndxOff = byIdx(f.offmarket, 'NDX');
+            var spxOff = byIdx(f.offmarket, 'SPX');
+
+            var fundHtml =
+                offBlock('纳斯达克100 · 场外基金', ndxOff) +
+                etfBlock('纳斯达克100 · 场内 ETF', ndxEtf) +
+                offBlock('标普500 · 场外基金', spxOff) +
+                etfBlock('标普500 · 场内 ETF', spxEtf);
 
             var html =
                 '<p style="' + P + '">大家好，这里是<strong style="' + K + '">叨居</strong>，带来今日美股主要指数的一览速递。</p>' +
                 '<section style="' + H + '">美股主要指数（收盘行情 · ' + escWeekly(date) + '）</section>' +
                 quoteHtml +
-                '<section style="' + H + '">场内 ETF 溢价速览</section>' +
-                '<p style="' + P + '">以下为跟踪纳指100 / 标普500 的基金中，溢价率居前的场内 ETF；<strong>溢价过高需留意回落风险</strong>。</p>' +
-                etfHtml +
-                '<section style="' + H + '">场外限购速览</section>' +
-                limitedHtml +
+                fundHtml +
                 '<section style="' + H + '">重要声明</section>' +
                 '<section style="' + W + '">以上内容仅为个人记录与数据整理，不构成任何投资建议。市场有风险，入市需谨慎。</section>' +
                 '<section style="' + G + '"><strong style="font-size:15px;">每日美股速览，欢迎关注</strong><br>' +
-                '<span style="font-size:13px;">公众号：叨居　|　B站：投么有度</span><br>' +
-                '<span style="font-size:13px;color:#8a7a55;">完整数据与更多投资记录，可访问个人网站【投么有度】查看。</span></section>';
+                '<span style="font-size:13px;">公众号：叨居</span><br>' +
+                '<span style="font-size:13px;color:#8a7a55;">完整数据与更多投资记录，可访问个人网站【投么有度】查看。（详见主页）</span></section>';
 
             var textLines = [];
             textLines.push('大家好，这里是叨居，带来今日美股主要指数的一览速递。');
@@ -3322,21 +3512,34 @@
             q.quotes.forEach(function (it) {
                 textLines.push('- ' + it.name + '：' + fmt(it.price) + '　涨跌 ' + sign(it.change) + fmt(it.change) + '（' + sign(it.pct) + fmt(it.pct) + '%）');
             });
-            textLines.push('');
-            textLines.push('【场内 ETF 溢价速览】');
-            f.etfs.slice(0, 6).forEach(function (e) {
-                textLines.push('- ' + e.name + '（' + e.code + '）溢价率：' + (e.premium == null ? '—' : sign(e.premium) + e.premium.toFixed(2) + '%'));
-            });
-            textLines.push('');
-            textLines.push('【场外限购速览】');
-            f.limited.slice(0, 5).forEach(function (l) {
-                textLines.push('- ' + l.name + '：' + l.status);
-            });
-            if (!f.limited.length) textLines.push('- 暂无暂停/限额申购的场外基金');
+            var etfLine = function (e) { return e.name + '（' + e.code + '）溢价率：' + (e.premium == null ? '—' : sign(e.premium) + e.premium.toFixed(2) + '%') + '　跟踪误差：' + (e.trackingError || '—'); };
+            var offLine = function (l) {
+                var cur = limitCell(l);
+                var prev = prevCellPlain(l);
+                if (prev === '—' || prev === cur) return l.name + '（' + l.code + '）' + cur;
+                return l.name + '（' + l.code + '）' + cur + '（昨日：' + prev + '）';
+            };
+            var appendEtf = function (label, list) {
+                textLines.push('');
+                textLines.push('【' + label + ' · 共 ' + list.length + ' 只】');
+                if (!list.length) { textLines.push('- 暂无该分组标的'); return; }
+                list.forEach(function (e) { textLines.push('- ' + etfLine(e)); });
+            };
+            var appendOff = function (label, list) {
+                textLines.push('');
+                textLines.push('【' + label + ' · 共 ' + list.length + ' 只】');
+                if (!list.length) { textLines.push('- 暂无该分组标的'); return; }
+                list.forEach(function (l) { textLines.push('- ' + offLine(l)); });
+                textLines.push('→ ' + summarizeOff(list).text);
+            };
+            appendOff('纳斯达克100 · 场外基金', ndxOff);
+            appendEtf('纳斯达克100 · 场内 ETF', ndxEtf);
+            appendOff('标普500 · 场外基金', spxOff);
+            appendEtf('标普500 · 场内 ETF', spxEtf);
             textLines.push('');
             textLines.push('【重要声明】以上内容仅为个人记录与数据整理，不构成任何投资建议。市场有风险，入市需谨慎。');
             textLines.push('');
-            textLines.push('每日美股速览，欢迎关注：公众号：叨居　B站：投么有度');
+            textLines.push('每日美股速览，欢迎关注：公众号：叨居');
 
             return { html: html, text: textLines.join('\n') };
         }

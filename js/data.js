@@ -709,6 +709,90 @@ const WEEKLY_POSTS = [
 /* ===== 公众号文章数据 ===== */
 const ARTICLES = [
     {
+        "date": "2026-10-02",
+        "category": "每天认识一个指数",
+        "title": "中证红利：专挑「愿意分钱的公司」",
+        "summary": "中证红利：专挑「愿意分钱的公司」",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484218&idx=1&sn=d9607c86ae34f914f5ec40f10d30b2a4&chksm=f529cb84c25e4292f4f068e9b437ce0e2131d3bcde9d0ad2de08adcc7257ba992f131af3bc8e&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-30",
+        "category": "每天认识一个指数",
+        "title": "深证成指：A股资历最老的那批指数之一",
+        "summary": "深证成指：A股资历最老的那批指数之一",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484217&idx=1&sn=d8272adc55f2a37f332a7decc18c3d8d&chksm=f529cb87c25e4291bccd6e5af4ca77d851299f3556febc5297bae65d8c100bb4b2908b0454a0&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-29",
+        "category": "每天认识一个指数",
+        "title": "创业板指：15 年换了三代主角的「成长班」",
+        "summary": "创业板指：15 年换了三代主角的「成长班」",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484216&idx=1&sn=6b70ff866c92d8380390d236b46f270b&chksm=f529cb86c25e4290b836e0a1a1dd29d4ceb9bddc6e16952af42b88b730bd24c2ed78782db0ad&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-28",
+        "category": "每天认识一个指数",
+        "title": "科创100：从2146点到661点，这只指数四年半走完三种人生",
+        "summary": "科创100：从2146点到661点，这只指数四年半走完三种人生",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484215&idx=1&sn=f0bace7d4813a74fffc2c2d842df4b57&chksm=f529cb89c25e429fdcc8e9d8aec188fadda5a0f0263382476186ed0971c4a03c06c280690c9e&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-24",
+        "category": "每天认识一个指数",
+        "title": "科创50：A 股脾气最暴的宽基",
+        "summary": "科创50：A 股脾气最暴的宽基",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484052&idx=1&sn=53fde115e73ea165f9af09d746768c77&chksm=f529ca2ac25e433ce37430d7322cffe3fa649b76086456db4324c3cc979d2cfadec662abd788&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-23",
+        "category": "每天认识一个指数",
+        "title": "科创综指：五年半只涨 12%，随后一年涨 46%，科创综指经历了什么",
+        "summary": "科创综指：五年半只涨 12%，随后一年涨 46%，科创综指经历了什么",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484051&idx=1&sn=5094d103b6ac10ffa47ca1af32ba5950&chksm=f529ca2dc25e433b91b92cb403b78ed9c893bc07e8302840dd1b1cd1a1ffac651836cbf9ef45&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-22",
+        "category": "每天认识一个指数",
+        "title": "上证50：上海滩最大的 50 家公司",
+        "summary": "上证50：上海滩最大的 50 家公司",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484050&idx=1&sn=0a54706b82193812b65eada6b47cdccd&chksm=f529ca2cc25e433a0e0a0e75c2cedac8f7d2875cde0c5017cea93d9c122f653228f2024595bd&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-21",
+        "category": "每天认识一个指数",
+        "title": "上证指数：6124点，快19年了，A股还没回去过",
+        "summary": "上证指数：6124点，快19年了，A股还没回去过",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484049&idx=1&sn=c28deabb7abfc4b089189face9f22bc3&chksm=f529ca2fc25e43394fd3de07b4d33d733977c86cbde2acb753f9e3c30c1aaa8983c670940a22&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-20",
+        "category": "每天认识一个指数",
+        "title": "中证1000：连跌三年亏掉58%的指数，凭什么被盯了十年",
+        "summary": "中证1000：连跌三年亏掉58%的指数，凭什么被盯了十年",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247484048&idx=1&sn=5ccbc12fdb58cb02485c58c5e5e32f7d&chksm=f529ca2ec25e43389523fd17c0b5cc9341525e13b8df7c78cdd08bfb18a4202b0d8cf801b5eb&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-18",
+        "category": "每天认识一个指数",
+        "title": "中证500：一篮子会自动换血的中盘公司",
+        "summary": "中证500：一篮子会自动换血的中盘公司",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247483996&idx=1&sn=2325ddc946b33725a54085492fe83ec7&chksm=f529cae2c25e43f4368b0cd9862b73d97e7fbc276253cb59d8c76fb9e882164184cf7fd1a37d&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-16",
+        "category": "每天认识一个指数",
+        "title": "中证A500：给每个行业分席位的500家公司",
+        "summary": "中证A500：给每个行业分席位的500家公司",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247483931&idx=1&sn=fd3976bbd080b2603b00948b95eb593f&chksm=f529caa5c25e43b3b52b3a719bbf99ab0b29924e3bc3de404c127913e4cf1df1c49fffcf1693&token=131387801&lang=zh_CN#rd"
+    },
+    {
+        "date": "2026-09-14",
+        "category": "每天认识一个指数",
+        "title": "沪深300：300 家公司，赚走 A 股 86% 的钱",
+        "summary": "沪深300：300 家公司，赚走 A 股 86% 的钱",
+        "link": "https://mp.weixin.qq.com/s?__biz=MzcwOTMwNDc4NQ==&mid=2247483918&idx=1&sn=bb472b024205d3979e20486db48a74fd&chksm=f529cab0c25e43a62854061c616d46646d81981e7c9165931064a8c4c5a667406a384fb130d7&token=131387801&lang=zh_CN#rd"
+    },
+    {
         "date": "2026-07-26",
         "category": "给大脑添砖加瓦",
         "title": "低利率时代，从忽视债券到补齐这堂必修课的心态转变",
@@ -793,6 +877,11 @@ const CATEGORIES = [
         "name": "关于个人的投资觉醒",
         "tagColor": "tag-blue",
         "desc": "意识到投资的重要性，纪录关于个人的投资心路历程"
+    },
+    {
+        "name": "每天认识一个指数",
+        "tagColor": "tag-cyan",
+        "desc": ""
     },
     {
         "name": "给大脑添砖加瓦",

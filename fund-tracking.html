@@ -333,11 +333,11 @@
     <script src="js/nasdaq-funds.js"></script>
     <script>
         (function () {
-            // 部署到 CloudBase 后填入你的 HTTP 接口地址，即可自动读取每日更新的云端数据
-            var API_URL = 'https://ceshi-1-d1g0czdaa999081f4-1470950321.ap-shanghai.app.tcloudbase.com/get-nasdaq-funds';
+            // 纯 GitHub Pages 部署：数据由 GitHub Actions 定时抓取后写入 js/nasdaq-funds.js，此处不再请求云端
+            var API_URL = '';
             var DATA = (window.NASDAQ_FUNDS || []).map(function (f) { return f; });
             var UPDATED = window.NASDAQ_FUNDS_UPDATED || '';
-            var SOURCE = '本地数据';
+            var SOURCE = '每日自动更新（GitHub Actions）';
             var state = { cat: '全部', q: '', key: null, dir: 1, idx: 'NDX' };
 
             function num(v) {

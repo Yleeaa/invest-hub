@@ -2803,8 +2803,8 @@
                 '<section style="' + W + '">所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。</section>' +
                 '<p style="' + F + '">更多长期投资思考与复盘笔记，会持续更新于此。</p>' +
                 '<section style="' + G + '"><strong style="font-size:15px;">每周更新实盘周记，欢迎关注</strong><br>' +
-                '<span style="font-size:13px;">公众号：叨居　|　B站：投么有度</span><br>' +
-                '<span style="font-size:13px;color:#8a7a55;">往后每周，我都会在这里同步账户最新情况，记录一路上的思考、犯错与成长。<br>完整的数据演示页面，可访问个人网站【投么有度】查看。<br>视频版本同步更新在B站，搜索「投么有度」即可观看。</span></section>';
+                '<span style="font-size:13px;">公众号：叨居</span><br>' +
+                '<span style="font-size:13px;color:#8a7a55;">往后每周，在这里同步账户最新情况，记录一路上的思考与成长。<br>完整的数据内容，可前往【个人主页】访问个人网站【投么有度】查看。</span></section>';
 
             var text =
                 '大家好，这里是' + author + '，欢迎来到我的投资纪实记录。\n\n' +
@@ -3158,7 +3158,14 @@
         var cloudIndexLoadStarted = false;
 
         // GitHub 手动拉取：指数行情与跟踪基金由 GitHub Actions 每日抓取后写入仓库
-        var GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/Yleeaa/invest-hub/main';
+        // 数据源按可达性排序逐级降级：GitHub Pages（Fastly CDN）→ jsDelivr → raw.githubusercontent
+        var GITHUB_SOURCES = [
+            'https://yleeaa.github.io/invest-hub',
+            'https://cdn.jsdelivr.net/gh/Yleeaa/invest-hub@main',
+            'https://raw.githubusercontent.com/Yleeaa/invest-hub/main'
+        ];
+        // 单次请求超时（毫秒），避免连接挂起时按钮长期停留在「拉取中…」
+        var GITHUB_FETCH_TIMEOUT = 6000;
         var githubIndexQuotes = null;
         var githubIndexQuotesUpdated = '';
         var githubIndexFunds = null;
@@ -3192,8 +3199,8 @@
             Promise.all([quoteP, fundP]).then(function () {
                 var qEl = document.getElementById('indexQuoteUpdated');
                 var fEl = document.getElementById('indexFundUpdated');
-                if (qEl) qEl.textContent = getIndexQuotes().updated || '未生成';
-                if (fEl) fEl.textContent = getIndexFundsUpdated() || '未生成';
+                if (qEl) qEl.textContent = updatedText(getIndexQuotes().updated);
+                if (fEl) fEl.textContent = updatedText(getIndexFundsUpdated());
                 var page = document.getElementById('page-indexQuote');
                 if (page && page.style.display !== 'none') renderIndexPreview();
             });
@@ -3203,48 +3210,70 @@
             return githubIndexFundsUpdated || cloudIndexFundsUpdated || window.NASDAQ_FUNDS_UPDATED || '';
         }
 
-        // 从 GitHub raw 手动拉取每日自动更新后的指数行情与基金数据
+        // 带超时的一次请求：超时或 HTTP 错误都 reject，交由上层切换下一个数据源
+        function fetchWithTimeout(url, ms) {
+            var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+            var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, ms);
+            var opt = { cache: 'no-store' };
+            if (ctrl) opt.signal = ctrl.signal;
+            return fetch(url, opt).then(function (r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.text();
+            }).finally(function () { clearTimeout(timer); });
+        }
+
+        // 依次尝试各数据源，任一成功即返回；全部失败才抛错
+        function loadScriptWithFallback(path) {
+            var i = 0;
+            function attempt() {
+                if (i >= GITHUB_SOURCES.length) return Promise.reject(new Error('所有数据源均不可用'));
+                return fetchWithTimeout(GITHUB_SOURCES[i++] + path, GITHUB_FETCH_TIMEOUT).catch(attempt);
+            }
+            return attempt();
+        }
+
+        function evalWindow(src) {
+            try {
+                var sandbox = {};
+                new Function('window', src + '\nreturn window;')(sandbox);
+                return sandbox;
+            } catch (e) { return null; }
+        }
+
+        // 从 GitHub 手动拉取每日自动更新后的指数行情与基金数据
         function fetchGithubData() {
             if (githubFetching) return;
             githubFetching = true;
             var btn = document.getElementById('btnFetchGithub');
-
-            function evalWindow(src) {
-                var sandbox = {};
-                new Function('window', src + '\nreturn window;')(sandbox);
-                return sandbox;
-            }
-            function loadScript(path) {
-                return fetch(GITHUB_RAW_BASE + path, { cache: 'no-store' }).then(function (r) {
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    return r.text();
-                });
-            }
-
             if (btn) btn.textContent = '拉取中…';
 
-            var quoteP = loadScript('/js/index-quotes.js').then(function (src) {
-                var w = evalWindow(src);
-                if (w && w.INDEX_QUOTES) {
-                    githubIndexQuotes = w.INDEX_QUOTES;
-                    githubIndexQuotesUpdated = w.INDEX_QUOTES_UPDATED || '';
+            // allSettled：两个文件互不影响，偶发失败不会拖垮另一个
+            Promise.allSettled([
+                loadScriptWithFallback('/js/index-quotes.js'),
+                loadScriptWithFallback('/js/nasdaq-funds.js')
+            ]).then(function (res) {
+                var ok = 0;
+                var qw = res[0].status === 'fulfilled' ? evalWindow(res[0].value) : null;
+                if (qw && qw.INDEX_QUOTES) {
+                    githubIndexQuotes = qw.INDEX_QUOTES;
+                    githubIndexQuotesUpdated = qw.INDEX_QUOTES_UPDATED || '';
+                    ok++;
                 }
-            });
-            var fundP = loadScript('/js/nasdaq-funds.js').then(function (src) {
-                var w = evalWindow(src);
-                if (w && w.NASDAQ_FUNDS) {
-                    githubIndexFunds = w.NASDAQ_FUNDS;
-                    githubIndexFundsUpdated = w.NASDAQ_FUNDS_UPDATED || '';
+                var fw = res[1].status === 'fulfilled' ? evalWindow(res[1].value) : null;
+                if (fw && fw.NASDAQ_FUNDS) {
+                    githubIndexFunds = fw.NASDAQ_FUNDS;
+                    githubIndexFundsUpdated = fw.NASDAQ_FUNDS_UPDATED || '';
+                    ok++;
                 }
-            });
 
-            Promise.all([quoteP, fundP]).then(function () {
-                document.getElementById('indexQuoteUpdated').textContent = getIndexQuotes().updated || '未生成';
-                document.getElementById('indexFundUpdated').textContent = getIndexFundsUpdated() || '未生成';
+                // 无论成败都落到本地/云端已有数据，保证界面可用
+                document.getElementById('indexQuoteUpdated').textContent = updatedText(getIndexQuotes().updated);
+                document.getElementById('indexFundUpdated').textContent = updatedText(getIndexFundsUpdated());
                 renderIndexPreview();
-                showToast('已获取 GitHub 最新数据', 'success');
-            }).catch(function (e) {
-                showToast('拉取失败：' + (e && e.message ? e.message : '网络错误'), 'error');
+
+                if (ok === 2) showToast('已获取 GitHub 最新数据', 'success');
+                else if (ok === 1) showToast('部分数据拉取失败，已更新成功部分，其余为本地缓存', 'error');
+                else showToast('网络不佳，拉取失败，已使用本地缓存数据', 'error');
             }).finally(function () {
                 githubFetching = false;
                 if (btn) btn.textContent = '从 GitHub 拉取最新数据';
@@ -3256,6 +3285,36 @@
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         }
 
+        // 统一把各来源的更新时间渲染成「2026-10-03 01:00（北京时间）」：ISO(UTC) 自动换算，去掉 T/Z 与秒
+        function formatUpdatedTime(v) {
+            if (v == null) return '';
+            var s = String(v).trim();
+            if (!s || s === '未生成' || s === '—') return s;
+
+            if (!/^\d{4}-\d{2}-\d{2}T/.test(s)) {
+                // 已是北京时间字符串（如 2026/10/3 19:41:54），只需规范分隔符并去掉秒
+                return s
+                    .replace(/^(\d{4})[\/](\d{1,2})[\/](\d{1,2})/, function (all, y, mo, da) {
+                        return y + '-' + String(mo).padStart(2, '0') + '-' + String(da).padStart(2, '0');
+                    })
+                    .replace(/:\d{2}(\.\d+)?$/, '');
+            }
+
+            var d = new Date(s);
+            if (isNaN(d.getTime())) return s;
+            var o = {};
+            new Intl.DateTimeFormat('zh-CN', {
+                timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+            }).formatToParts(d).forEach(function (p) { o[p.type] = p.value; });
+            return o.year + '-' + o.month + '-' + o.day + ' ' + o.hour + ':' + o.minute;
+        }
+
+        function updatedText(v) {
+            var t = formatUpdatedTime(v);
+            return t ? t + '（北京时间）' : '未生成';
+        }
+
         function indexDefaultTitle(date) {
             return '纳指标普收盘速览｜' + date;
         }
@@ -3263,7 +3322,8 @@
         // 指数行情：优先云端（get-index-quotes），回退本地 window.INDEX_QUOTES（js/index-quotes.js）
         function getIndexQuotes() {
             var q = githubIndexQuotes || cloudIndexQuotes || (typeof window !== 'undefined' && window.INDEX_QUOTES) || {};
-            var updated = githubIndexQuotesUpdated || cloudIndexQuotesUpdated || window.INDEX_QUOTES_UPDATED || '';
+            // 指数行情更新时间以「GitHub Actions 每日抓取」的时间点为准，云端接口时间仅作兜底
+            var updated = githubIndexQuotesUpdated || window.INDEX_QUOTES_UPDATED || cloudIndexQuotesUpdated || '';
             var order = ['NDX', 'SPX', 'DJIA'];
             var list = [];
             order.forEach(function (k) {
@@ -3351,15 +3411,22 @@
             var q = getIndexQuotes();
             var f = getIndexFunds();
 
-            var P = 'margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;';
+            var P = 'margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.2px;';
             var H = 'display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;';
-            var Q = 'margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;';
+            var Q = 'margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;letter-spacing:0.2px;';
+            // 指数行情行：字号 13px 且省略"涨跌"二字，配合下方内容顺序，保证手机端单行显示（实测单行需约 305px，375px 手机可用约 320px）
+            var QP = 'margin:6px 0;padding:9px 12px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:13px;line-height:1.7;color:#7a6a45;letter-spacing:0.2px;';
             var W = 'margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;';
             var G = 'margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;';
             var K = 'color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;';
-            var TBL = 'width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px;color:#3f3f3f;';
-            var TH = 'border:1px solid #e3d9c0;background:#f3ecdc;color:#7a5c28;padding:7px 10px;text-align:left;font-weight:700;';
-            var TD = 'border:1px solid #e8e0cd;padding:7px 10px;color:#3f3f3f;';
+            // 表格宽度自适应：基金名称列占剩余宽度并允许换行，数值列一律不换行、按内容取最小宽度，
+            // 避免公众号（尤其手机端）重排表格时出现列宽变形
+            var TBL = 'width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px;line-height:1.6;color:#3f3f3f;letter-spacing:0.2px;';
+            var TH = 'border:1px solid #e3d9c0;background:#f3ecdc;color:#7a5c28;padding:6px 5px;text-align:left;font-weight:700;word-break:break-word;';
+            var TD = 'border:1px solid #e8e0cd;padding:6px 5px;color:#3f3f3f;vertical-align:top;word-break:break-word;';
+            // 数值列：不换行 + width:1%（自动布局下即"最小内容宽度"），把宽度尽量让给基金名称列
+            var THV = TH + 'white-space:nowrap;width:1%;';
+            var TDV = TD + 'white-space:nowrap;width:1%;';
 
             var fmt = function (n) {
                 if (n == null || isNaN(n)) return '—';
@@ -3380,9 +3447,9 @@
             if (q.quotes.length) {
                 q.quotes.forEach(function (it) {
                     var c = chgColor(it.change);
-                    quoteHtml += '<section style="' + Q + '">' + escWeekly(it.name) +
+                    quoteHtml += '<section style="' + QP + '">' + escWeekly(it.name) +
                         '：<strong style="color:' + c + ';">' + fmt(it.price) + '</strong>' +
-                        '　涨跌 <strong style="color:' + c + ';">' + sign(it.change) + fmt(it.change) + '（' + sign(it.pct) + fmt(it.pct) + '%）</strong></section>';
+                        '<span style="white-space:nowrap;"> <strong style="color:' + c + ';">' + sign(it.change) + fmt(it.change) + '（' + sign(it.pct) + fmt(it.pct) + '%）</strong></span></section>';
                 });
             } else {
                 quoteHtml = '<section style="' + Q + '">未读取到指数行情，请稍后重试，或在本地运行 node scripts/run-fetch-index.js 生成本地快照。</section>';
@@ -3442,19 +3509,18 @@
                 if (!list.length) return s + '<section style="' + Q + '">暂无该分组标的。</section>';
                 s += '<table style="' + TBL + '"><thead><tr>' +
                     '<th style="' + TH + '">基金名称</th>' +
-                    '<th style="' + TH + '">代码</th>' +
-                    '<th style="' + TH + '">溢价率</th>' +
-                    '<th style="' + TH + '">跟踪误差</th>' +
+                    '<th style="' + THV + '">代码</th>' +
+                    '<th style="' + THV + '">溢价率</th>' +
+                    '<th style="' + THV + '">跟踪误差</th>' +
                     '</tr></thead><tbody>';
                 list.forEach(function (e) {
                     var premStr = e.premium == null ? '—' : (sign(e.premium) + e.premium.toFixed(2) + '%');
                     var c = e.premium == null ? '#999' : (e.premium >= 0 ? '#c00000' : '#0a7d48');
-                    var highTag = (e.premium != null && e.premium >= 2) ? ' <span style="' + K + '">高溢价</span>' : '';
                     s += '<tr>' +
                         '<td style="' + TD + '">' + escWeekly(e.name) + '</td>' +
-                        '<td style="' + TD + '">' + e.code + '</td>' +
-                        '<td style="' + TD + '"><strong style="color:' + c + ';">' + premStr + '</strong>' + highTag + '</td>' +
-                        '<td style="' + TD + '">' + (e.trackingError || '—') + '</td>' +
+                        '<td style="' + TDV + '">' + e.code + '</td>' +
+                        '<td style="' + TDV + '"><strong style="color:' + c + ';">' + premStr + '</strong></td>' +
+                        '<td style="' + TDV + '">' + (e.trackingError || '—') + '</td>' +
                         '</tr>';
                 });
                 s += '</tbody></table>';
@@ -3467,16 +3533,16 @@
                 s += '<section style="' + Q + '"><strong>汇总：' + sum.text + '</strong></section>';
                 s += '<table style="' + TBL + '"><thead><tr>' +
                     '<th style="' + TH + '">基金名称</th>' +
-                    '<th style="' + TH + '">代码</th>' +
-                    '<th style="' + TH + '">今日限购</th>' +
-                    '<th style="' + TH + '">昨日限购</th>' +
+                    '<th style="' + THV + '">代码</th>' +
+                    '<th style="' + THV + '">今日限购</th>' +
+                    '<th style="' + THV + '">昨日限购</th>' +
                     '</tr></thead><tbody>';
                 list.forEach(function (l) {
                     s += '<tr>' +
                         '<td style="' + TD + '">' + escWeekly(l.name) + '</td>' +
-                        '<td style="' + TD + '">' + l.code + '</td>' +
-                        '<td style="' + TD + '">' + limitCellHtml(l) + '</td>' +
-                        '<td style="' + TD + '">' + prevCellHtml(l) + '</td>' +
+                        '<td style="' + TDV + '">' + l.code + '</td>' +
+                        '<td style="' + TDV + '">' + limitCellHtml(l) + '</td>' +
+                        '<td style="' + TDV + '">' + prevCellHtml(l) + '</td>' +
                         '</tr>';
                 });
                 s += '</tbody></table>';
@@ -3556,8 +3622,8 @@
                 indexQuoteInited = true;
                 document.getElementById('indexDate').value = indexTodayStr();
             }
-            document.getElementById('indexQuoteUpdated').textContent = getIndexQuotes().updated || '未生成';
-            document.getElementById('indexFundUpdated').textContent = getIndexFundsUpdated() || '未生成';
+            document.getElementById('indexQuoteUpdated').textContent = updatedText(getIndexQuotes().updated);
+            document.getElementById('indexFundUpdated').textContent = updatedText(getIndexFundsUpdated());
             loadIndexCloudData();
             renderIndexPreview();
         }

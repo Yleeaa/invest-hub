@@ -1,47 +1,41 @@
 /* 本文件由 scripts/run-fetch-index.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/9/6 22:53:52（Asia/Shanghai） */
-window.INDEX_QUOTES_UPDATED = "2026/9/6 22:53:52";
+/* 生成时间：2026/10/3 20:15:29（Asia/Shanghai） */
+window.INDEX_QUOTES_UPDATED = "2026/10/3 20:15:29";
 window.INDEX_QUOTES = {
   "NDX": {
     "code": "NDX",
     "secid": "100.NDX",
     "name": "纳斯达克100",
-    "price": 26506.99,
-    "prevClose": 26584.06,
-    "change": -77.07,
-    "pct": -0.29,
-    "high": 26628.58,
-    "low": 26444.84,
-    "open": 26587.9
+    "price": 30807.93,
+    "prevClose": 30501.56,
+    "change": 306.37,
+    "pct": 1,
+    "high": 31017.52,
+    "low": 30737.07,
+    "open": 30869.14
   },
   "SPX": {
     "code": "SPX",
     "secid": "100.SPX",
     "name": "标普500",
-    "price": 7718.6,
-    "prevClose": 7747.71,
-    "change": -29.11,
-    "pct": -0.38,
-    "high": 7750.19,
-    "low": 7706.12,
-    "open": 7750.19
-  },
-  "IXIC": {
-    "code": "IXIC",
-    "secid": "100.IXIC",
-    "name": "纳斯达克综合",
-    "error": "未获取到行情"
+    "price": 7722.72,
+    "prevClose": 7666.45,
+    "change": 56.27,
+    "pct": 0.73,
+    "high": 7754.67,
+    "low": 7700.51,
+    "open": 7726.24
   },
   "DJIA": {
     "code": "DJIA",
     "secid": "100.DJIA",
     "name": "道琼斯工业",
-    "price": 53414.25,
-    "prevClose": 53686.11,
-    "change": -271.86,
-    "pct": -0.51,
-    "high": 53635.35,
-    "low": 53289.88,
-    "open": 53584.89
+    "price": 51176.96,
+    "prevClose": 50926.56,
+    "change": 250.4,
+    "pct": 0.49,
+    "high": 51382.88,
+    "low": 50950.61,
+    "open": 51241.18
   }
 };

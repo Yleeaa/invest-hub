@@ -32,17 +32,23 @@ jobs:
         with:
           node-version: '20'
 
-      # 定时 / 手动触发时，抓取最新基金数据并提交回仓库
-      - name: Fetch latest fund data
+      # 定时 / 手动触发时，抓取最新基金与指数行情数据并提交回仓库
+      - name: Fetch latest data (funds + index quotes)
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: node scripts/run-fetch-local.js
+        run: |
+          node scripts/run-fetch-local.js; fund=$?
+          node scripts/run-fetch-index.js; index=$?
+          echo "基金抓取退出码=$fund，指数抓取退出码=$index"
+          if [ $fund -ne 0 ] || [ $index -ne 0 ]; then
+            echo "::warning::部分数据抓取失败（fund=$fund, index=$index），对应数据本次未更新"
+          fi
 
       - name: Commit updated data
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add js/nasdaq-funds.js
+          git add js/nasdaq-funds.js js/index-quotes.js
           if git diff --cached --quiet; then
             echo "NO_CHANGES"
           else

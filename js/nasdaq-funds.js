@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/3 19:41:54（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/3 19:41:54";
+/* 生成时间：2026/10/4 08:17:36（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/4 08:17:36";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -2059,7 +2059,9 @@ window.NASDAQ_FUNDS = [
     "manager": "长信基金",
     "scale": "17.14亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "--"
+    "trackingError": "--",
+    "prevPurchaseStatus": "限大额",
+    "prevDailyLimit": "100.00元"
   },
   {
     "code": "096001",
@@ -2085,7 +2087,9 @@ window.NASDAQ_FUNDS = [
     "manager": "大成基金",
     "scale": "7.30亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.43%"
+    "trackingError": "1.43%",
+    "prevPurchaseStatus": "限大额",
+    "prevDailyLimit": "100.00元"
   },
   {
     "code": "161128",
@@ -2111,7 +2115,9 @@ window.NASDAQ_FUNDS = [
     "manager": "易方达基金",
     "scale": "41.46亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "--"
+    "trackingError": "--",
+    "prevPurchaseStatus": "暂停申购",
+    "prevDailyLimit": "10.00元"
   },
   {
     "code": "007721",
@@ -2137,6 +2143,8 @@ window.NASDAQ_FUNDS = [
     "manager": "天弘基金",
     "scale": "25.25亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": ""
+    "trackingError": "",
+    "prevPurchaseStatus": "暂停申购",
+    "prevDailyLimit": "100.00元"
   }
 ];

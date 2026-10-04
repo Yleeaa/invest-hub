@@ -250,19 +250,19 @@
         .page .updated b { color: var(--gold-bright); font-weight: 500; }
 
         /* ===== 统计 ===== */
-        .stats { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.8rem 0 1.2rem; }
+        .stats { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0.8rem; }
         .stat {
             background: var(--surface);
             border: 1px solid var(--surface-border);
             border-radius: 10px;
-            padding: 0.7rem 1.1rem;
+            padding: 0.45rem 0.85rem;
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
-            min-width: 92px;
+            gap: 0.15rem;
+            min-width: 80px;
         }
-        .stat .k { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 1px; }
-        .stat .v { font-size: 1.25rem; font-weight: 700; }
+        .stat .k { font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.5px; }
+        .stat .v { font-size: 1.1rem; font-weight: 700; }
         .stat .v.gold { color: var(--gold-bright); }
         .stat .v.red { color: var(--stop); }
         .stat .v.green { color: var(--ok); }
@@ -300,16 +300,16 @@
         #search:focus { border-color: var(--gold); }
 
         /* ===== 顶部标签页 ===== */
-        .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.6rem 0 0; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0; }
         .tab {
             background: var(--surface);
             border: 1px solid var(--surface-border);
             color: var(--text-soft);
-            padding: 0.55rem 1.6rem;
+            padding: 0.35rem 1.1rem;
             border-radius: 999px;
             cursor: pointer;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
             transition: all 0.2s;
             user-select: none;
         }
@@ -425,6 +425,9 @@
             .page { padding: 6.5rem 1rem 3rem; }
             .page h1 { font-size: 1.7rem; }
             #search { width: 100%; margin-left: 0; }
+            /* 表格 13 列在窄屏被 table-layout:fixed 挤扁：固定最小宽度触发横向滑动，保证每列可读、内容完整 */
+            .table-wrap { -webkit-overflow-scrolling: touch; overflow-x: auto; }
+            table { min-width: 920px; }
         }
     </style>
 </head>

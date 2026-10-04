@@ -1175,7 +1175,7 @@
                             指数行情来自东方财富全球指数接口；跟踪基金数据来自天天基金抓取脚本。数据由 GitHub Actions 每日 6:00（北京时间）自动抓取并更新到仓库，点击下方按钮可手动拉取 GitHub 最新数据，失败时自动回退到本地快照。
                         </div>
                         <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);">
-                            指数行情更新时间：<span id="indexQuoteUpdated">—</span>　基金数据更新时间：<span id="indexFundUpdated">—</span>
+                            指数行情更新时间：<span id="indexQuoteUpdated">—</span>　基金净值/行情日期：<span id="indexFundUpdated">—</span>
                         </div>
                         <div style="margin-top:0.7rem;">
                             <button class="btn btn-primary btn-sm" id="btnFetchGithub" onclick="fetchGithubData()">从 GitHub 拉取最新数据</button>
@@ -3200,14 +3200,34 @@
                 var qEl = document.getElementById('indexQuoteUpdated');
                 var fEl = document.getElementById('indexFundUpdated');
                 if (qEl) qEl.textContent = updatedText(getIndexQuotes().updated);
-                if (fEl) fEl.textContent = updatedText(getIndexFundsUpdated());
+                if (fEl) fEl.textContent = getIndexFundsBizDate();
                 var page = document.getElementById('page-indexQuote');
                 if (page && page.style.display !== 'none') renderIndexPreview();
             });
         }
 
-        function getIndexFundsUpdated() {
-            return githubIndexFundsUpdated || cloudIndexFundsUpdated || window.NASDAQ_FUNDS_UPDATED || '';
+        // 「基金数据更新时间」改为展示基金净值/行情的业务日期（交易日），而非抓取动作的时刻
+        function getIndexFundsBizDate() {
+            var funds = githubIndexFunds || cloudIndexFunds || (typeof window !== 'undefined' && window.NASDAQ_FUNDS) || [];
+            if (!funds.length) return '未生成';
+            var nav = '', price = '', year = '';
+            for (var i = 0; i < funds.length; i++) {
+                var f = funds[i];
+                if (f.priceDate && !price) {
+                    price = String(f.priceDate);
+                    if (/^\d{8}$/.test(price)) year = price.slice(0, 4);
+                }
+                if (f.navDate && !nav) nav = String(f.navDate);
+                if (nav && price) break;
+            }
+            var navFull = nav;
+            if (/^\d{1,2}-\d{1,2}$/.test(nav) && year) navFull = year + '-' + nav;
+            var priceFull = price;
+            if (/^\d{8}$/.test(price)) priceFull = price.slice(0, 4) + '-' + price.slice(4, 6) + '-' + price.slice(6, 8);
+            var parts = [];
+            if (navFull) parts.push('净值 ' + navFull);
+            if (priceFull) parts.push('行情 ' + priceFull);
+            return parts.length ? parts.join(' · ') : '未生成';
         }
 
         // 带超时的一次请求：超时或 HTTP 错误都 reject，交由上层切换下一个数据源
@@ -3268,7 +3288,7 @@
 
                 // 无论成败都落到本地/云端已有数据，保证界面可用
                 document.getElementById('indexQuoteUpdated').textContent = updatedText(getIndexQuotes().updated);
-                document.getElementById('indexFundUpdated').textContent = updatedText(getIndexFundsUpdated());
+                document.getElementById('indexFundUpdated').textContent = getIndexFundsBizDate();
                 renderIndexPreview();
 
                 if (ok === 2) showToast('已获取 GitHub 最新数据', 'success');
@@ -3623,7 +3643,7 @@
                 document.getElementById('indexDate').value = indexTodayStr();
             }
             document.getElementById('indexQuoteUpdated').textContent = updatedText(getIndexQuotes().updated);
-            document.getElementById('indexFundUpdated').textContent = updatedText(getIndexFundsUpdated());
+            document.getElementById('indexFundUpdated').textContent = getIndexFundsBizDate();
             loadIndexCloudData();
             renderIndexPreview();
         }

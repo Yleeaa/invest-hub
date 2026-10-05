@@ -3582,8 +3582,11 @@
                 offBlock('标普500 · 场外基金', spxOff) +
                 etfBlock('标普500 · 场内 ETF', spxEtf);
 
+            var dp = date.split('-');
+            var dateText = dp[0] + '年' + parseInt(dp[1], 10) + '月' + parseInt(dp[2], 10) + '日';
+
             var html =
-                '<p style="' + P + '">大家好，这里是<strong style="' + K + '">叨居</strong>，带来今日场内 ETF 与场外基金的一览速递。</p>' +
+                '<p style="' + P + '">大家好，这里是<strong style="' + K + '">叨居</strong>，带来 ' + dateText + ' 场内 ETF 与场外基金的一览速递。</p>' +
                 fundHtml +
                 '<section style="' + H + '">重要声明</section>' +
                 '<section style="' + W + '">以上内容仅为个人记录与数据整理，不构成任何投资建议。市场有风险，入市需谨慎。</section>' +
@@ -3592,7 +3595,7 @@
                 '<span style="font-size:13px;color:#8a7a55;">完整数据与更多投资记录，可访问个人网站【投么有度】查看。（详见主页）</span></section>';
 
             var textLines = [];
-            textLines.push('大家好，这里是叨居，带来今日场内 ETF 与场外基金的一览速递。');
+            textLines.push('大家好，这里是叨居，带来 ' + dateText + ' 场内 ETF 与场外基金的一览速递。');
             textLines.push('');
             var etfLine = function (e) { return e.name + '（' + e.code + '）溢价率：' + (e.premium == null ? '—' : sign(e.premium) + e.premium.toFixed(2) + '%') + '　跟踪误差：' + (e.trackingError || '—'); };
             var offLine = function (l) {

@@ -249,8 +249,9 @@
         }
         .page .updated b { color: var(--gold-bright); font-weight: 500; }
 
-        /* ===== 统计 ===== */
-        .stats { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0.8rem; }
+        /* ===== 统计 + 筛选（同一行） ===== */
+        .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin: 0.8rem 0 0.8rem; }
+        .stats { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; }
         .stat {
             background: var(--surface);
             border: 1px solid var(--surface-border);
@@ -268,7 +269,7 @@
         .stat .v.green { color: var(--ok); }
 
         /* ===== 筛选 ===== */
-        .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+        .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-bottom: 0; flex: 1; min-width: 200px; }
         .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .filter-group .g-label { font-size: 0.75rem; color: var(--text-dim); align-self: center; letter-spacing: 1px; }
         .chip {
@@ -458,17 +459,18 @@
             <button class="tab" data-idx="SPX">标普500</button>
         </div>
 
-        <div class="stats" id="stats"></div>
-
-        <div class="filters">
-            <div class="filter-group" id="catGroup"><span class="g-label">类别</span></div>
-            <input id="search" type="text" placeholder="搜索代码 / 名称">
+        <div class="toolbar">
+            <div class="stats" id="stats"></div>
+            <div class="filters">
+                <div class="filter-group" id="catGroup"><span class="g-label">类别</span></div>
+                <input id="search" type="text" placeholder="搜索代码 / 名称">
+            </div>
         </div>
 
         <div class="table-wrap">
             <table id="tbl">
                 <colgroup>
-                    <col style="width:8%"><col style="width:16%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:7%"><col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">
+                    <col style="width:8%"><col style="width:16%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">
                 </colgroup>
                 <thead>
                     <tr>
@@ -480,7 +482,6 @@
                         <th class="sortable" data-key="scale">规模<span class="arrow"></span></th>
                         <th>限购状态</th>
                         <th class="sortable" data-key="dailyLimit">单日限额<span class="arrow"></span></th>
-                        <th>申购起点</th>
                         <th class="sortable" data-key="mgmtFee">管理费<span class="arrow"></span></th>
                         <th class="sortable" data-key="custodyFee">托管费<span class="arrow"></span></th>
                         <th class="sortable" data-key="trackingError">跟踪误差<span class="arrow"></span></th>
@@ -651,7 +652,7 @@
                 renderStats(list);
                 var tbody = document.getElementById('tbody');
                 if (!list.length) {
-                    tbody.innerHTML = '<tr><td colspan="13" class="empty-tip">没有符合条件的结果</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="12" class="empty-tip">没有符合条件的结果</td></tr>';
                     return;
                 }
                 var html = '';
@@ -666,7 +667,6 @@
                         '<td class="num">' + (f.scale || '—') + '</td>' +
                         '<td><span class="badge ' + b.cls + '">' + b.text + '</span></td>' +
                         '<td>' + limitCell(f) + '</td>' +
-                        '<td class="num">' + (f.purchaseMin || '—') + '</td>' +
                         '<td class="num">' + (feeText(f.mgmtFee) || '—') + '</td>' +
                         '<td class="num">' + (feeText(f.custodyFee) || '—') + '</td>' +
                         '<td class="num">' + trackCell(f) + '</td>' +

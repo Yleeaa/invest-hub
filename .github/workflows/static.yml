@@ -3,9 +3,9 @@ name: Deploy static content to Pages
 on:
   push:
     branches: ["main"]
-  # 每天北京时间 06:00（UTC 22:00）自动抓取；UTC 21:55(北京05:55)提前触发以错开整点高峰，让实际运行更贴近 6 点
+  # 每天北京时间 05:35（UTC 21:35）自动抓取，错开整点高峰；美股夏令时 04:00 / 冬令时 05:00 收盘，05:35 全年均在收盘后
   schedule:
-    - cron: '55 21 * * *'
+    - cron: '35 21 * * *'
   workflow_dispatch:
 
 permissions:

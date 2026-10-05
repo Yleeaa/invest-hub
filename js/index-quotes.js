@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-index.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/4 08:17:37（Asia/Shanghai） */
-window.INDEX_QUOTES_UPDATED = "2026/10/4 08:17:37";
+/* 生成时间：2026/10/5 08:21:32（Asia/Shanghai） */
+window.INDEX_QUOTES_UPDATED = "2026/10/5 08:21:32";
 window.INDEX_QUOTES = {
   "NDX": {
     "code": "NDX",

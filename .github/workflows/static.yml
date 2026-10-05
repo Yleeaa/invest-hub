@@ -3,9 +3,9 @@ name: Deploy static content to Pages
 on:
   push:
     branches: ["main"]
-  # 每天北京时间 05:35（UTC 21:35）自动抓取，错开整点高峰；美股夏令时 04:00 / 冬令时 05:00 收盘，05:35 全年均在收盘后
+  # 每天北京时间 02:00（UTC 18:00）自动抓取基金数据（不抓美股指数，故无需等美股收盘）
   schedule:
-    - cron: '35 21 * * *'
+    - cron: '0 18 * * *'
   workflow_dispatch:
 
 permissions:
@@ -32,15 +32,14 @@ jobs:
         with:
           node-version: '20'
 
-      # 定时 / 手动触发时，抓取最新基金与指数行情数据并提交回仓库
-      - name: Fetch latest data (funds + index quotes)
+      # 定时 / 手动触发时，抓取最新基金数据并提交回仓库
+      - name: Fetch latest data (funds)
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           node scripts/run-fetch-local.js; fund=$?
-          node scripts/run-fetch-index.js; index=$?
-          echo "基金抓取退出码=$fund，指数抓取退出码=$index"
-          if [ $fund -ne 0 ] || [ $index -ne 0 ]; then
-            echo "::warning::部分数据抓取失败（fund=$fund, index=$index），对应数据本次未更新"
+          echo "基金抓取退出码=$fund"
+          if [ $fund -ne 0 ]; then
+            echo "::warning::基金数据抓取失败（fund=$fund），本次未更新"
           fi
 
       - name: Commit updated data
@@ -48,7 +47,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add js/nasdaq-funds.js js/index-quotes.js
+          git add js/nasdaq-funds.js
           if git diff --cached --quiet; then
             echo "NO_CHANGES"
           else

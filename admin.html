@@ -1004,6 +1004,7 @@
                             <thead>
                                 <tr>
                                     <th>分类名称</th>
+                                    <th>备注</th>
                                     <th>标的数量</th>
                                     <th>当前市值</th>
                                     <th>操作</th>
@@ -1172,14 +1173,14 @@
                     </div>
                     <div class="panel-body">
                         <div style="font-size:0.85rem;color:var(--text-soft);line-height:1.8;">
-                            指数行情来自东方财富全球指数接口；跟踪基金数据来自天天基金抓取脚本。数据由 GitHub Actions 每日 6:00（北京时间）自动抓取并更新到仓库，点击下方按钮可手动拉取 GitHub 最新数据，失败时自动回退到本地快照。
+                            跟踪基金数据来自天天基金抓取脚本。数据由 GitHub Actions 每日自动抓取并更新到仓库，点击下方按钮可手动拉取 GitHub 最新数据，失败时自动回退到本地快照。
                         </div>
                         <div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);">
-                            指数行情更新时间：<span id="indexQuoteUpdated">—</span>　基金净值/行情日期：<span id="indexFundUpdated">—</span>
+                            基金净值/行情日期：<span id="indexFundUpdated">—</span>
                         </div>
                         <div style="margin-top:0.7rem;">
                             <button class="btn btn-primary btn-sm" id="btnFetchGithub" onclick="fetchGithubData()">从 GitHub 拉取最新数据</button>
-                            <span class="hint" style="margin-left:0.6rem;">手动获取 GitHub 上每日更新后的指数行情与基金数据，用于生成本期文章</span>
+                            <span class="hint" style="margin-left:0.6rem;">手动获取 GitHub 上每日更新后的基金数据，用于生成本期文章</span>
                         </div>
                     </div>
                 </div>
@@ -1485,6 +1486,10 @@
                             <label>分类名称 <span class="req">*</span></label>
                             <input type="text" id="icName" placeholder="如：债券、纳斯达克、标普500等" required>
                         </div>
+                        <div class="form-field full">
+                            <label>备注</label>
+                            <textarea id="icNote" rows="2" placeholder="选填，用于说明该分类，如：主要跟踪纳指100等"></textarea>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -1655,10 +1660,6 @@
                         <div class="form-field">
                             <label>已实现收益</label>
                             <input type="number" id="annualRealized" placeholder="卖出部分的收益/亏损，可填负数" step="0.01" value="0">
-                        </div>
-                        <div class="form-field">
-                            <label>年度总收益（静态）</label>
-                            <input type="number" id="annualStatic" placeholder="无月度数据时手动填写，可填负数" step="0.01">
                         </div>
                         <div class="form-field">
                             <label>投入本金</label>
@@ -2263,6 +2264,9 @@
                 '/* ===== 投资分类（用于持仓明细聚合展示） ===== */',
                 'const INV_CATEGORIES = ' + JSON.stringify(Storage.getInvCategories(), null, 4) + ';',
                 '',
+                '/* ===== 投资分类备注 ===== */',
+                'const INV_CATEGORY_NOTES = ' + JSON.stringify(Storage.getInvCategoryNotes(), null, 4) + ';',
+                '',
                 '/* ===== 持仓数据更新记录 ===== */',
                 'const HOLDINGS_UPDATE = ' + JSON.stringify(Storage.getHoldingsUpdate(), null, 4) + ';',
                 '',
@@ -2322,6 +2326,7 @@
             '    updateInvType(old, n) { var i = INV_TYPES.indexOf(old); if (i >= 0) { INV_TYPES[i] = n; INV_TARGETS.forEach(function(t) { if (t.type === old) t.type = n; }); } return INV_TYPES; },\n' +
             '    deleteInvType(n) { var i = INV_TYPES.indexOf(n); if (i >= 0) INV_TYPES.splice(i, 1); return INV_TYPES; },\n' +
             '    getInvCategories() { return INV_CATEGORIES; },\n' +
+            '    getInvCategoryNotes() { return INV_CATEGORY_NOTES; },\n' +
             '    addInvCategory(n) { INV_CATEGORIES.push(n); return INV_CATEGORIES; },\n' +
             '    updateInvCategory(old, n) { var i = INV_CATEGORIES.indexOf(old); if (i >= 0) { INV_CATEGORIES[i] = n; INV_TARGETS.forEach(function(t) { if (t.category === old) t.category = n; }); } return INV_CATEGORIES; },\n' +
             '    deleteInvCategory(n) { var i = INV_CATEGORIES.indexOf(n); if (i >= 0) INV_CATEGORIES.splice(i, 1); return INV_CATEGORIES; },\n' +
@@ -2553,10 +2558,11 @@
 
         function renderInvCategories() {
             var cats = Storage.getInvCategories();
+            var notes = Storage.getInvCategoryNotes() || {};
             var targets = Storage.getInvTargets();
             var tbody = document.getElementById('invCategoryTbody');
             if (cats.length === 0) {
-                tbody.innerHTML = '<tr class="empty-row"><td colspan="4">暂无分类，请先添加分类</td></tr>';
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="5">暂无分类，请先添加分类</td></tr>';
                 return;
             }
             tbody.innerHTML = cats.map(function(c, i) {
@@ -2564,8 +2570,10 @@
                 var totalAmount = catTargets.reduce(function(sum, item) {
                     return sum + (parseFloat(item.marketValue) || 0);
                 }, 0);
+                var note = notes[c] || '';
                 return '<tr>' +
                     '<td><span class="tag ' + INV_TYPE_TAG_COLORS[i % INV_TYPE_TAG_COLORS.length] + '">' + c + '</span></td>' +
+                    '<td style="color:var(--text-soft);white-space:normal;">' + note + '</td>' +
                     '<td>' + catTargets.length + '</td>' +
                     '<td>' + formatMoney(totalAmount) + '</td>' +
                     '<td class="td-actions">' +
@@ -2579,6 +2587,7 @@
         function openInvCategoryModal() {
             document.getElementById('invCategoryForm').reset();
             document.getElementById('icEditOldName').value = '';
+            document.getElementById('icNote').value = '';
             document.getElementById('invCategoryModalTitle').textContent = '新增投资分类';
             document.getElementById('invCategoryModalHint').textContent = '添加后可在投资标的中选择此分类';
             document.getElementById('invCategorySubmitBtn').textContent = '添加分类';
@@ -2589,8 +2598,10 @@
             var cats = Storage.getInvCategories();
             var name = cats[index];
             if (!name) return;
+            var notes = Storage.getInvCategoryNotes() || {};
             document.getElementById('icEditOldName').value = name;
             document.getElementById('icName').value = name;
+            document.getElementById('icNote').value = notes[name] || '';
             document.getElementById('invCategoryModalTitle').textContent = '编辑投资分类';
             document.getElementById('invCategoryModalHint').textContent = '修改后，使用此分类的投资标的将同步更新';
             document.getElementById('invCategorySubmitBtn').textContent = '保存修改';
@@ -2604,6 +2615,7 @@
         function submitInvCategory() {
             var oldName = document.getElementById('icEditOldName').value;
             var name = document.getElementById('icName').value.trim();
+            var note = document.getElementById('icNote').value.trim();
             if (!name) {
                 showToast('请输入分类名称', 'error');
                 return;
@@ -2619,6 +2631,11 @@
             } else {
                 Storage.addInvCategory(name);
                 showToast('分类添加成功', 'success');
+            }
+            var notes = Storage.getInvCategoryNotes() || {};
+            notes[name] = note;
+            if (oldName && oldName !== name) {
+                delete notes[oldName];
             }
             populateInvCategoryDropdowns();
             renderInvCategories();
@@ -2637,6 +2654,8 @@
                 : '确认删除分类「' + name + '」？';
             if (!confirm(msg)) return;
             Storage.deleteInvCategory(name);
+            var notes = Storage.getInvCategoryNotes() || {};
+            delete notes[name];
             populateInvCategoryDropdowns();
             renderInvCategories();
             renderInvTargets();
@@ -3197,9 +3216,7 @@
                 : Promise.resolve();
 
             Promise.all([quoteP, fundP]).then(function () {
-                var qEl = document.getElementById('indexQuoteUpdated');
                 var fEl = document.getElementById('indexFundUpdated');
-                if (qEl) qEl.textContent = updatedText(getIndexQuotes().updated);
                 if (fEl) fEl.textContent = getIndexFundsBizDate();
                 var page = document.getElementById('page-indexQuote');
                 if (page && page.style.display !== 'none') renderIndexPreview();
@@ -3287,7 +3304,6 @@
                 }
 
                 // 无论成败都落到本地/云端已有数据，保证界面可用
-                document.getElementById('indexQuoteUpdated').textContent = updatedText(getIndexQuotes().updated);
                 document.getElementById('indexFundUpdated').textContent = getIndexFundsBizDate();
                 renderIndexPreview();
 
@@ -3428,7 +3444,6 @@
 
         function buildIndexArticleHtml() {
             var date = document.getElementById('indexDate').value || indexTodayStr();
-            var q = getIndexQuotes();
             var f = getIndexFunds();
 
             var P = 'margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.2px;';
@@ -3462,20 +3477,7 @@
                 return n > 0 ? '#c00000' : '#0a7d48';
             };
 
-            // 1) 指数行情
-            var quoteHtml = '';
-            if (q.quotes.length) {
-                q.quotes.forEach(function (it) {
-                    var c = chgColor(it.change);
-                    quoteHtml += '<section style="' + QP + '">' + escWeekly(it.name) +
-                        '：<strong style="color:' + c + ';">' + fmt(it.price) + '</strong>' +
-                        '<span style="white-space:nowrap;"> <strong style="color:' + c + ';">' + sign(it.change) + fmt(it.change) + '（' + sign(it.pct) + fmt(it.pct) + '%）</strong></span></section>';
-                });
-            } else {
-                quoteHtml = '<section style="' + Q + '">未读取到指数行情，请稍后重试，或在本地运行 node scripts/run-fetch-index.js 生成本地快照。</section>';
-            }
-
-            // 2) 基金全景：按 指数 × 场内/场外 四组展示所有标的
+            // 基金全景：按 指数 × 场内/场外 四组展示所有标的
             function byIdx(list, idx) { return list.filter(function (x) { return x.index === idx; }); }
             function summarizeOff(list) {
                 var total = 0, unlimited = 0, paused = 0;
@@ -3581,9 +3583,7 @@
                 etfBlock('标普500 · 场内 ETF', spxEtf);
 
             var html =
-                '<p style="' + P + '">大家好，这里是<strong style="' + K + '">叨居</strong>，带来今日美股主要指数的一览速递。</p>' +
-                '<section style="' + H + '">美股主要指数（收盘行情 · ' + escWeekly(date) + '）</section>' +
-                quoteHtml +
+                '<p style="' + P + '">大家好，这里是<strong style="' + K + '">叨居</strong>，带来今日场内 ETF 与场外基金的一览速递。</p>' +
                 fundHtml +
                 '<section style="' + H + '">重要声明</section>' +
                 '<section style="' + W + '">以上内容仅为个人记录与数据整理，不构成任何投资建议。市场有风险，入市需谨慎。</section>' +
@@ -3592,12 +3592,8 @@
                 '<span style="font-size:13px;color:#8a7a55;">完整数据与更多投资记录，可访问个人网站【投么有度】查看。（详见主页）</span></section>';
 
             var textLines = [];
-            textLines.push('大家好，这里是叨居，带来今日美股主要指数的一览速递。');
+            textLines.push('大家好，这里是叨居，带来今日场内 ETF 与场外基金的一览速递。');
             textLines.push('');
-            textLines.push('【美股主要指数】收盘行情 · ' + date);
-            q.quotes.forEach(function (it) {
-                textLines.push('- ' + it.name + '：' + fmt(it.price) + '　涨跌 ' + sign(it.change) + fmt(it.change) + '（' + sign(it.pct) + fmt(it.pct) + '%）');
-            });
             var etfLine = function (e) { return e.name + '（' + e.code + '）溢价率：' + (e.premium == null ? '—' : sign(e.premium) + e.premium.toFixed(2) + '%') + '　跟踪误差：' + (e.trackingError || '—'); };
             var offLine = function (l) {
                 var cur = limitCell(l);
@@ -3642,7 +3638,6 @@
                 indexQuoteInited = true;
                 document.getElementById('indexDate').value = indexTodayStr();
             }
-            document.getElementById('indexQuoteUpdated').textContent = updatedText(getIndexQuotes().updated);
             document.getElementById('indexFundUpdated').textContent = getIndexFundsBizDate();
             loadIndexCloudData();
             renderIndexPreview();
@@ -4234,7 +4229,6 @@
             document.getElementById('annualEditIndex').value = '-1';
             document.getElementById('annualYear').value = new Date().getFullYear();
             document.getElementById('annualRealized').value = '0';
-            document.getElementById('annualStatic').value = '';
             document.getElementById('annualCapital').value = '0';
             document.getElementById('annualReturnModalTitle').textContent = '新增年度收益';
             document.getElementById('annualReturnModalHint').textContent = '当年记录会自动叠加当前持仓浮盈计算年度总收益 · 已录入月度的年份静态总收益自动取月度合计';
@@ -4249,7 +4243,6 @@
             document.getElementById('annualEditIndex').value = index;
             document.getElementById('annualYear').value = item.year || '';
             document.getElementById('annualRealized').value = item.realizedProfit || 0;
-            document.getElementById('annualStatic').value = (item.staticProfit !== undefined && item.staticProfit !== null && item.staticProfit !== '') ? item.staticProfit : '';
             document.getElementById('annualCapital').value = item.capital || 0;
             document.getElementById('annualNote').value = item.note || '';
             document.getElementById('annualReturnModalTitle').textContent = '编辑年度收益';
@@ -4268,7 +4261,6 @@
             var realized = document.getElementById('annualRealized').value;
             var capital = document.getElementById('annualCapital').value;
             var note = document.getElementById('annualNote').value.trim();
-            var staticInput = document.getElementById('annualStatic').value;
 
             if (!year) {
                 showToast('请填写年份', 'error');
@@ -4288,10 +4280,6 @@
                 capital: parseFloat(capital) || 0,
                 note: note
             };
-            // 静态总收益：未填写则不写入该字段（表格显示「—」）
-            if (staticInput !== '' && !isNaN(parseFloat(staticInput))) {
-                item.staticProfit = parseFloat(staticInput);
-            }
 
             if (editIndex >= 0) {
                 Storage.updateAnnualReturn(editIndex, item);

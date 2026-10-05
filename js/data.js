@@ -265,9 +265,17 @@ const INV_CATEGORIES = [
     "日股"
 ];
 
+/* ===== 投资分类备注 ===== */
+const INV_CATEGORY_NOTES = {
+    "标普500": "日定投：110元",
+    "红利低波": "日定投：10元",
+    "日股": "日定投：20元",
+    "纳斯达克": "日定投：35元"
+};
+
 /* ===== 持仓数据更新记录 ===== */
 const HOLDINGS_UPDATE = {
-    "date": "2026-10-01",
+    "date": "2026-10-03",
     "note": ""
 };
 
@@ -975,6 +983,7 @@ const Storage = {
     updateInvType(old, n) { var i = INV_TYPES.indexOf(old); if (i >= 0) { INV_TYPES[i] = n; INV_TARGETS.forEach(function(t) { if (t.type === old) t.type = n; }); } return INV_TYPES; },
     deleteInvType(n) { var i = INV_TYPES.indexOf(n); if (i >= 0) INV_TYPES.splice(i, 1); return INV_TYPES; },
     getInvCategories() { return INV_CATEGORIES; },
+    getInvCategoryNotes() { return INV_CATEGORY_NOTES; },
     addInvCategory(n) { INV_CATEGORIES.push(n); return INV_CATEGORIES; },
     updateInvCategory(old, n) { var i = INV_CATEGORIES.indexOf(old); if (i >= 0) { INV_CATEGORIES[i] = n; INV_TARGETS.forEach(function(t) { if (t.category === old) t.category = n; }); } return INV_CATEGORIES; },
     deleteInvCategory(n) { var i = INV_CATEGORIES.indexOf(n); if (i >= 0) INV_CATEGORIES.splice(i, 1); return INV_CATEGORIES; },

@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/7 06:12:15（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/7 06:12:15";
+/* 生成时间：2026/10/8 06:34:37（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/8 06:34:37";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -26,7 +26,7 @@ window.NASDAQ_FUNDS = [
     "manager": "国泰基金",
     "scale": "194.68亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.03%",
+    "trackingError": "",
     "iopv": 2.0381,
     "premium": 15.4,
     "priceDate": "20260930"

@@ -1,2 +1,27 @@
 # 沙箱运行产生的临时 HOME 目录（含系统缓存及权限文件，非项目源码）
 .home/
+
+# 照片原始大图（仅本地保留，线上/仓库只提交压缩后的 thumbs 缩略图）
+photo/*.JPG
+photo/thumbs/DSC00987.jpg
+photo/thumbs/DSC00989.jpg
+photo/thumbs/DSC00991.jpg
+photo/thumbs/DSC01256.jpg
+photo/thumbs/DSC01261.jpg
+photo/thumbs/DSC01266.jpg
+photo/thumbs/DSC01270.jpg
+photo/thumbs/DSC01277.jpg
+photo/thumbs/DSC01281.jpg
+photo/thumbs/DSC01283.jpg
+photo/thumbs/DSC01292.jpg
+photo/thumbs/DSC01293.jpg
+photo/thumbs/DSC01295.jpg
+photo/thumbs/DSC01378.jpg
+photo/thumbs/DSC01385.jpg
+photo/thumbs/DSC01387.jpg
+photo/thumbs/DSC01388.jpg
+photo/thumbs/DSC01389.jpg
+photo/thumbs/DSC01401.jpg
+photo/thumbs/DSC01404.jpg
+photo/thumbs/DSC01416.jpg
+photos.html

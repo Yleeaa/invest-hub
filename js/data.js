@@ -275,7 +275,7 @@ const INV_CATEGORY_NOTES = {
 
 /* ===== 持仓数据更新记录 ===== */
 const HOLDINGS_UPDATE = {
-    "date": "2026-10-03",
+    "date": "2026-10-10",
     "note": ""
 };
 
@@ -286,8 +286,8 @@ const INV_TARGETS = [
         "category": "债券",
         "code": "006792",
         "name": "长城短债债券D",
-        "marketValue": 10061.06,
-        "profit": 61.06,
+        "marketValue": 10065.07,
+        "profit": 65.07,
         "cost": 10000,
         "dailyInvest": 0,
         "remark": ""
@@ -297,8 +297,8 @@ const INV_TARGETS = [
         "category": "债券",
         "code": "006791",
         "name": "长城短债债券A",
-        "marketValue": 5027.4,
-        "profit": 27.4,
+        "marketValue": 5029.8,
+        "profit": 29.8,
         "cost": 5000,
         "dailyInvest": 0,
         "remark": ""
@@ -308,8 +308,8 @@ const INV_TARGETS = [
         "category": "债券",
         "code": "003102",
         "name": "长盛盛裕纯债债券D",
-        "marketValue": 6036.45,
-        "profit": 36.45,
+        "marketValue": 6041.1,
+        "profit": 41.1,
         "cost": 6000,
         "dailyInvest": 0,
         "remark": ""
@@ -319,9 +319,9 @@ const INV_TARGETS = [
         "category": "债券",
         "code": "400030",
         "name": "东方添益债券",
-        "marketValue": 5058.22,
-        "profit": 58.22,
-        "cost": 5000,
+        "marketValue": 10061.34,
+        "profit": 61.34,
+        "cost": 10000,
         "dailyInvest": 0,
         "remark": ""
     },
@@ -330,8 +330,8 @@ const INV_TARGETS = [
         "category": "债券",
         "code": "007861",
         "name": "鹏华丰享债券",
-        "marketValue": 5044.49,
-        "profit": 44.49,
+        "marketValue": 5047.92,
+        "profit": 47.92,
         "cost": 5000,
         "dailyInvest": 0,
         "remark": ""
@@ -341,8 +341,8 @@ const INV_TARGETS = [
         "category": "偏债",
         "code": "001837",
         "name": "易方达瑞锦灵活配置混合A",
-        "marketValue": 10047.44,
-        "profit": 47.44,
+        "marketValue": 10039.5,
+        "profit": 39.5,
         "cost": 10000,
         "dailyInvest": 0,
         "remark": ""
@@ -352,8 +352,8 @@ const INV_TARGETS = [
         "category": "偏债",
         "code": "001838",
         "name": "易方达瑞锦灵活配置混合C",
-        "marketValue": 16497.26,
-        "profit": -172.53,
+        "marketValue": 16482.85,
+        "profit": -186.94,
         "cost": 16669.789999999997,
         "dailyInvest": 0,
         "remark": ""
@@ -363,9 +363,9 @@ const INV_TARGETS = [
         "category": "红利低波",
         "code": "012861",
         "name": "华泰柏瑞中证红利低波动ETF联接A",
-        "marketValue": 10720.78,
-        "profit": 318.64,
-        "cost": 10402.140000000001,
+        "marketValue": 10828.26,
+        "profit": 406.11,
+        "cost": 10422.15,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -374,8 +374,8 @@ const INV_TARGETS = [
         "category": "恒生科技",
         "code": "015204",
         "name": "南方恒生科技ETF联接(QDII)C",
-        "marketValue": 2222.84,
-        "profit": -327.16,
+        "marketValue": 2193.51,
+        "profit": -356.49,
         "cost": 2550,
         "dailyInvest": 0,
         "remark": ""
@@ -385,9 +385,9 @@ const INV_TARGETS = [
         "category": "标普500",
         "code": "513351",
         "name": "摩根标普500指数(QDII)A",
-        "marketValue": 5849.64,
-        "profit": 389.64,
-        "cost": 5460,
+        "marketValue": 5935.47,
+        "profit": 455.47,
+        "cost": 5480,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -396,9 +396,9 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "160140",
         "name": "南方纳斯达克100指数(QDII)A",
-        "marketValue": 3969.46,
-        "profit": 339.46,
-        "cost": 3630,
+        "marketValue": 4035.4,
+        "profit": 385.4,
+        "cost": 3650,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -407,9 +407,9 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "016055",
         "name": "招商纳斯达克100ETF联接(QDII)A",
-        "marketValue": 5356.06,
-        "profit": 636.06,
-        "cost": 4720,
+        "marketValue": 5433.99,
+        "profit": 693.99,
+        "cost": 4740,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -418,8 +418,8 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "017091",
         "name": "景顺长城纳斯达克科技市值加权ETF联接(QDII)A",
-        "marketValue": 3014.54,
-        "profit": 654.54,
+        "marketValue": 3039.06,
+        "profit": 679.06,
         "cost": 2360,
         "dailyInvest": 0,
         "remark": ""
@@ -429,9 +429,9 @@ const INV_TARGETS = [
         "category": "日股",
         "code": "008280",
         "name": "摩根日本精选股票(QDII)A",
-        "marketValue": 3610.71,
-        "profit": 208.22,
-        "cost": 3402.4900000000002,
+        "marketValue": 3629.62,
+        "profit": 207.13,
+        "cost": 3422.49,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -440,8 +440,8 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "270042",
         "name": "广发纳斯达克100ETF联接(QDII)A",
-        "marketValue": 94.43,
-        "profit": 2.43,
+        "marketValue": 95.54,
+        "profit": 3.54,
         "cost": 92,
         "dailyInvest": 0,
         "remark": ""
@@ -451,8 +451,8 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "160213",
         "name": "国泰纳斯达克100指数(QDII)",
-        "marketValue": 1836.59,
-        "profit": 36.59,
+        "marketValue": 1858.25,
+        "profit": 58.25,
         "cost": 1800,
         "dailyInvest": 0,
         "remark": ""
@@ -462,9 +462,9 @@ const INV_TARGETS = [
         "category": "日股",
         "code": "020712",
         "name": "华安三菱日联日经225ETF联接(QDII)A",
-        "marketValue": 234.37,
-        "profit": 4.37,
-        "cost": 230,
+        "marketValue": 261.15,
+        "profit": 11.15,
+        "cost": 249.99999999999997,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -473,9 +473,9 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "000834",
         "name": "大成纳斯达克100ETF联接(QDII)A",
-        "marketValue": 162.14,
-        "profit": 2.14,
-        "cost": 160,
+        "marketValue": 183.95,
+        "profit": 3.95,
+        "cost": 180,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -484,9 +484,9 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "040046",
         "name": "华安纳斯达克100ETF联接(QDII)A",
-        "marketValue": 142.73,
-        "profit": 2.73,
-        "cost": 140,
+        "marketValue": 154.39,
+        "profit": 4.39,
+        "cost": 150,
         "dailyInvest": 5,
         "remark": ""
     },
@@ -495,9 +495,9 @@ const INV_TARGETS = [
         "category": "标普500",
         "code": "096001",
         "name": "大成标普500等权重指数(QDII)A",
-        "marketValue": 783.09,
-        "profit": -6.91,
-        "cost": 790,
+        "marketValue": 991.42,
+        "profit": 1.42,
+        "cost": 990,
         "dailyInvest": 100,
         "remark": ""
     }
@@ -507,7 +507,7 @@ const INV_TARGETS = [
 const CASH = [
     {
         "name": "余额宝",
-        "amount": 6467.86,
+        "amount": 1119.05,
         "remark": ""
     }
 ];

@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/12 21:18:33（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/12 21:18:33";
+/* 生成时间：2026/10/13 08:04:23（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/13 08:04:23";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -374,7 +374,7 @@ window.NASDAQ_FUNDS = [
     "manager": "景顺长城基金",
     "scale": "151.28亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.38%",
+    "trackingError": "1.37%",
     "iopv": 2.4005,
     "premium": 32.6,
     "priceDate": "20261012"
@@ -627,7 +627,7 @@ window.NASDAQ_FUNDS = [
     "manager": "摩根基金(中国)",
     "scale": "10.80亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.35%",
+    "trackingError": "2.34%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -655,7 +655,7 @@ window.NASDAQ_FUNDS = [
     "manager": "万家基金",
     "scale": "9.68亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.19%",
+    "trackingError": "2.18%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -852,8 +852,8 @@ window.NASDAQ_FUNDS = [
     "scale": "122.23亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "prevPurchaseStatus": "暂停申购",
-    "prevDailyLimit": "2.00元"
+    "prevPurchaseStatus": "限大额",
+    "prevDailyLimit": "10.00元"
   },
   {
     "code": "006479",
@@ -880,8 +880,8 @@ window.NASDAQ_FUNDS = [
     "scale": "64.93亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "prevPurchaseStatus": "暂停申购",
-    "prevDailyLimit": "2.00元"
+    "prevPurchaseStatus": "限大额",
+    "prevDailyLimit": "10.00元"
   },
   {
     "code": "021778",
@@ -893,7 +893,7 @@ window.NASDAQ_FUNDS = [
     "index": "NDX",
     "nav": "8.4426",
     "navDate": "10-09",
-    "purchaseStatus": "暂停申购",
+    "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
     "dailyLimit": "",
@@ -1159,7 +1159,7 @@ window.NASDAQ_FUNDS = [
     "manager": "博时基金",
     "scale": "1.70亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.46%",
+    "trackingError": "1.47%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": ""
   },
@@ -1299,7 +1299,7 @@ window.NASDAQ_FUNDS = [
     "manager": "汇添富基金",
     "scale": "11.09亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.79%",
+    "trackingError": "1.78%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -1383,7 +1383,7 @@ window.NASDAQ_FUNDS = [
     "manager": "华泰柏瑞基金",
     "scale": "6.39亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.58%",
+    "trackingError": "1.57%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "5.00元"
   },
@@ -1523,7 +1523,7 @@ window.NASDAQ_FUNDS = [
     "manager": "易方达基金",
     "scale": "1.80亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.46%",
+    "trackingError": "1.45%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -1551,7 +1551,7 @@ window.NASDAQ_FUNDS = [
     "manager": "景顺长城基金",
     "scale": "27.70亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.91%",
+    "trackingError": "2.92%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1579,7 +1579,7 @@ window.NASDAQ_FUNDS = [
     "manager": "景顺长城基金",
     "scale": "13.28亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.91%",
+    "trackingError": "2.93%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1607,7 +1607,7 @@ window.NASDAQ_FUNDS = [
     "manager": "景顺长城基金",
     "scale": "8.88亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.91%",
+    "trackingError": "2.92%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1751,7 +1751,7 @@ window.NASDAQ_FUNDS = [
     "manager": "博时基金",
     "scale": "64.67亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.25%",
+    "trackingError": "1.24%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1891,7 +1891,7 @@ window.NASDAQ_FUNDS = [
     "manager": "国泰基金",
     "scale": "1.32亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.55%",
+    "trackingError": "1.54%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "1.00万元"
   },
@@ -2015,8 +2015,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "SPX",
-    "nav": "0.2548",
-    "navDate": "10-08",
+    "nav": "0.2562",
+    "navDate": "10-09",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",

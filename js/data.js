@@ -267,106 +267,29 @@ const INV_CATEGORIES = [
 
 /* ===== 投资分类备注 ===== */
 const INV_CATEGORY_NOTES = {
-    "标普500": "日定投：110元",
+    "标普500": "日定投：60元",
     "红利低波": "日定投：10元",
     "日股": "日定投：20元",
-    "纳斯达克": "日定投：35元"
+    "纳斯达克": "日定投：70元"
 };
 
 /* ===== 持仓数据更新记录 ===== */
 const HOLDINGS_UPDATE = {
-    "date": "2026-10-10",
+    "date": "2026-10-17",
     "note": ""
 };
 
 /* ===== 投资标的数据 ===== */
 const INV_TARGETS = [
     {
-        "type": "债券",
-        "category": "债券",
-        "code": "006792",
-        "name": "长城短债债券D",
-        "marketValue": 10065.07,
-        "profit": 65.07,
-        "cost": 10000,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "债券",
-        "category": "债券",
-        "code": "006791",
-        "name": "长城短债债券A",
-        "marketValue": 5029.8,
-        "profit": 29.8,
-        "cost": 5000,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "债券",
-        "category": "债券",
-        "code": "003102",
-        "name": "长盛盛裕纯债债券D",
-        "marketValue": 6041.1,
-        "profit": 41.1,
-        "cost": 6000,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "债券",
-        "category": "债券",
-        "code": "400030",
-        "name": "东方添益债券",
-        "marketValue": 10061.34,
-        "profit": 61.34,
-        "cost": 10000,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "债券",
-        "category": "债券",
-        "code": "007861",
-        "name": "鹏华丰享债券",
-        "marketValue": 5047.92,
-        "profit": 47.92,
-        "cost": 5000,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "偏债",
-        "category": "偏债",
-        "code": "001837",
-        "name": "易方达瑞锦灵活配置混合A",
-        "marketValue": 10039.5,
-        "profit": 39.5,
-        "cost": 10000,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
         "type": "偏债",
         "category": "偏债",
         "code": "001838",
         "name": "易方达瑞锦灵活配置混合C",
-        "marketValue": 16482.85,
-        "profit": -186.94,
-        "cost": 16669.789999999997,
+        "marketValue": 0,
+        "profit": 0,
+        "cost": 0,
         "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "A股",
-        "category": "红利低波",
-        "code": "012861",
-        "name": "华泰柏瑞中证红利低波动ETF联接A",
-        "marketValue": 10828.26,
-        "profit": 406.11,
-        "cost": 10422.15,
-        "dailyInvest": 10,
         "remark": ""
     },
     {
@@ -374,131 +297,76 @@ const INV_TARGETS = [
         "category": "恒生科技",
         "code": "015204",
         "name": "南方恒生科技ETF联接(QDII)C",
-        "marketValue": 2193.51,
-        "profit": -356.49,
-        "cost": 2550,
+        "marketValue": 0,
+        "profit": 0,
+        "cost": 0,
         "dailyInvest": 0,
         "remark": ""
     },
     {
         "type": "美股",
+        "category": "纳斯达克",
+        "code": "000003",
+        "name": "纳斯达克100",
+        "marketValue": 11795.65,
+        "profit": 838.65,
+        "cost": 10957,
+        "dailyInvest": 70,
+        "remark": ""
+    },
+    {
+        "type": "美股",
         "category": "标普500",
-        "code": "513351",
-        "name": "摩根标普500指数(QDII)A",
-        "marketValue": 5935.47,
-        "profit": 455.47,
-        "cost": 5480,
+        "code": "000004",
+        "name": "标普500",
+        "marketValue": 7413,
+        "profit": 443,
+        "cost": 6970,
+        "dailyInvest": 60,
+        "remark": ""
+    },
+    {
+        "type": "日股",
+        "category": "日股",
+        "code": "000006",
+        "name": "日股",
+        "marketValue": 3932.8,
+        "profit": 180.31,
+        "cost": 3752.4900000000002,
+        "dailyInvest": 20,
+        "remark": ""
+    },
+    {
+        "type": "A股",
+        "category": "红利低波",
+        "code": "000002",
+        "name": "红利低波",
+        "marketValue": 10949.25,
+        "profit": 477.11,
+        "cost": 10472.14,
         "dailyInvest": 10,
+        "remark": ""
+    },
+    {
+        "type": "债券",
+        "category": "债券",
+        "code": "000001",
+        "name": "债券",
+        "marketValue": 41312.42,
+        "profit": 312.42,
+        "cost": 41000,
+        "dailyInvest": 0,
         "remark": ""
     },
     {
         "type": "美股",
         "category": "纳斯达克",
-        "code": "160140",
-        "name": "南方纳斯达克100指数(QDII)A",
-        "marketValue": 4035.4,
-        "profit": 385.4,
-        "cost": 3650,
-        "dailyInvest": 10,
-        "remark": ""
-    },
-    {
-        "type": "美股",
-        "category": "纳斯达克",
-        "code": "016055",
-        "name": "招商纳斯达克100ETF联接(QDII)A",
-        "marketValue": 5433.99,
-        "profit": 693.99,
-        "cost": 4740,
-        "dailyInvest": 10,
-        "remark": ""
-    },
-    {
-        "type": "美股",
-        "category": "纳斯达克",
-        "code": "017091",
-        "name": "景顺长城纳斯达克科技市值加权ETF联接(QDII)A",
-        "marketValue": 3039.06,
-        "profit": 679.06,
+        "code": "000006",
+        "name": "纳斯达克科技",
+        "marketValue": 2903.92,
+        "profit": 543.92,
         "cost": 2360,
         "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "日股",
-        "category": "日股",
-        "code": "008280",
-        "name": "摩根日本精选股票(QDII)A",
-        "marketValue": 3629.62,
-        "profit": 207.13,
-        "cost": 3422.49,
-        "dailyInvest": 10,
-        "remark": ""
-    },
-    {
-        "type": "美股",
-        "category": "纳斯达克",
-        "code": "270042",
-        "name": "广发纳斯达克100ETF联接(QDII)A",
-        "marketValue": 95.54,
-        "profit": 3.54,
-        "cost": 92,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "美股",
-        "category": "纳斯达克",
-        "code": "160213",
-        "name": "国泰纳斯达克100指数(QDII)",
-        "marketValue": 1858.25,
-        "profit": 58.25,
-        "cost": 1800,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "日股",
-        "category": "日股",
-        "code": "020712",
-        "name": "华安三菱日联日经225ETF联接(QDII)A",
-        "marketValue": 261.15,
-        "profit": 11.15,
-        "cost": 249.99999999999997,
-        "dailyInvest": 10,
-        "remark": ""
-    },
-    {
-        "type": "美股",
-        "category": "纳斯达克",
-        "code": "000834",
-        "name": "大成纳斯达克100ETF联接(QDII)A",
-        "marketValue": 183.95,
-        "profit": 3.95,
-        "cost": 180,
-        "dailyInvest": 10,
-        "remark": ""
-    },
-    {
-        "type": "美股",
-        "category": "纳斯达克",
-        "code": "040046",
-        "name": "华安纳斯达克100ETF联接(QDII)A",
-        "marketValue": 154.39,
-        "profit": 4.39,
-        "cost": 150,
-        "dailyInvest": 5,
-        "remark": ""
-    },
-    {
-        "type": "美股",
-        "category": "标普500",
-        "code": "096001",
-        "name": "大成标普500等权重指数(QDII)A",
-        "marketValue": 991.42,
-        "profit": 1.42,
-        "cost": 990,
-        "dailyInvest": 100,
         "remark": ""
     }
 ];
@@ -507,7 +375,7 @@ const INV_TARGETS = [
 const CASH = [
     {
         "name": "余额宝",
-        "amount": 1119.05,
+        "amount": 23800.46,
         "remark": ""
     }
 ];
@@ -516,7 +384,7 @@ const CASH = [
 const ANNUAL_RETURNS = [
     {
         "year": "2026",
-        "realizedProfit": -128.58,
+        "realizedProfit": -693.17,
         "capital": 100000,
         "note": ""
     }
@@ -577,6 +445,12 @@ const MONTHLY_RETURNS = [
         "month": 9,
         "profit": -53.05,
         "note": ""
+    },
+    {
+        "year": "2026",
+        "month": 10,
+        "profit": -132.48,
+        "note": ""
     }
 ];
 
@@ -602,6 +476,28 @@ const WEEKLY_CONFIG = {
 
 /* ===== 实盘周记存档（coverUrl/pushedAt/draftMediaId 为草稿箱推送预留字段） ===== */
 const WEEKLY_POSTS = [
+    {
+        "week": 6,
+        "date": "2026-10-11",
+        "title": "实盘周记｜第6周｜自建网站丨+287.87元，恒生科技收益率已经来到-16%，却还在持续回调！！",
+        "essay": "纳指、标普500、日股、红利低波本周都有不同程度上涨\n然而\n恒生科技，一枝独秀，本周还在继续回调~\n\n本周主动操作：\n增加纯债的比例：32.61%→35.74%\n",
+        "weeklyProfit": 287.87,
+        "weeklyRate": null,
+        "snapshot": {
+            "totalAsset": 102526.63999999997,
+            "totalMarket": 101407.58999999997,
+            "totalCash": 1119.05,
+            "totalProfit": 2651.16,
+            "totalProfitRate": 0.026143605227182707,
+            "bondPct": 61.22075199187257,
+            "equityPct": 37.68777558691089,
+            "targetCount": 20
+        },
+        "html": "<p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">大家好，这里是<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">叨居</strong>，欢迎来到我的投资纪实记录。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">经过一段时间准备，我的个人记录网站「<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">投么有度</strong>」开启长期实盘更新。<br>从2026年开始，我计划用二十年时间，慢慢实践属于自己的退休积累计划。<br>投资对于我而言，永远只是生活的附属，<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">生活大于投资</strong>，也是我一直坚持的核心理念。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">这是开始分享实盘周记的<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">第6周</strong>。</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周账户概况（更新日期：2026-10-11）</section><section style=\"margin:14px 0 18px;padding:16px 12px;background:#fdf6f6;border:1px solid #f2d9d9;border-radius:8px;text-align:center;\"><span style=\"font-size:13px;color:#7a6a45;\">本 周 收 益</span><br><strong style=\"font-size:24px;line-height:1.5;color:#c00000;\">+¥ 287.87</strong></section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">初始本金：<strong>¥ 100,000.00</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">总资产：<strong>¥ 102,526.64</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">组合总市值：<strong>¥ 101,407.59</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">现金：<strong>¥ 1,119.05</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益：<strong style=\"color:#c00000;\">¥ +2,651.16</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益率：<strong style=\"color:#c00000;\">+2.61%</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">当前资产配比：</p><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">债券类占比：61.2%</section><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">权益类占比：37.7%</section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">现阶段处于<strong>积累期</strong>，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周复盘</section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">纳指、标普500、日股、红利低波本周都有不同程度上涨</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">然而</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">恒生科技，一枝独秀，本周还在继续回调~</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">本周主动操作：</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">增加纯债的比例：32.61%→35.74%</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">重要声明</section><section style=\"margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;\">所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。</section><p style=\"margin:26px 0 0;font-size:13px;line-height:1.8;color:#999;\">更多长期投资思考与复盘笔记，会持续更新于此。</p><section style=\"margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;\"><strong style=\"font-size:15px;\">每周更新实盘周记，欢迎关注</strong><br><span style=\"font-size:13px;\">公众号：叨居</span><br><span style=\"font-size:13px;color:#8a7a55;\">往后每周，在这里同步账户最新情况，记录一路上的思考与成长。<br>完整的数据内容，可前往【个人主页】访问个人网站【投么有度】查看。</span></section>",
+        "coverUrl": "",
+        "pushedAt": "",
+        "draftMediaId": ""
+    },
     {
         "week": 5,
         "date": "2026-10-03",

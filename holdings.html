@@ -423,6 +423,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
         .ring-wrap {
             position: relative;
@@ -444,6 +446,30 @@
             font-size: 0.75rem;
             color: var(--h-text-3);
             margin-top: 0.25rem;
+        }
+        .profit-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.5rem;
+            min-width: 176px;
+            padding: 1.6rem 1.25rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--h-card-border);
+        }
+        .profit-card-label {
+            font-size: 0.85rem;
+            color: var(--h-text-3);
+            letter-spacing: 0.02em;
+        }
+        .profit-card-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.1;
         }
 
         /* ===== Tab ===== */
@@ -1056,7 +1082,7 @@
                                 <span class="val" id="heroProfit">+ ¥ 0</span>
                             </div>
                             <div class="hero-meta-item">
-                                <span class="lbl">收益率</span>
+                                <span class="lbl">持仓收益率</span>
                                 <span class="val" id="heroRate">+ 0.00%</span>
                             </div>
                             <div class="hero-meta-item">
@@ -1066,6 +1092,10 @@
                         </div>
                     </div>
                     <div class="hero-ring">
+                        <div class="profit-card">
+                            <div class="profit-card-label">总收益</div>
+                            <div class="profit-card-value" id="ringProfit">+¥0</div>
+                        </div>
                         <div class="ring-wrap">
                             <svg width="200" height="200">
                                 <defs>
@@ -1080,7 +1110,7 @@
                             </svg>
                             <div class="ring-center">
                                 <div class="pct" id="ringPct">+0.0%</div>
-                                <div class="lbl">收益率</div>
+                                <div class="lbl">总收益率</div>
                             </div>
                         </div>
                     </div>
@@ -1375,6 +1405,38 @@
             });
         }
 
+        // 年度汇总：总收益（所有年份）与总收益率 = 总收益 / 投入本金
+        function calcAnnualTotals() {
+            const S = (typeof Storage !== 'undefined') ? Storage : null;
+            const list = S && S.getAnnualReturns ? S.getAnnualReturns() : [];
+            const monthList = S && S.getMonthlyReturns ? S.getMonthlyReturns() : [];
+            const hasMonthly = (year) => monthList.some((r) => String(r.year) === String(year));
+            const monthlyTotal = (year) => monthList
+                .filter((r) => String(r.year) === String(year))
+                .reduce((s, r) => s + (parseFloat(r.profit) || 0), 0);
+            const staticTotal = (item) => {
+                if (hasMonthly(item.year)) return monthlyTotal(item.year);
+                const v = parseFloat(item.staticProfit);
+                return isNaN(v) ? null : v;
+            };
+            // 当前持仓浮盈 = 各标的 profit 之和
+            const targets = S && S.getInvTargets ? S.getInvTargets() : [];
+            const floating = targets.reduce((s, t) => s + (parseFloat(t.profit) || 0), 0);
+
+            const currentYear = String(new Date().getFullYear());
+            let sumTotal = 0, sumCapital = 0;
+            list.forEach((item) => {
+                const isCurrent = String(item.year) === currentYear;
+                const realized = parseFloat(item.realizedProfit) || 0;
+                const sv = staticTotal(item);
+                const yearTotal = isCurrent ? (realized + floating) : (sv !== null ? sv : realized);
+                sumTotal += yearTotal;
+                sumCapital += parseFloat(item.capital) || 0;
+            });
+            const totalRate = sumCapital !== 0 ? (sumTotal / sumCapital) : 0; // 小数（0.0357 即 3.57%）
+            return { totalProfit: sumTotal, totalRate: totalRate, floating: floating };
+        }
+
         // 渲染 Hero 区域（基于新投资标的数据）
         function renderHero() {
             // 通过全局 holdings.js 提供的工具读取并计算
@@ -1382,6 +1444,7 @@
             const m = (typeof calcInvMetrics === 'function')
                 ? calcInvMetrics(list)
                 : { totalMarket: 0, totalProfit: 0, totalProfitRate: 0, count: 0 };
+            const annual = calcAnnualTotals();
 
             const totalEl = document.getElementById('heroTotalValue');
             if (totalEl) {
@@ -1418,11 +1481,19 @@
                 }
             }
 
-            // 环形进度（按收益率映射为 50%-100% 显示）
+            // 总收益：普通卡片展示「总收益」金额（已取消环形，仅填充金额）
+            const profitRingPct = document.getElementById('ringProfit');
+            if (profitRingPct) {
+                const sign = annual.totalProfit >= 0 ? '+' : '';
+                profitRingPct.textContent = sign + '¥' + fmtMoney(annual.totalProfit);
+                profitRingPct.style.color = annual.totalProfit >= 0 ? 'var(--up)' : 'var(--down)';
+            }
+
+            // 环形进度（按年度汇总总收益率映射为 50%-100% 显示）
             const ring = document.getElementById('ringProgress');
             const ringPct = document.getElementById('ringPct');
             if (ring && ringPct) {
-                const rate = m.totalProfitRate;
+                const rate = annual.totalRate;
                 const visualPct = Math.max(0, Math.min(1, 0.5 + rate));
                 const circumference = 2 * Math.PI * 80;
                 const offset = circumference * (1 - visualPct);

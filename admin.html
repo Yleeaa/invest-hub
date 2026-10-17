@@ -2815,7 +2815,6 @@
                 '<p style="' + P + '">当前资产配比：</p>' +
                 '<section style="' + Q + '">债券类占比：' + m.bondPct.toFixed(1) + '%</section>' +
                 '<section style="' + Q + '">权益类占比：' + m.equityPct.toFixed(1) + '%</section>' +
-                '<p style="' + P + '">现阶段处于<strong>积累期</strong>，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。</p>' +
                 '<section style="' + H + '">本周复盘</section>' +
                 (essayParas || '<p style="' + P + 'color:#bbb;">（本周复盘待填写）</p>') +
                 '<section style="' + H + '">重要声明</section>' +
@@ -2840,7 +2839,6 @@
                 '当前资产配比：\n' +
                 '> 债券类占比：' + m.bondPct.toFixed(1) + '%\n' +
                 '> 权益类占比：' + m.equityPct.toFixed(1) + '%\n\n' +
-                '现阶段处于积累期，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。\n\n' +
                 '【本周复盘】\n' + (essay.trim() || '（待填写）') + '\n\n' +
                 '【重要声明】\n所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。\n\n' +
                 '更多长期投资思考与复盘笔记，会持续更新于此。\n\n每周更新实盘周记，欢迎关注：\n公众号：叨居\nB站：投么有度\n\n往后每周，我都会在这里同步账户最新情况，记录一路上的思考、犯错与成长。\n完整的数据演示页面，可访问个人网站【投么有度】查看；\n视频版本同步更新在B站，搜索「投么有度」即可观看。';
@@ -3151,7 +3149,6 @@
                 '- 累计持仓收益率：**' + rateStr + '**\n' +
                 '- 债券类占比：**' + m.bondPct.toFixed(1) + '%**\n' +
                 '- 权益类占比：**' + m.equityPct.toFixed(1) + '%**\n\n' +
-                '现阶段处于**积累期**，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。\n\n' +
                 '## 本周复盘\n\n' + essayParas + '\n\n' +
                 '## 重要声明\n\n' +
                 '> 所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。\n\n' +
@@ -3560,10 +3557,13 @@
                     '<th style="' + THV + '">昨日限购</th>' +
                     '</tr></thead><tbody>';
                 list.forEach(function (l) {
+                    var changed = limitCell(l) !== prevCellPlain(l);
+                    var curHtml = limitCellHtml(l) + (changed ? ' <span style="color:#e0720a;font-weight:700;">▲</span>' : '');
+                    var curStyle = TDV + (changed ? 'background:#fff4e5;' : '');
                     s += '<tr>' +
                         '<td style="' + TD + '">' + escWeekly(l.name) + '</td>' +
                         '<td style="' + TDV + '">' + l.code + '</td>' +
-                        '<td style="' + TDV + '">' + limitCellHtml(l) + '</td>' +
+                        '<td style="' + curStyle + '">' + curHtml + '</td>' +
                         '<td style="' + TDV + '">' + prevCellHtml(l) + '</td>' +
                         '</tr>';
                 });
@@ -3573,14 +3573,20 @@
 
             var ndxEtf = byIdx(f.etfs, 'NDX');
             var spxEtf = byIdx(f.etfs, 'SPX');
+            var djiEtf = byIdx(f.etfs, 'DJI');
+            var nkyEtf = byIdx(f.etfs, 'NKY');
             var ndxOff = byIdx(f.offmarket, 'NDX');
             var spxOff = byIdx(f.offmarket, 'SPX');
+            var nkyOff = byIdx(f.offmarket, 'NKY');
 
             var fundHtml =
                 offBlock('纳斯达克100 · 场外基金', ndxOff) +
                 etfBlock('纳斯达克100 · 场内 ETF', ndxEtf) +
                 offBlock('标普500 · 场外基金', spxOff) +
-                etfBlock('标普500 · 场内 ETF', spxEtf);
+                etfBlock('标普500 · 场内 ETF', spxEtf) +
+                etfBlock('道琼斯 · 场内 ETF', djiEtf) +
+                offBlock('日经225 · 场外基金', nkyOff) +
+                etfBlock('日经225 · 场内 ETF', nkyEtf);
 
             var dp = date.split('-');
             var dateText = dp[0] + '年' + parseInt(dp[1], 10) + '月' + parseInt(dp[2], 10) + '日';
@@ -3602,7 +3608,7 @@
                 var cur = limitCell(l);
                 var prev = prevCellPlain(l);
                 if (prev === '—' || prev === cur) return l.name + '（' + l.code + '）' + cur;
-                return l.name + '（' + l.code + '）' + cur + '（昨日：' + prev + '）';
+                return l.name + '（' + l.code + '）' + cur + ' ▲（昨日：' + prev + '）';
             };
             var appendEtf = function (label, list) {
                 textLines.push('');
@@ -3621,6 +3627,9 @@
             appendEtf('纳斯达克100 · 场内 ETF', ndxEtf);
             appendOff('标普500 · 场外基金', spxOff);
             appendEtf('标普500 · 场内 ETF', spxEtf);
+            appendEtf('道琼斯 · 场内 ETF', djiEtf);
+            appendOff('日经225 · 场外基金', nkyOff);
+            appendEtf('日经225 · 场内 ETF', nkyEtf);
             textLines.push('');
             textLines.push('【重要声明】以上内容仅为个人记录与数据整理，不构成任何投资建议。市场有风险，入市需谨慎。');
             textLines.push('');

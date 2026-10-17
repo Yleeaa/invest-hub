@@ -1,8 +1,8 @@
 /**
- * 美股被动指数基金（纳指100 / 标普500）—— 基本信息 + 限购情况抓取
+ * 海外被动指数基金（纳指100 / 标普500 / 日经225 / 道琼斯）—— 基本信息 + 限购情况抓取
  *
  * 数据源：天天基金 F10 费率/购买信息页  http://fundf10.eastmoney.com/jjfl_{code}.html
- * 覆盖：纳指100 / 标普500 的场外 QDII 指数基金 / 场外 ETF 联接 / 场内 ETF（仅保留人民币份额）
+ * 覆盖：纳指100 / 标普500 / 日经225 / 道琼斯 的场外 QDII 指数基金 / 场外 ETF 联接 / 场内 ETF（仅保留人民币份额）
  *
  * 可在三种环境下运行：
  *   1. CloudBase 云函数（导出 main，可配合定时触发器每日执行）
@@ -119,8 +119,36 @@ const SPX_LIST = [
   ['007721', '天弘标普500发起(QDII-FOF)A', '天弘', '指数', '人民币', 'A']
 ];
 
-/* 合并纳指100与标普500清单，并标记标的指数（NDX=纳斯达克100 / SPX=标普500） */
-const FUND_LIST = NDX_LIST.map((it) => it.concat('NDX')).concat(SPX_LIST.map((it) => it.concat('SPX')));
+/* ============================================================
+ * 日经225 被动指数基金完整清单（截至 2026-09，仅人民币份额）
+ * 说明：覆盖国内跟踪日经225指数的场内 ETF 与场外 ETF 联接。
+ * ============================================================ */
+const NIKKEI_LIST = [
+  // —— 场内 ETF（证券账户二级市场可直接买卖）——
+  ['513520', '华夏野村日经225ETF(QDII)', '华夏', 'ETF', '人民币', '-'],
+  ['513880', '华安三菱日联日经225ETF(QDII)', '华安', 'ETF', '人民币', '-'],
+  ['513000', '易方达日兴资管日经225ETF(QDII)', '易方达', 'ETF', '人民币', '-'],
+  ['159866', '工银瑞信大和日经225ETF(QDII)', '工银瑞信', 'ETF', '人民币', '-'],
+
+  // —— 场外 ETF 联接 ——
+  ['020712', '华安三菱日联日经225ETF发起式联接(QDII)A', '华安', '联接', '人民币', 'A'],
+  ['020713', '华安三菱日联日经225ETF发起式联接(QDII)C', '华安', '联接', '人民币', 'C']
+];
+
+/* ============================================================
+ * 道琼斯工业平均指数 被动基金完整清单（截至 2026-09，仅人民币份额）
+ * 说明：当前国内仅鹏华道琼斯工业平均ETF一只场内产品。
+ * ============================================================ */
+const DOW_LIST = [
+  // —— 场内 ETF（证券账户二级市场可直接买卖）——
+  ['513400', '鹏华道琼斯工业平均ETF(QDII)', '鹏华', 'ETF', '人民币', '-']
+];
+
+/* 合并纳指100、标普500、日经225与道琼斯清单，并标记标的指数（NDX=纳斯达克100 / SPX=标普500 / NKY=日经225 / DJI=道琼斯工业平均） */
+const FUND_LIST = NDX_LIST.map((it) => it.concat('NDX'))
+  .concat(SPX_LIST.map((it) => it.concat('SPX')))
+  .concat(DOW_LIST.map((it) => it.concat('DJI')))
+  .concat(NIKKEI_LIST.map((it) => it.concat('NKY')));
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -226,7 +254,8 @@ async function fetchEtfPremium(etfCodes) {
       map[code] = {
         iopv: typeof row.f441 === 'number' ? row.f441 : '',
         premium: discount == null ? '' : Math.round(-discount * 100) / 100,
-        priceDate: row.f297 ? String(row.f297) : ''
+        priceDate: row.f297 ? String(row.f297) : '',
+        price: typeof row.f2 === 'number' ? row.f2 : ''
       };
     }
   } catch (e) { /* 溢价率抓取失败不阻塞主流程 */ }
@@ -305,6 +334,15 @@ async function scrapeAll(list = FUND_LIST, onProgress) {
           extra.iopv = pm.iopv != null ? pm.iopv : '';
           extra.premium = pm.premium != null ? pm.premium : '';
           extra.priceDate = pm.priceDate || '';
+          // 净值溢价率兜底：IOPV 缺失/无效（如道琼斯 QDII）时，用「市价 ÷ 单位净值 − 1」估算，净值存在滞后
+          if (!(parseFloat(extra.iopv) > 0)) {
+            const nav = parseFloat(detail.nav);
+            const price = parseFloat(pm.price);
+            if (nav > 0 && price > 0) {
+              extra.premium = Math.round((price / nav - 1) * 10000) / 100;
+              extra.premiumBasis = 'nav';
+            }
+          }
         }
         results[idx] = Object.assign(base, detail, extra);
       } catch (e) {

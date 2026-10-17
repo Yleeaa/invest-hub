@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="美股被动指数基金（纳指100 · 标普500）：基本信息与限购情况">
+    <meta name="description" content="海外被动指数基金（纳指100 · 标普500 · 道琼斯 · 日经225）：基本信息与限购情况">
     <title>基金跟踪 · 生活大于投资</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -451,12 +451,14 @@
     </div>
 
     <main class="page">
-        <h1>纳指100 · 标普500 指数基金全景</h1>
+        <h1>纳指100 · 标普500 · 道琼斯 · 日经225 指数基金全景</h1>
         <p class="updated">数据更新：<b id="updated">—</b> · <span id="source">本地数据</span> </p>
 
         <div class="tabs" id="indexTabs">
             <button class="tab on" data-idx="NDX">纳指100</button>
             <button class="tab" data-idx="SPX">标普500</button>
+            <button class="tab" data-idx="DJI">道琼斯</button>
+            <button class="tab" data-idx="NKY">日经225</button>
         </div>
 
         <div class="toolbar">
@@ -544,7 +546,10 @@
                 var p = f.premium;
                 if (p == null || p === '') return '<span class="muted">—</span>';
                 var cls = p > 0 ? 'limit-zero' : 'ok';
-                return '<span class="' + cls + '">' + (p > 0 ? '+' : '') + p + '%</span>';
+                var hint = f.premiumBasis === 'nav'
+                    ? '<span class="muted" title="净值口径：市价÷单位净值−1，QDII 净值存在滞后，仅供参考">（净值）</span>'
+                    : '';
+                return '<span class="' + cls + '">' + (p > 0 ? '+' : '') + p + '%</span>' + hint;
             }
             function isSuspended(f) {
                 return f.cat !== 'ETF' && f.purchaseStatus === '暂停申购';

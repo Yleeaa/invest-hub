@@ -3,9 +3,9 @@ name: Deploy static content to Pages
 on:
   push:
     branches: ["main"]
-  # 每天北京时间 02:00（UTC 18:00）自动抓取基金数据（不抓美股指数，故无需等美股收盘）
+  # 每天北京时间 00:30（UTC 16:30）自动抓取基金数据（不抓美股指数，故无需等美股收盘）
   schedule:
-    - cron: '0 18 * * *'
+    - cron: '30 16 * * *'
   workflow_dispatch:
 
 permissions:

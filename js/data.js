@@ -477,6 +477,28 @@ const WEEKLY_CONFIG = {
 /* ===== 实盘周记存档（coverUrl/pushedAt/draftMediaId 为草稿箱推送预留字段） ===== */
 const WEEKLY_POSTS = [
     {
+        "week": 7,
+        "date": "2026-10-17",
+        "title": "实盘周记｜第7周｜自建网站丨清仓了恒生科技",
+        "essay": "1.清仓：偏债资产（原因：市场走熊，无法产生增值收益，基金经理调仓后不符合个人的投资选择）\n2.清仓：恒生科技（原因：总结三个字：不看好）\n3.债券：加了点债券（原因：当下最稳妥的选择）\n",
+        "weeklyProfit": -420.35,
+        "weeklyRate": null,
+        "snapshot": {
+            "totalAsset": 102107.5,
+            "totalMarket": 78307.04,
+            "totalCash": 23800.46,
+            "totalProfit": 2795.4100000000003,
+            "totalProfitRate": 0.03569806750453089,
+            "bondPct": 40.45973116568323,
+            "equityPct": 36.23105060842739,
+            "targetCount": 8
+        },
+        "html": "<p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">大家好，这里是<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">叨居</strong>，欢迎来到我的投资纪实记录。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">经过一段时间准备，我的个人记录网站「<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">投么有度</strong>」开启长期实盘更新。<br>从2026年开始，我计划用二十年时间，慢慢实践属于自己的退休积累计划。<br>投资对于我而言，永远只是生活的附属，<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">生活大于投资</strong>，也是我一直坚持的核心理念。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">这是开始分享实盘周记的<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">第7周</strong>。</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周账户概况（更新日期：2026-10-17）</section><section style=\"margin:14px 0 18px;padding:16px 12px;background:#f5faf5;border:1px solid #d8ecd8;border-radius:8px;text-align:center;\"><span style=\"font-size:13px;color:#7a6a45;\">本 周 收 益</span><br><strong style=\"font-size:24px;line-height:1.5;color:#0a7d48;\">¥ -420.35</strong></section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">初始本金：<strong>¥ 100,000.00</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">总资产：<strong>¥ 102,107.50</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">组合总市值：<strong>¥ 78,307.04</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">现金：<strong>¥ 23,800.46</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益：<strong style=\"color:#c00000;\">¥ +2,795.41</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益率：<strong style=\"color:#c00000;\">+3.57%</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">当前资产配比：</p><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">债券类占比：40.5%</section><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">权益类占比：36.2%</section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">现阶段处于<strong>积累期</strong>，我的配置思路以平衡收益与波动为主，采用偏稳健的股债搭配，不追求短期暴利，优先控制回撤，着眼几十年的长期复利。</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周复盘</section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">1.清仓：偏债资产（原因：市场走熊，无法产生增值收益，基金经理调仓后不符合个人的投资选择）</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">2.清仓：恒生科技（原因：总结三个字：不看好）</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">3.债券：加了点债券（原因：当下最稳妥的选择）</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">重要声明</section><section style=\"margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;\">所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。</section><p style=\"margin:26px 0 0;font-size:13px;line-height:1.8;color:#999;\">更多长期投资思考与复盘笔记，会持续更新于此。</p><section style=\"margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;\"><strong style=\"font-size:15px;\">每周更新实盘周记，欢迎关注</strong><br><span style=\"font-size:13px;\">公众号：叨居</span><br><span style=\"font-size:13px;color:#8a7a55;\">往后每周，在这里同步账户最新情况，记录一路上的思考与成长。<br>完整的数据内容，可前往【个人主页】访问个人网站【投么有度】查看。</span></section>",
+        "coverUrl": "",
+        "pushedAt": "",
+        "draftMediaId": ""
+    },
+    {
         "week": 6,
         "date": "2026-10-11",
         "title": "实盘周记｜第6周｜自建网站丨+287.87元，恒生科技收益率已经来到-16%，却还在持续回调！！",

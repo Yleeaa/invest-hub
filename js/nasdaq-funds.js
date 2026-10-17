@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/17 16:53:12（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/17 16:53:12";
+/* 生成时间：2026/10/18 02:45:50（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/18 02:45:50";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -2288,7 +2288,9 @@ window.NASDAQ_FUNDS = [
     "manager": "华安基金",
     "scale": "2.87亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "6.75%"
+    "trackingError": "6.75%",
+    "prevPurchaseStatus": "限大额",
+    "prevDailyLimit": "10.00元"
   },
   {
     "code": "020713",
@@ -2314,6 +2316,8 @@ window.NASDAQ_FUNDS = [
     "manager": "华安基金",
     "scale": "1.60亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "6.75%"
+    "trackingError": "6.75%",
+    "prevPurchaseStatus": "限大额",
+    "prevDailyLimit": "10.00元"
   }
 ];

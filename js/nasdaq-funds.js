@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/18 02:45:50（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/18 02:45:50";
+/* 生成时间：2026/10/19 02:51:12（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/19 02:51:12";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",

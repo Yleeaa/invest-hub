@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/20 05:13:32（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/20 05:13:32";
+/* 生成时间：2026/10/20 17:06:06（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/20 17:06:06";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -27,9 +27,9 @@ window.NASDAQ_FUNDS = [
     "scale": "194.68亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "iopv": 1.9541,
-    "premium": 20,
-    "priceDate": "20261019"
+    "iopv": 1.9775,
+    "premium": 18.03,
+    "priceDate": "20261020"
   },
   {
     "code": "513110",
@@ -56,9 +56,9 @@ window.NASDAQ_FUNDS = [
     "scale": "50.98亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.03%",
-    "iopv": 2.2442,
-    "premium": 12.51,
-    "priceDate": "20261019"
+    "iopv": 2.2702,
+    "premium": 10.03,
+    "priceDate": "20261020"
   },
   {
     "code": "513300",
@@ -68,8 +68,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.4286",
-    "navDate": "10-16",
+    "nav": "2.4550",
+    "navDate": "10-19",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -85,9 +85,9 @@ window.NASDAQ_FUNDS = [
     "scale": "132.88亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "2.17%",
-    "iopv": 2.4286,
-    "premium": 14.72,
-    "priceDate": "20261019"
+    "iopv": 2.4552,
+    "premium": 11.72,
+    "priceDate": "20261020"
   },
   {
     "code": "513390",
@@ -114,9 +114,9 @@ window.NASDAQ_FUNDS = [
     "scale": "42.50亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.06%",
-    "iopv": 2.1939,
-    "premium": 12.4,
-    "priceDate": "20261019"
+    "iopv": 2.2189,
+    "premium": 9.96,
+    "priceDate": "20261020"
   },
   {
     "code": "513870",
@@ -143,9 +143,9 @@ window.NASDAQ_FUNDS = [
     "scale": "24.71亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "0.99%",
-    "iopv": 1.8614,
-    "premium": 14.32,
-    "priceDate": "20261019"
+    "iopv": 1.8834,
+    "premium": 12.24,
+    "priceDate": "20261020"
   },
   {
     "code": "159501",
@@ -155,8 +155,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.8361",
-    "navDate": "10-16",
+    "nav": "1.8571",
+    "navDate": "10-19",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -172,9 +172,9 @@ window.NASDAQ_FUNDS = [
     "scale": "124.11亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.01%",
-    "iopv": 1.8361,
-    "premium": 19.11,
-    "priceDate": "20261019"
+    "iopv": 1.8572,
+    "premium": 17.76,
+    "priceDate": "20261020"
   },
   {
     "code": "159513",
@@ -201,9 +201,9 @@ window.NASDAQ_FUNDS = [
     "scale": "73.84亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.03%",
-    "iopv": 1.6291,
-    "premium": 12.39,
-    "priceDate": "20261019"
+    "iopv": 1.6478,
+    "premium": 10.03,
+    "priceDate": "20261020"
   },
   {
     "code": "159632",
@@ -230,9 +230,9 @@ window.NASDAQ_FUNDS = [
     "scale": "113.00亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.04%",
-    "iopv": 2.2208,
-    "premium": 13.29,
-    "priceDate": "20261019"
+    "iopv": 2.2467,
+    "premium": 10.61,
+    "priceDate": "20261020"
   },
   {
     "code": "159659",
@@ -259,9 +259,9 @@ window.NASDAQ_FUNDS = [
     "scale": "99.36亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.08%",
-    "iopv": 2.1126,
-    "premium": 16.11,
-    "priceDate": "20261019"
+    "iopv": 2.137,
+    "premium": 13.57,
+    "priceDate": "20261020"
   },
   {
     "code": "159660",
@@ -288,9 +288,9 @@ window.NASDAQ_FUNDS = [
     "scale": "49.10亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.03%",
-    "iopv": 2.1358,
-    "premium": 14.1,
-    "priceDate": "20261019"
+    "iopv": 2.1606,
+    "premium": 11.87,
+    "priceDate": "20261020"
   },
   {
     "code": "159696",
@@ -300,8 +300,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.8203",
-    "navDate": "10-16",
+    "nav": "1.8411",
+    "navDate": "10-19",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -317,9 +317,9 @@ window.NASDAQ_FUNDS = [
     "scale": "50.11亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.00%",
-    "iopv": 1.8203,
-    "premium": 17.67,
-    "priceDate": "20261019"
+    "iopv": 1.8412,
+    "premium": 15.85,
+    "priceDate": "20261020"
   },
   {
     "code": "159941",
@@ -346,9 +346,9 @@ window.NASDAQ_FUNDS = [
     "scale": "346.82亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "iopv": 1.4624,
-    "premium": 17.82,
-    "priceDate": "20261019"
+    "iopv": 1.4792,
+    "premium": 15.47,
+    "priceDate": "20261020"
   },
   {
     "code": "159509",
@@ -375,9 +375,9 @@ window.NASDAQ_FUNDS = [
     "scale": "151.28亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.36%",
-    "iopv": 2.2531,
-    "premium": 42.78,
-    "priceDate": "20261019"
+    "iopv": 2.2793,
+    "premium": 39.08,
+    "priceDate": "20261020"
   },
   {
     "code": "160213",
@@ -977,9 +977,9 @@ window.NASDAQ_FUNDS = [
     "index": "NDX",
     "nav": "8.0314",
     "navDate": "10-16",
-    "purchaseStatus": "限大额",
+    "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
-    "autoInvest": "支持",
+    "autoInvest": "不支持",
     "dailyLimit": "5.00元",
     "maxHolding": "无限额",
     "purchaseMin": "5.00元",
@@ -1005,9 +1005,9 @@ window.NASDAQ_FUNDS = [
     "index": "NDX",
     "nav": "7.8641",
     "navDate": "10-16",
-    "purchaseStatus": "限大额",
+    "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
-    "autoInvest": "支持",
+    "autoInvest": "不支持",
     "dailyLimit": "5.00元",
     "maxHolding": "无限额",
     "purchaseMin": "5.00元",
@@ -1031,8 +1031,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.9998",
-    "navDate": "10-16",
+    "nav": "2.0205",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1059,8 +1059,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.9730",
-    "navDate": "10-16",
+    "nav": "1.9933",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1171,8 +1171,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "2.1380",
-    "navDate": "10-16",
+    "nav": "2.1611",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1199,8 +1199,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "2.1131",
-    "navDate": "10-16",
+    "nav": "2.1359",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1227,8 +1227,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "I",
     "index": "NDX",
-    "nav": "2.1187",
-    "navDate": "10-16",
+    "nav": "2.1416",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1479,8 +1479,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "4.3704",
-    "navDate": "10-16",
+    "nav": "4.4177",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1507,8 +1507,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "4.2919",
-    "navDate": "10-16",
+    "nav": "4.3382",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1619,8 +1619,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "SPX",
-    "nav": "2.4359",
-    "navDate": "10-16",
+    "nav": "2.4454",
+    "navDate": "10-19",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -1636,9 +1636,9 @@ window.NASDAQ_FUNDS = [
     "scale": "239.99亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.09%",
-    "iopv": 2.437,
-    "premium": 9.85,
-    "priceDate": "20261019"
+    "iopv": 2.4453,
+    "premium": 8.33,
+    "priceDate": "20261020"
   },
   {
     "code": "513650",
@@ -1665,9 +1665,9 @@ window.NASDAQ_FUNDS = [
     "scale": "76.94亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.05%",
-    "iopv": 1.8552,
-    "premium": 7.81,
-    "priceDate": "20261019"
+    "iopv": 1.8624,
+    "premium": 6.42,
+    "priceDate": "20261020"
   },
   {
     "code": "159655",
@@ -1677,8 +1677,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "SPX",
-    "nav": "1.8655",
-    "navDate": "10-16",
+    "nav": "1.8717",
+    "navDate": "10-19",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -1694,9 +1694,9 @@ window.NASDAQ_FUNDS = [
     "scale": "39.37亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "2.15%",
-    "iopv": 1.8659,
-    "premium": 8.15,
-    "priceDate": "20261019"
+    "iopv": 1.8718,
+    "premium": 6.96,
+    "priceDate": "20261020"
   },
   {
     "code": "159612",
@@ -1723,9 +1723,9 @@ window.NASDAQ_FUNDS = [
     "scale": "8.44亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "iopv": 1.9119,
-    "premium": 8.64,
-    "priceDate": "20261019"
+    "iopv": 1.9183,
+    "premium": 7.6,
+    "priceDate": "20261020"
   },
   {
     "code": "050025",
@@ -1847,8 +1847,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "SPX",
-    "nav": "1.6763",
-    "navDate": "10-16",
+    "nav": "1.6817",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -2071,8 +2071,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "6.6654",
-    "navDate": "10-16",
+    "nav": "6.7387",
+    "navDate": "10-19",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -2144,9 +2144,9 @@ window.NASDAQ_FUNDS = [
     "scale": "29.55亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.06%",
-    "iopv": 1.2724,
-    "premium": 3.82,
-    "priceDate": "20261019"
+    "iopv": 1.2709,
+    "premium": 3.63,
+    "priceDate": "20261020"
   },
   {
     "code": "513520",
@@ -2173,9 +2173,9 @@ window.NASDAQ_FUNDS = [
     "scale": "24.29亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "7.72%",
-    "iopv": 2.1575,
-    "premium": 4.43,
-    "priceDate": "20261019"
+    "iopv": 2.1308,
+    "premium": 4.28,
+    "priceDate": "20261020"
   },
   {
     "code": "513880",
@@ -2202,9 +2202,9 @@ window.NASDAQ_FUNDS = [
     "scale": "27.30亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "6.77%",
-    "iopv": 2.025,
-    "premium": 4.59,
-    "priceDate": "20261019"
+    "iopv": 1.9862,
+    "premium": 5.23,
+    "priceDate": "20261020"
   },
   {
     "code": "513000",
@@ -2231,9 +2231,9 @@ window.NASDAQ_FUNDS = [
     "scale": "22.70亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "7.43%",
-    "iopv": 2.1734,
-    "premium": 3.34,
-    "priceDate": "20261019"
+    "iopv": 2.1338,
+    "premium": 3.81,
+    "priceDate": "20261020"
   },
   {
     "code": "159866",
@@ -2260,9 +2260,9 @@ window.NASDAQ_FUNDS = [
     "scale": "13.90亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "",
-    "iopv": 1.6163,
-    "premium": 2.7,
-    "priceDate": "20261019"
+    "iopv": 1.5931,
+    "premium": 2.57,
+    "priceDate": "20261020"
   },
   {
     "code": "020712",

@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/21 20:10:39（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/21 20:10:39";
+/* 生成时间：2026/10/21 20:12:35（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/21 20:12:35";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -26,7 +26,7 @@ window.NASDAQ_FUNDS = [
     "manager": "国泰基金",
     "scale": "194.68亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "",
+    "trackingError": "1.02%",
     "iopv": 1.9742,
     "premium": 17.06,
     "priceDate": "20261021"
@@ -39,10 +39,26 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "error": "timeout",
-    "iopv": 2.2702,
-    "premium": 10.03,
-    "priceDate": "20261020"
+    "nav": "2.2665",
+    "navDate": "10-20",
+    "purchaseStatus": "场内交易",
+    "redeemStatus": "场内交易",
+    "autoInvest": "不支持",
+    "dailyLimit": "",
+    "maxHolding": "",
+    "purchaseMin": "",
+    "mgmtFee": "0.80%（每年）",
+    "custodyFee": "0.20%（每年）",
+    "salesFee": "",
+    "establishDate": "2023-03-01",
+    "fundType": "指数型-海外股票",
+    "manager": "华泰柏瑞基金",
+    "scale": "50.98亿元",
+    "scaleDate": "2026-06-30",
+    "trackingError": "1.03%",
+    "iopv": 2.2666,
+    "premium": 11.09,
+    "priceDate": "20261021"
   },
   {
     "code": "513300",
@@ -640,7 +656,7 @@ window.NASDAQ_FUNDS = [
     "scale": "9.68亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "2.17%",
-    "prevPurchaseStatus": "暂停申购",
+    "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "5.00元"
   },
   {
@@ -668,7 +684,7 @@ window.NASDAQ_FUNDS = [
     "scale": "4.29亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "2.17%",
-    "prevPurchaseStatus": "暂停申购",
+    "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "5.00元"
   },
   {

@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/21 20:12:35（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/21 20:12:35";
+/* 生成时间：2026/10/22 04:20:28（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/22 04:20:28";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -142,7 +142,7 @@ window.NASDAQ_FUNDS = [
     "manager": "富国基金",
     "scale": "24.71亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.00%",
+    "trackingError": "0.99%",
     "iopv": 1.8803,
     "premium": 13.17,
     "priceDate": "20261021"
@@ -171,7 +171,7 @@ window.NASDAQ_FUNDS = [
     "manager": "嘉实基金",
     "scale": "124.11亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.02%",
+    "trackingError": "1.01%",
     "iopv": 1.8544,
     "premium": 17.45,
     "priceDate": "20261021"
@@ -229,7 +229,7 @@ window.NASDAQ_FUNDS = [
     "manager": "华安基金",
     "scale": "113.00亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.05%",
+    "trackingError": "1.04%",
     "iopv": 2.2432,
     "premium": 11.54,
     "priceDate": "20261021"
@@ -287,7 +287,7 @@ window.NASDAQ_FUNDS = [
     "manager": "汇添富基金",
     "scale": "49.10亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.04%",
+    "trackingError": "1.03%",
     "iopv": 2.1573,
     "premium": 13.29,
     "priceDate": "20261021"
@@ -316,7 +316,7 @@ window.NASDAQ_FUNDS = [
     "manager": "易方达基金",
     "scale": "50.11亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.01%",
+    "trackingError": "1.00%",
     "iopv": 1.8385,
     "premium": 16.13,
     "priceDate": "20261021"
@@ -487,7 +487,7 @@ window.NASDAQ_FUNDS = [
     "manager": "南方基金",
     "scale": "31.36亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.43%",
+    "trackingError": "1.42%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": ""
   },
@@ -627,7 +627,7 @@ window.NASDAQ_FUNDS = [
     "manager": "摩根基金(中国)",
     "scale": "10.80亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.31%",
+    "trackingError": "2.30%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -695,8 +695,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.4793",
-    "navDate": "10-19",
+    "nav": "1.4773",
+    "navDate": "10-20",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -723,8 +723,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.4686",
-    "navDate": "10-19",
+    "nav": "1.4665",
+    "navDate": "10-20",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -739,7 +739,7 @@ window.NASDAQ_FUNDS = [
     "manager": "宝盈基金",
     "scale": "4.06亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.70%",
+    "trackingError": "1.69%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -767,7 +767,7 @@ window.NASDAQ_FUNDS = [
     "manager": "建信基金",
     "scale": "21.76亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.23%",
+    "trackingError": "2.22%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -823,7 +823,7 @@ window.NASDAQ_FUNDS = [
     "manager": "建信基金",
     "scale": "0.52亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.23%",
+    "trackingError": "2.22%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -963,7 +963,7 @@ window.NASDAQ_FUNDS = [
     "manager": "大成基金",
     "scale": "11.10亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.04%",
+    "trackingError": "1.03%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -1131,7 +1131,7 @@ window.NASDAQ_FUNDS = [
     "manager": "博时基金",
     "scale": "7.07亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.47%",
+    "trackingError": "1.46%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "无限额"
   },
@@ -1215,7 +1215,7 @@ window.NASDAQ_FUNDS = [
     "manager": "嘉实基金",
     "scale": "16.40亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.50%",
+    "trackingError": "1.49%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1271,7 +1271,7 @@ window.NASDAQ_FUNDS = [
     "manager": "汇添富基金",
     "scale": "16.33亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.77%",
+    "trackingError": "1.76%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -1327,7 +1327,7 @@ window.NASDAQ_FUNDS = [
     "manager": "汇添富基金",
     "scale": "3.64亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.77%",
+    "trackingError": "1.76%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -1411,7 +1411,7 @@ window.NASDAQ_FUNDS = [
     "manager": "华泰柏瑞基金",
     "scale": "0.60亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.55%",
+    "trackingError": "1.54%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "5.00元"
   },
@@ -1439,7 +1439,7 @@ window.NASDAQ_FUNDS = [
     "manager": "招商基金",
     "scale": "21.78亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.74%",
+    "trackingError": "1.73%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -1495,7 +1495,7 @@ window.NASDAQ_FUNDS = [
     "manager": "易方达基金",
     "scale": "17.83亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.45%",
+    "trackingError": "1.44%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -1523,7 +1523,7 @@ window.NASDAQ_FUNDS = [
     "manager": "易方达基金",
     "scale": "1.80亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.45%",
+    "trackingError": "1.44%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -1551,7 +1551,7 @@ window.NASDAQ_FUNDS = [
     "manager": "景顺长城基金",
     "scale": "27.70亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.92%",
+    "trackingError": "2.93%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1607,7 +1607,7 @@ window.NASDAQ_FUNDS = [
     "manager": "景顺长城基金",
     "scale": "8.88亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.92%",
+    "trackingError": "2.93%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1863,7 +1863,7 @@ window.NASDAQ_FUNDS = [
     "manager": "华夏基金",
     "scale": "1.66亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "2.18%",
+    "trackingError": "2.17%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "100.00元"
   },
@@ -1975,7 +1975,7 @@ window.NASDAQ_FUNDS = [
     "manager": "易方达基金",
     "scale": "1.23亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.19%",
+    "trackingError": "1.18%",
     "prevPurchaseStatus": "暂停申购",
     "prevDailyLimit": "10.00元"
   },
@@ -2003,7 +2003,7 @@ window.NASDAQ_FUNDS = [
     "manager": "摩根基金(中国)",
     "scale": "53.03亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.59%",
+    "trackingError": "1.58%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
   },
@@ -2015,8 +2015,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "SPX",
-    "nav": "0.2524",
-    "navDate": "10-19",
+    "nav": "0.2530",
+    "navDate": "10-20",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -2059,7 +2059,7 @@ window.NASDAQ_FUNDS = [
     "manager": "大成基金",
     "scale": "7.30亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "1.43%",
+    "trackingError": "1.42%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "50.00元"
   },
@@ -2172,7 +2172,7 @@ window.NASDAQ_FUNDS = [
     "manager": "华夏基金",
     "scale": "24.29亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "7.70%",
+    "trackingError": "7.67%",
     "iopv": 2.1466,
     "premium": 3.89,
     "priceDate": "20261021"
@@ -2230,7 +2230,7 @@ window.NASDAQ_FUNDS = [
     "manager": "易方达基金",
     "scale": "22.70亿元",
     "scaleDate": "2026-06-30",
-    "trackingError": "7.43%",
+    "trackingError": "7.42%",
     "iopv": 2.1583,
     "premium": 3.23,
     "priceDate": "20261021"

@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/23 04:16:39（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/23 04:16:39";
+/* 生成时间：2026/10/23 21:14:20（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/23 21:14:20";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -10,8 +10,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.9960",
-    "navDate": "10-21",
+    "nav": "1.9384",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -21,15 +21,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2013-04-25",
     "fundType": "指数型-海外股票",
     "manager": "国泰基金",
     "scale": "194.68亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "iopv": 1.9963,
-    "premium": 13.31,
-    "priceDate": "20261022"
+    "iopv": 1.9377,
+    "premium": 15.76,
+    "priceDate": "20261023",
+    "prevPremium": 13.31
   },
   {
     "code": "513110",
@@ -39,8 +45,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.2916",
-    "navDate": "10-21",
+    "nav": "2.2256",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -50,15 +56,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-03-01",
     "fundType": "指数型-海外股票",
     "manager": "华泰柏瑞基金",
     "scale": "50.98亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.03%",
-    "iopv": 2.2917,
-    "premium": 8.39,
-    "priceDate": "20261022"
+    "iopv": 2.2254,
+    "premium": 9.96,
+    "priceDate": "20261023",
+    "prevPremium": 8.39
   },
   {
     "code": "513300",
@@ -68,8 +80,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.4780",
-    "navDate": "10-21",
+    "nav": "2.4045",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -79,15 +91,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2020-10-22",
     "fundType": "指数型-海外股票",
     "manager": "华夏基金",
     "scale": "132.88亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "2.17%",
-    "iopv": 2.4781,
-    "premium": 10.65,
-    "priceDate": "20261022"
+    "iopv": 2.4045,
+    "premium": 11.87,
+    "priceDate": "20261023",
+    "prevPremium": 10.65
   },
   {
     "code": "513390",
@@ -97,8 +115,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.2400",
-    "navDate": "10-21",
+    "nav": "2.1752",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -108,15 +126,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-04-19",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
     "scale": "42.50亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.06%",
-    "iopv": 2.24,
-    "premium": 8.79,
-    "priceDate": "20261022"
+    "iopv": 2.1753,
+    "premium": 10.19,
+    "priceDate": "20261023",
+    "prevPremium": 8.79
   },
   {
     "code": "513870",
@@ -126,8 +150,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.9012",
-    "navDate": "10-21",
+    "nav": "1.8462",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -137,15 +161,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-10-25",
     "fundType": "指数型-海外股票",
     "manager": "富国基金",
     "scale": "24.71亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "0.99%",
-    "iopv": 1.9014,
-    "premium": 10.23,
-    "priceDate": "20261022"
+    "iopv": 1.8458,
+    "premium": 12.69,
+    "priceDate": "20261023",
+    "prevPremium": 10.23
   },
   {
     "code": "159501",
@@ -155,8 +185,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.8750",
-    "navDate": "10-21",
+    "nav": "1.8208",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -166,15 +196,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-05-31",
     "fundType": "指数型-海外股票",
     "manager": "嘉实基金",
     "scale": "124.11亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.01%",
-    "iopv": 1.875,
-    "premium": 14.45,
-    "priceDate": "20261022"
+    "iopv": 1.8209,
+    "premium": 17.63,
+    "priceDate": "20261023",
+    "prevPremium": 14.45
   },
   {
     "code": "159513",
@@ -184,8 +220,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.6630",
-    "navDate": "10-21",
+    "nav": "1.6148",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -195,15 +231,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-07-12",
     "fundType": "指数型-海外股票",
     "manager": "大成基金",
     "scale": "73.84亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "iopv": 1.6633,
-    "premium": 8.46,
-    "priceDate": "20261022"
+    "iopv": 1.6144,
+    "premium": 9.89,
+    "priceDate": "20261023",
+    "prevPremium": 8.46
   },
   {
     "code": "159632",
@@ -213,8 +255,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.2680",
-    "navDate": "10-21",
+    "nav": "2.2025",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -224,15 +266,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2022-07-21",
     "fundType": "指数型-海外股票",
     "manager": "华安基金",
     "scale": "113.00亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.04%",
-    "iopv": 2.2681,
-    "premium": 8.81,
-    "priceDate": "20261022"
+    "iopv": 2.2024,
+    "premium": 10.38,
+    "priceDate": "20261023",
+    "prevPremium": 8.81
   },
   {
     "code": "159659",
@@ -242,8 +290,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.1574",
-    "navDate": "10-21",
+    "nav": "2.0952",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -253,15 +301,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-04-12",
     "fundType": "指数型-海外股票",
     "manager": "招商基金",
     "scale": "99.36亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.08%",
-    "iopv": 2.1575,
-    "premium": 10.78,
-    "priceDate": "20261022"
+    "iopv": 2.095,
+    "premium": 13.13,
+    "priceDate": "20261023",
+    "prevPremium": 10.78
   },
   {
     "code": "159660",
@@ -271,8 +325,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.1812",
-    "navDate": "10-21",
+    "nav": "2.1181",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -282,15 +336,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-03-30",
     "fundType": "指数型-海外股票",
     "manager": "汇添富基金",
     "scale": "49.10亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.03%",
-    "iopv": 2.1813,
-    "premium": 9.98,
-    "priceDate": "20261022"
+    "iopv": 2.1181,
+    "premium": 12.18,
+    "priceDate": "20261023",
+    "prevPremium": 9.98
   },
   {
     "code": "159696",
@@ -300,8 +360,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.8589",
-    "navDate": "10-21",
+    "nav": "1.8051",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -311,15 +371,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-08-17",
     "fundType": "指数型-海外股票",
     "manager": "易方达基金",
     "scale": "50.11亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.00%",
-    "iopv": 1.8589,
-    "premium": 12.97,
-    "priceDate": "20261022"
+    "iopv": 1.8052,
+    "premium": 15.22,
+    "priceDate": "20261023",
+    "prevPremium": 12.97
   },
   {
     "code": "159941",
@@ -329,8 +395,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "1.4930",
-    "navDate": "10-21",
+    "nav": "1.4499",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -340,15 +406,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2015-06-10",
     "fundType": "指数型-海外股票",
     "manager": "广发基金",
     "scale": "346.82亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "iopv": 1.4932,
-    "premium": 12.64,
-    "priceDate": "20261022"
+    "iopv": 1.45,
+    "premium": 15.03,
+    "priceDate": "20261023",
+    "prevPremium": 12.64
   },
   {
     "code": "159509",
@@ -358,8 +430,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "2.2880",
-    "navDate": "10-21",
+    "nav": "2.2085",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -369,15 +441,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-07-19",
     "fundType": "指数型-海外股票",
     "manager": "景顺长城基金",
     "scale": "151.28亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.36%",
-    "iopv": 2.2891,
-    "premium": 28.57,
-    "priceDate": "20261022"
+    "iopv": 2.2058,
+    "premium": 33.74,
+    "priceDate": "20261023",
+    "prevPremium": 28.57
   },
   {
     "code": "160213",
@@ -387,8 +465,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NDX",
-    "nav": "4.4780",
-    "navDate": "10-21",
+    "nav": "4.3500",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -398,6 +476,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "---",
+    "purchaseFee": "0.15%",
+    "purchaseFeeOrig": "1.50%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于365天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于365天，小于730天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于730天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2010-04-29",
     "fundType": "指数型-海外股票",
     "manager": "国泰基金",
@@ -415,8 +515,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "2.2932",
-    "navDate": "10-21",
+    "nav": "2.2296",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -426,6 +526,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-11-29",
     "fundType": "指数型-海外股票",
     "manager": "南方基金",
@@ -443,8 +557,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "2.2827",
-    "navDate": "10-21",
+    "nav": "2.2194",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -454,6 +568,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.10%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-11-29",
     "fundType": "指数型-海外股票",
     "manager": "南方基金",
@@ -471,8 +599,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "I",
     "index": "NDX",
-    "nav": "2.2932",
-    "navDate": "10-21",
+    "nav": "2.2295",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -482,6 +610,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.01%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-03-19",
     "fundType": "指数型-海外股票",
     "manager": "南方基金",
@@ -499,8 +641,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "2.0382",
-    "navDate": "10-21",
+    "nav": "1.9821",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -510,6 +652,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.10%",
+    "purchaseFeeOrig": "1.00%",
+    "purchaseFeeCond": "小于500万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于180天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于180天，小于365天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于365天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-04-11",
     "fundType": "指数型-海外股票",
     "manager": "天弘基金",
@@ -527,8 +691,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "2.0204",
-    "navDate": "10-21",
+    "nav": "1.9648",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -538,6 +702,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.20%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-04-11",
     "fundType": "指数型-海外股票",
     "manager": "天弘基金",
@@ -555,8 +733,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "D",
     "index": "NDX",
-    "nav": "2.0161",
-    "navDate": "10-21",
+    "nav": "1.9606",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -566,6 +744,24 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.20%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "1.00%"
+      },
+      {
+        "cond": "大于等于30天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-11-01",
     "fundType": "指数型-海外股票",
     "manager": "天弘基金",
@@ -583,8 +779,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.7554",
-    "navDate": "10-21",
+    "nav": "1.7076",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -594,6 +790,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-09-25",
     "fundType": "指数型-海外股票",
     "manager": "摩根基金(中国)",
@@ -611,8 +821,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.7385",
-    "navDate": "10-21",
+    "nav": "1.6912",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -622,6 +832,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-09-25",
     "fundType": "指数型-海外股票",
     "manager": "摩根基金(中国)",
@@ -639,8 +863,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.6916",
-    "navDate": "10-21",
+    "nav": "1.6456",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -650,6 +874,24 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.10%",
+    "purchaseFeeOrig": "1.00%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "0.10%"
+      },
+      {
+        "cond": "大于等于30天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-09-27",
     "fundType": "指数型-海外股票",
     "manager": "万家基金",
@@ -667,8 +909,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.6803",
-    "navDate": "10-21",
+    "nav": "1.6345",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -678,6 +920,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.20%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-09-27",
     "fundType": "指数型-海外股票",
     "manager": "万家基金",
@@ -695,8 +951,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.4928",
-    "navDate": "10-21",
+    "nav": "1.4520",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -706,6 +962,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-03-22",
     "fundType": "指数型-海外股票",
     "manager": "宝盈基金",
@@ -723,8 +993,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.4819",
-    "navDate": "10-21",
+    "nav": "1.4414",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -734,6 +1004,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.25%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-03-22",
     "fundType": "指数型-海外股票",
     "manager": "宝盈基金",
@@ -751,8 +1035,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "3.4499",
-    "navDate": "10-21",
+    "nav": "3.3630",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -762,6 +1046,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于30天，小于90天",
+        "fee": "0.30%"
+      },
+      {
+        "cond": "大于等于90天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2010-09-14",
     "fundType": "指数型-海外股票",
     "manager": "建信基金",
@@ -779,8 +1085,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "3.3369",
-    "navDate": "10-21",
+    "nav": "3.2529",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -790,6 +1096,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2021-09-22",
     "fundType": "指数型-海外股票",
     "manager": "建信基金",
@@ -807,8 +1127,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "D",
     "index": "NDX",
-    "nav": "3.3530",
-    "navDate": "10-21",
+    "nav": "3.2685",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -818,6 +1138,24 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "1.00%"
+      },
+      {
+        "cond": "大于等于30天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2025-02-12",
     "fundType": "指数型-海外股票",
     "manager": "建信基金",
@@ -835,8 +1173,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "8.1590",
-    "navDate": "10-21",
+    "nav": "7.9221",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -846,6 +1184,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.13%",
+    "purchaseFeeOrig": "1.30%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于1年",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于1年，小于2年",
+        "fee": "0.30%"
+      },
+      {
+        "cond": "大于等于2年",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2012-08-15",
     "fundType": "指数型-海外股票",
     "manager": "广发基金",
@@ -863,8 +1223,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "8.0143",
-    "navDate": "10-21",
+    "nav": "7.7815",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -874,6 +1234,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.20%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2018-10-25",
     "fundType": "指数型-海外股票",
     "manager": "广发基金",
@@ -891,8 +1265,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "F",
     "index": "NDX",
-    "nav": "8.1279",
-    "navDate": "10-21",
+    "nav": "7.8918",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -902,6 +1276,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.18%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-08-14",
     "fundType": "指数型-海外股票",
     "manager": "广发基金",
@@ -919,8 +1307,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "6.2880",
-    "navDate": "10-21",
+    "nav": "6.1077",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -930,6 +1318,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于1年",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于1年，小于2年",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于2年",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2014-11-13",
     "fundType": "指数型-海外股票",
     "manager": "大成基金",
@@ -947,8 +1357,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "6.2268",
-    "navDate": "10-21",
+    "nav": "6.0481",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -958,6 +1368,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-06-28",
     "fundType": "指数型-海外股票",
     "manager": "大成基金",
@@ -975,8 +1399,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "8.2002",
-    "navDate": "10-21",
+    "nav": "7.9641",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -986,6 +1410,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2013-08-02",
     "fundType": "指数型-海外股票",
     "manager": "华安基金",
@@ -1003,8 +1441,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "8.0290",
-    "navDate": "10-21",
+    "nav": "7.7978",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1014,6 +1452,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.20%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-02-22",
     "fundType": "指数型-海外股票",
     "manager": "华安基金",
@@ -1031,8 +1483,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "2.0385",
-    "navDate": "10-21",
+    "nav": "1.9814",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1042,6 +1494,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-04-14",
     "fundType": "指数型-海外股票",
     "manager": "华夏基金",
@@ -1059,8 +1525,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "2.0110",
-    "navDate": "10-21",
+    "nav": "1.9547",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1070,6 +1536,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-04-14",
     "fundType": "指数型-海外股票",
     "manager": "华夏基金",
@@ -1087,8 +1567,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "2.1272",
-    "navDate": "10-21",
+    "nav": "2.0686",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1098,6 +1578,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.10%",
+    "purchaseFeeOrig": "1.00%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-07-26",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
@@ -1115,8 +1609,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "2.0985",
-    "navDate": "10-21",
+    "nav": "2.0408",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1126,6 +1620,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-07-26",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
@@ -1143,8 +1651,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "I",
     "index": "NDX",
-    "nav": "2.1222",
-    "navDate": "10-21",
+    "nav": "2.0638",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1154,6 +1662,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.15%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2025-05-12",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
@@ -1171,8 +1693,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "2.1809",
-    "navDate": "10-21",
+    "nav": "2.1210",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1182,6 +1704,24 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.10%",
+    "purchaseFeeOrig": "1.00%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "0.10%"
+      },
+      {
+        "cond": "大于等于30天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-09-15",
     "fundType": "指数型-海外股票",
     "manager": "嘉实基金",
@@ -1199,8 +1739,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "2.1554",
-    "navDate": "10-21",
+    "nav": "2.0962",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1210,6 +1750,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.25%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-09-15",
     "fundType": "指数型-海外股票",
     "manager": "嘉实基金",
@@ -1227,8 +1781,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "I",
     "index": "NDX",
-    "nav": "2.1612",
-    "navDate": "10-21",
+    "nav": "2.1018",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1238,6 +1792,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.10%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-07-18",
     "fundType": "指数型-海外股票",
     "manager": "嘉实基金",
@@ -1255,8 +1823,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.6235",
-    "navDate": "10-21",
+    "nav": "1.5789",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1266,6 +1834,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-08-02",
     "fundType": "指数型-海外股票",
     "manager": "汇添富基金",
@@ -1283,8 +1865,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.6030",
-    "navDate": "10-21",
+    "nav": "1.5590",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1294,6 +1876,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.40%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-08-02",
     "fundType": "指数型-海外股票",
     "manager": "汇添富基金",
@@ -1311,8 +1907,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "E",
     "index": "NDX",
-    "nav": "1.6199",
-    "navDate": "10-21",
+    "nav": "1.5754",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1322,6 +1918,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.10%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-07-03",
     "fundType": "指数型-海外股票",
     "manager": "汇添富基金",
@@ -1339,8 +1949,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.6510",
-    "navDate": "10-21",
+    "nav": "1.6070",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -1350,6 +1960,24 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "0.10%"
+      },
+      {
+        "cond": "大于等于30天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-10-19",
     "fundType": "指数型-海外股票",
     "manager": "华泰柏瑞基金",
@@ -1367,8 +1995,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.6366",
-    "navDate": "10-21",
+    "nav": "1.5929",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -1378,6 +2006,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.25%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-10-19",
     "fundType": "指数型-海外股票",
     "manager": "华泰柏瑞基金",
@@ -1395,8 +2037,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "I",
     "index": "NDX",
-    "nav": "1.6486",
-    "navDate": "10-21",
+    "nav": "1.6046",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -1406,6 +2048,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.10%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-11-26",
     "fundType": "指数型-海外股票",
     "manager": "华泰柏瑞基金",
@@ -1423,8 +2079,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "1.5774",
-    "navDate": "10-21",
+    "nav": "1.5358",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1434,6 +2090,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-11-29",
     "fundType": "指数型-海外股票",
     "manager": "招商基金",
@@ -1451,8 +2121,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "1.5595",
-    "navDate": "10-21",
+    "nav": "1.5183",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1462,6 +2132,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.40%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-11-29",
     "fundType": "指数型-海外股票",
     "manager": "招商基金",
@@ -1479,8 +2163,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "4.4586",
-    "navDate": "10-21",
+    "nav": "4.3360",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1490,6 +2174,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于等于6天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于等于364天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于365天，小于等于729天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于730天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2017-06-23",
     "fundType": "指数型-海外股票",
     "manager": "易方达基金",
@@ -1507,8 +2213,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "4.3783",
-    "navDate": "10-21",
+    "nav": "4.2579",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1518,6 +2224,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.10%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于等于6天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2021-07-23",
     "fundType": "指数型-海外股票",
     "manager": "易方达基金",
@@ -1535,8 +2255,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NDX",
-    "nav": "2.8118",
-    "navDate": "10-21",
+    "nav": "2.7198",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1546,6 +2266,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "0.75%"
+      },
+      {
+        "cond": "大于等于30天，小于180天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于180天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-12-09",
     "fundType": "指数型-海外股票",
     "manager": "景顺长城基金",
@@ -1563,8 +2305,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NDX",
-    "nav": "2.7659",
-    "navDate": "10-21",
+    "nav": "2.6754",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1574,6 +2316,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.40%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于30天",
+        "fee": "0.75%"
+      },
+      {
+        "cond": "大于等于30天，小于180天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于180天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-12-09",
     "fundType": "指数型-海外股票",
     "manager": "景顺长城基金",
@@ -1591,8 +2355,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "E",
     "index": "NDX",
-    "nav": "2.7915",
-    "navDate": "10-21",
+    "nav": "2.7001",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1602,6 +2366,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.20%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-08-16",
     "fundType": "指数型-海外股票",
     "manager": "景顺长城基金",
@@ -1619,8 +2397,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "SPX",
-    "nav": "2.4659",
-    "navDate": "10-21",
+    "nav": "2.4355",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -1630,15 +2408,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2013-12-05",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
     "scale": "239.99亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.08%",
-    "iopv": 2.4656,
-    "premium": 6.83,
-    "priceDate": "20261022"
+    "iopv": 2.4366,
+    "premium": 6.91,
+    "priceDate": "20261023",
+    "prevPremium": 6.83
   },
   {
     "code": "513650",
@@ -1648,8 +2432,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "SPX",
-    "nav": "1.8779",
-    "navDate": "10-21",
+    "nav": "1.8552",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -1659,15 +2443,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2023-03-23",
     "fundType": "指数型-海外股票",
     "manager": "南方基金",
     "scale": "76.94亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.05%",
-    "iopv": 1.8779,
-    "premium": 5.54,
-    "priceDate": "20261022"
+    "iopv": 1.8553,
+    "premium": 5.59,
+    "priceDate": "20261023",
+    "prevPremium": 5.54
   },
   {
     "code": "159655",
@@ -1677,8 +2467,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "SPX",
-    "nav": "1.8865",
-    "navDate": "10-21",
+    "nav": "1.8619",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -1688,15 +2478,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2022-10-12",
     "fundType": "指数型-海外股票",
     "manager": "华夏基金",
     "scale": "39.37亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "2.15%",
-    "iopv": 1.8866,
-    "premium": 5.8,
-    "priceDate": "20261022"
+    "iopv": 1.8624,
+    "premium": 5.88,
+    "priceDate": "20261023",
+    "prevPremium": 5.8
   },
   {
     "code": "159612",
@@ -1706,8 +2502,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "SPX",
-    "nav": "1.9345",
-    "navDate": "10-21",
+    "nav": "1.9107",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -1717,15 +2513,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2022-05-09",
     "fundType": "指数型-海外股票",
     "manager": "国泰基金",
     "scale": "8.44亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.02%",
-    "iopv": 1.9342,
-    "premium": 6.19,
-    "priceDate": "20261022"
+    "iopv": 1.9116,
+    "premium": 6.61,
+    "priceDate": "20261023",
+    "prevPremium": 6.19
   },
   {
     "code": "050025",
@@ -1735,8 +2537,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "5.6086",
-    "navDate": "10-21",
+    "nav": "5.5429",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1746,6 +2548,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于730天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于730天，小于1095天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于1095天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2012-06-14",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
@@ -1763,8 +2587,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "SPX",
-    "nav": "5.4279",
-    "navDate": "10-21",
+    "nav": "5.3642",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1774,6 +2598,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.35%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2018-06-07",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
@@ -1791,8 +2629,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "E",
     "index": "SPX",
-    "nav": "5.6068",
-    "navDate": "10-21",
+    "nav": "5.5410",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1802,6 +2640,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.01%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-07-04",
     "fundType": "指数型-海外股票",
     "manager": "博时基金",
@@ -1819,8 +2671,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "1.7121",
-    "navDate": "10-21",
+    "nav": "1.6911",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1830,6 +2682,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-05-10",
     "fundType": "指数型-海外股票",
     "manager": "华夏基金",
@@ -1847,8 +2713,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "SPX",
-    "nav": "1.6945",
-    "navDate": "10-21",
+    "nav": "1.6737",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1858,6 +2724,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-05-10",
     "fundType": "指数型-海外股票",
     "manager": "华夏基金",
@@ -1875,8 +2755,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "1.7297",
-    "navDate": "10-21",
+    "nav": "1.7096",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1886,6 +2766,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.10%",
+    "purchaseFeeOrig": "1.00%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-11-02",
     "fundType": "指数型-海外股票",
     "manager": "国泰基金",
@@ -1903,8 +2797,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "SPX",
-    "nav": "1.7095",
-    "navDate": "10-21",
+    "nav": "1.6896",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1914,6 +2808,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.30%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2022-11-02",
     "fundType": "指数型-海外股票",
     "manager": "国泰基金",
@@ -1931,8 +2839,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "3.1568",
-    "navDate": "10-21",
+    "nav": "3.1208",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1942,6 +2850,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于等于6天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于等于364天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于365天，小于等于729天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于730天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2016-12-02",
     "fundType": "指数型-海外股票",
     "manager": "易方达基金",
@@ -1959,8 +2889,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "SPX",
-    "nav": "3.1004",
-    "navDate": "10-21",
+    "nav": "3.0650",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -1970,6 +2900,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.35%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于等于6天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2021-07-19",
     "fundType": "指数型-海外股票",
     "manager": "易方达基金",
@@ -1987,8 +2931,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "1.7094",
-    "navDate": "10-21",
+    "nav": "1.6894",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -1998,6 +2942,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于365天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于365天，小于730天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于730天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-04-06",
     "fundType": "指数型-海外股票",
     "manager": "摩根基金(中国)",
@@ -2026,6 +2992,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "1.20%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于10万美元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于365天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于365天，小于730天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于730天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2023-04-06",
     "fundType": "指数型-海外股票",
     "manager": "摩根基金(中国)",
@@ -2043,8 +3031,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "2.8022",
-    "navDate": "10-21",
+    "nav": "2.8224",
+    "navDate": "10-22",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -2054,6 +3042,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "1.00%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.15%",
+    "purchaseFeeOrig": "1.50%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于1年",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于1年，小于2年",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于2年",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2011-03-23",
     "fundType": "指数型-海外股票",
     "manager": "大成基金",
@@ -2071,8 +3081,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "6.8172",
-    "navDate": "10-21",
+    "nav": "6.6235",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -2082,6 +3092,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.80%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于等于6天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于等于364天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于365天，小于等于729天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于730天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2016-12-13",
     "fundType": "指数型-海外股票",
     "manager": "易方达基金",
@@ -2099,8 +3131,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "SPX",
-    "nav": "2.2605",
-    "navDate": "10-21",
+    "nav": "2.2361",
+    "navDate": "10-22",
     "purchaseStatus": "暂停申购",
     "redeemStatus": "开放赎回",
     "autoInvest": "不支持",
@@ -2110,6 +3142,28 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.60%（每年）",
     "custodyFee": "0.20%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.10%",
+    "purchaseFeeOrig": "1.00%",
+    "purchaseFeeCond": "小于500万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于180天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于180天，小于365天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于365天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2019-09-24",
     "fundType": "QDII-FOF",
     "manager": "天弘基金",
@@ -2127,8 +3181,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "DJI",
-    "nav": "1.2919",
-    "navDate": "10-21",
+    "nav": "1.2923",
+    "navDate": "10-22",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -2138,15 +3192,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.50%（每年）",
     "custodyFee": "0.15%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2024-01-17",
     "fundType": "指数型-海外股票",
     "manager": "鹏华基金",
     "scale": "29.55亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "1.06%",
-    "iopv": 1.2923,
-    "premium": 1.45,
-    "priceDate": "20261022"
+    "iopv": 1.2922,
+    "premium": 2,
+    "priceDate": "20261023",
+    "prevPremium": 1.45
   },
   {
     "code": "513520",
@@ -2156,8 +3216,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NKY",
-    "nav": "2.1036",
-    "navDate": "10-22",
+    "nav": "2.0965",
+    "navDate": "10-23",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -2167,15 +3227,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.20%（每年）",
     "custodyFee": "0.05%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2019-06-12",
     "fundType": "指数型-海外股票",
     "manager": "华夏基金",
     "scale": "24.29亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "7.69%",
-    "iopv": 2.1046,
-    "premium": 3.73,
-    "priceDate": "20261022"
+    "iopv": 2.0947,
+    "premium": 4.07,
+    "priceDate": "20261023",
+    "prevPremium": 3.73
   },
   {
     "code": "513880",
@@ -2185,8 +3251,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NKY",
-    "nav": "1.9583",
-    "navDate": "10-22",
+    "nav": "1.9646",
+    "navDate": "10-23",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -2196,15 +3262,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.20%（每年）",
     "custodyFee": "0.05%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2019-06-12",
     "fundType": "指数型-海外股票",
     "manager": "华安基金",
     "scale": "27.30亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "6.77%",
-    "iopv": 1.9582,
-    "premium": 4.99,
-    "priceDate": "20261022"
+    "iopv": 1.965,
+    "premium": 4.58,
+    "priceDate": "20261023",
+    "prevPremium": 4.99
   },
   {
     "code": "513000",
@@ -2214,8 +3286,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NKY",
-    "nav": "2.1061",
-    "navDate": "10-22",
+    "nav": "2.1140",
+    "navDate": "10-23",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -2225,15 +3297,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.20%（每年）",
     "custodyFee": "0.05%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2019-06-12",
     "fundType": "指数型-海外股票",
     "manager": "易方达基金",
     "scale": "22.70亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "7.43%",
-    "iopv": 2.1062,
-    "premium": 3.6,
-    "priceDate": "20261022"
+    "iopv": 2.1147,
+    "premium": 2.95,
+    "priceDate": "20261023",
+    "prevPremium": 3.6
   },
   {
     "code": "159866",
@@ -2243,8 +3321,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "-",
     "index": "NKY",
-    "nav": "1.5731",
-    "navDate": "10-22",
+    "nav": "1.5814",
+    "navDate": "10-23",
     "purchaseStatus": "场内交易",
     "redeemStatus": "场内交易",
     "autoInvest": "不支持",
@@ -2254,15 +3332,21 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.20%（每年）",
     "custodyFee": "0.05%（每年）",
     "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
     "establishDate": "2021-03-24",
     "fundType": "指数型-海外股票",
     "manager": "工银瑞信基金",
     "scale": "13.90亿元",
     "scaleDate": "2026-06-30",
     "trackingError": "",
-    "iopv": 1.5768,
-    "premium": 2.11,
-    "priceDate": "20261022"
+    "iopv": 1.5696,
+    "premium": 2.45,
+    "priceDate": "20261023",
+    "prevPremium": 2.11
   },
   {
     "code": "020712",
@@ -2272,8 +3356,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "A",
     "index": "NKY",
-    "nav": "1.3423",
-    "navDate": "10-22",
+    "nav": "1.3462",
+    "navDate": "10-23",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -2283,6 +3367,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.20%（每年）",
     "custodyFee": "0.05%（每年）",
     "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.06%",
+    "purchaseFeeOrig": "0.60%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-02-07",
     "fundType": "指数型-海外股票",
     "manager": "华安基金",
@@ -2300,8 +3398,8 @@ window.NASDAQ_FUNDS = [
     "ccy": "人民币",
     "cls": "C",
     "index": "NKY",
-    "nav": "1.3334",
-    "navDate": "10-22",
+    "nav": "1.3372",
+    "navDate": "10-23",
     "purchaseStatus": "限大额",
     "redeemStatus": "开放赎回",
     "autoInvest": "支持",
@@ -2311,6 +3409,20 @@ window.NASDAQ_FUNDS = [
     "mgmtFee": "0.20%（每年）",
     "custodyFee": "0.05%（每年）",
     "salesFee": "0.25%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
     "establishDate": "2024-02-07",
     "fundType": "指数型-海外股票",
     "manager": "华安基金",
@@ -2319,5 +3431,201 @@ window.NASDAQ_FUNDS = [
     "trackingError": "6.75%",
     "prevPurchaseStatus": "限大额",
     "prevDailyLimit": "10.00元"
+  },
+  {
+    "code": "513030",
+    "name": "华安德国(DAX)ETF",
+    "company": "华安",
+    "cat": "ETF",
+    "ccy": "人民币",
+    "cls": "-",
+    "index": "DAX",
+    "nav": "1.7398",
+    "navDate": "10-22",
+    "purchaseStatus": "场内交易",
+    "redeemStatus": "场内交易",
+    "autoInvest": "不支持",
+    "dailyLimit": "",
+    "maxHolding": "",
+    "purchaseMin": "",
+    "mgmtFee": "0.80%（每年）",
+    "custodyFee": "0.20%（每年）",
+    "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
+    "establishDate": "2014-08-08",
+    "fundType": "指数型-海外股票",
+    "manager": "华安基金",
+    "scale": "18.00亿元",
+    "scaleDate": "2026-06-30",
+    "trackingError": "4.09%",
+    "iopv": 1.74,
+    "premium": 0.69,
+    "priceDate": "20261023"
+  },
+  {
+    "code": "000614",
+    "name": "华安德国30(DAX)ETF联接A",
+    "company": "华安",
+    "cat": "联接",
+    "ccy": "人民币",
+    "cls": "A",
+    "index": "DAX",
+    "nav": "1.9036",
+    "navDate": "10-22",
+    "purchaseStatus": "限大额",
+    "redeemStatus": "开放赎回",
+    "autoInvest": "支持",
+    "dailyLimit": "1000.00元",
+    "maxHolding": "无限额",
+    "purchaseMin": "10.00元",
+    "mgmtFee": "0.80%（每年）",
+    "custodyFee": "0.20%（每年）",
+    "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.12%",
+    "purchaseFeeOrig": "1.20%",
+    "purchaseFeeCond": "小于100万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天，小于365天",
+        "fee": "0.50%"
+      },
+      {
+        "cond": "大于等于365天，小于730天",
+        "fee": "0.25%"
+      },
+      {
+        "cond": "大于等于730天",
+        "fee": "0.00%"
+      }
+    ],
+    "establishDate": "2014-08-12",
+    "fundType": "指数型-海外股票",
+    "manager": "华安基金",
+    "scale": "3.81亿元",
+    "scaleDate": "2026-06-30",
+    "trackingError": "3.81%"
+  },
+  {
+    "code": "513080",
+    "name": "华安法国CAC40ETF(QDII)",
+    "company": "华安",
+    "cat": "ETF",
+    "ccy": "人民币",
+    "cls": "-",
+    "index": "CAC",
+    "nav": "1.5793",
+    "navDate": "10-22",
+    "purchaseStatus": "场内交易",
+    "redeemStatus": "场内交易",
+    "autoInvest": "不支持",
+    "dailyLimit": "",
+    "maxHolding": "",
+    "purchaseMin": "",
+    "mgmtFee": "0.50%（每年）",
+    "custodyFee": "0.15%（每年）",
+    "salesFee": "",
+    "purchaseFee": "",
+    "purchaseFeeOrig": "",
+    "purchaseFeeCond": "",
+    "redeemFee": "",
+    "redeemFees": [],
+    "establishDate": "2020-05-29",
+    "fundType": "指数型-海外股票",
+    "manager": "华安基金",
+    "scale": "11.12亿元",
+    "scaleDate": "2026-06-30",
+    "trackingError": "4.11%",
+    "iopv": 1.5795,
+    "premium": 1.42,
+    "priceDate": "20261023"
+  },
+  {
+    "code": "021539",
+    "name": "华安法国CAC40ETF发起式联接(QDII)A",
+    "company": "华安",
+    "cat": "联接",
+    "ccy": "人民币",
+    "cls": "A",
+    "index": "CAC",
+    "nav": "0.9790",
+    "navDate": "10-22",
+    "purchaseStatus": "限大额",
+    "redeemStatus": "开放赎回",
+    "autoInvest": "支持",
+    "dailyLimit": "10.00万元",
+    "maxHolding": "无限额",
+    "purchaseMin": "10.00元",
+    "mgmtFee": "0.50%（每年）",
+    "custodyFee": "0.15%（每年）",
+    "salesFee": "0.00%（每年）",
+    "purchaseFee": "0.06%",
+    "purchaseFeeOrig": "0.60%",
+    "purchaseFeeCond": "小于50万元",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
+    "establishDate": "2024-06-25",
+    "fundType": "指数型-海外股票",
+    "manager": "华安基金",
+    "scale": "1.05亿元",
+    "scaleDate": "2026-06-30",
+    "trackingError": "3.90%"
+  },
+  {
+    "code": "021540",
+    "name": "华安法国CAC40ETF发起式联接(QDII)C",
+    "company": "华安",
+    "cat": "联接",
+    "ccy": "人民币",
+    "cls": "C",
+    "index": "CAC",
+    "nav": "0.9734",
+    "navDate": "10-22",
+    "purchaseStatus": "限大额",
+    "redeemStatus": "开放赎回",
+    "autoInvest": "支持",
+    "dailyLimit": "10.00万元",
+    "maxHolding": "无限额",
+    "purchaseMin": "10.00元",
+    "mgmtFee": "0.50%（每年）",
+    "custodyFee": "0.15%（每年）",
+    "salesFee": "0.25%（每年）",
+    "purchaseFee": "0.00%",
+    "purchaseFeeOrig": "0.00%",
+    "purchaseFeeCond": "---",
+    "redeemFee": "1.50%",
+    "redeemFees": [
+      {
+        "cond": "小于7天",
+        "fee": "1.50%"
+      },
+      {
+        "cond": "大于等于7天",
+        "fee": "0.00%"
+      }
+    ],
+    "establishDate": "2024-06-25",
+    "fundType": "指数型-海外股票",
+    "manager": "华安基金",
+    "scale": "0.70亿元",
+    "scaleDate": "2026-06-30",
+    "trackingError": "3.89%"
   }
 ];

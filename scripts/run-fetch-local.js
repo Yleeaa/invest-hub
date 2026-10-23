@@ -18,7 +18,7 @@ function loadPrevFunds(dest) {
     JSON.parse(m[1]).forEach((f) => { map[f.code] = f; });
     return map;
   } catch (e) {
-    console.log('  [提示] 读取上一版数据失败，将无“昨日限购”对比：' + e.message);
+    console.log('  [提示] 读取上一版数据失败，将无“昨日限购 / 昨日溢价率”对比：' + e.message);
     return {};
   }
 }
@@ -32,7 +32,8 @@ async function run() {
 
   const dest = path.join(__dirname, '..', 'js', 'nasdaq-funds.js');
 
-  // 读取上一版数据：为场外基金补充“昨日限购”，并在溢价率抓取失败时保留旧值
+  // 读取上一版数据：为场外基金补充“昨日限购”，为场内 ETF 补充“昨日溢价率”，
+  // 并在溢价率抓取失败时保留旧值
   const prevMap = loadPrevFunds(dest);
   data.forEach((f) => {
     const p = prevMap[f.code];
@@ -40,10 +41,13 @@ async function run() {
     if (f.cat !== 'ETF') {
       f.prevPurchaseStatus = (p.purchaseStatus || '').trim();
       f.prevDailyLimit = (p.dailyLimit || '').trim();
-    } else if ((f.premium === '' || f.premium == null) && p.premium != null && p.premium !== '') {
-      f.iopv = p.iopv;
-      f.premium = p.premium;
-      f.priceDate = p.priceDate;
+    } else {
+      f.prevPremium = (p.premium === '' || p.premium == null) ? '' : p.premium;
+      if ((f.premium === '' || f.premium == null) && p.premium != null && p.premium !== '') {
+        f.iopv = p.iopv;
+        f.premium = p.premium;
+        f.priceDate = p.priceDate;
+      }
     }
   });
 

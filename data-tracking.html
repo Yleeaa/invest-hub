@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据跟踪 | 投么有度</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600&family=Inter:wght@300;400;600;800&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <style>
+        :root {
+            --gold: #c9a961;
+            --gold-bright: #d4b56a;
+            --gold-soft: rgba(201, 169, 97, 0.15);
+            --gold-light: #e0c98f;
+            --white: #f0f0f0;
+            --white-soft: rgba(255, 255, 255, 0.15);
+            --white-glow: rgba(255, 255, 255, 0.4);
+            --accent-gradient: linear-gradient(135deg, #c9a961 0%, #f0f0f0 100%);
+            --title-gradient: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #ffffff 100%);
+            --bg: #000000;
+            --bg-soft: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --surface-hover: rgba(255, 255, 255, 0.06);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.12);
+            --text: #f0f0f0;
+            --text-soft: #a8a8a8;
+            --text-dim: #555555;
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-muted: rgba(255, 255, 255, 0.35);
+            --red: #f87171;
+            --green: #7ee2b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { display: none; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        body::-webkit-scrollbar { display: none; }
+        /* 顶部渐变遮罩：避免滚动内容与固定品牌/导航重叠 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 7rem;
+            background: linear-gradient(to bottom, var(--bg) 0%, rgba(0, 0, 0, 0.88) 55%, transparent 100%);
+            z-index: 999;
+            pointer-events: none;
+        }
+        .serif { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+        .display { font-family: 'Cormorant Garamond', 'Noto Sans SC', sans-serif; }
+
+        /* ===== 左上角品牌区 ===== */
+        .brand {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.75rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .brand-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', 'STSong', 'PingFang SC', serif;
+            font-weight: 900;
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: 6px;
+            line-height: 1.15;
+            position: relative;
+            display: inline-block;
+            padding: 0.15rem 0 0.5rem;
+            align-self: flex-start;
+            text-shadow: 0 0 40px rgba(201, 169, 97, 0.4);
+            font-feature-settings: "palt" 1;
+        }
+        .brand-title::before {
+            content: '';
+            position: absolute;
+            left: -0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 65%;
+            background: linear-gradient(180deg, transparent, var(--gold) 25%, var(--gold) 75%, transparent);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+        .brand-subtitle {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-dim);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* ===== 右上角导航 ===== */
+        .top-nav {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.75rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .top-nav-menu {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin: 0;
+            padding: 0;
+        }
+        .top-nav-menu li {
+            list-style: none;
+            position: relative;
+        }
+        .top-nav-menu li + li::before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 12px;
+            background: rgba(201, 169, 97, 0.25);
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+        .top-nav-menu a {
+            display: inline-block;
+            color: var(--text-soft);
+            text-decoration: none;
+            padding: 0.4rem 0.85rem;
+            font-family: 'Inter', 'Noto Sans SC', 'PingFang SC', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .top-nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .top-nav-menu a:hover {
+            color: var(--text);
+        }
+        .top-nav-menu a:hover::after,
+        .top-nav-menu a.active::after {
+            width: calc(100% - 1.7rem);
+        }
+        .top-nav-menu a.active {
+            color: var(--gold);
+        }
+        .top-nav-toggle {
+            display: none;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            background: none;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 100px;
+            color: var(--gold);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+        .top-nav-toggle:hover {
+            border-color: var(--gold);
+            background: rgba(201, 169, 97, 0.08);
+        }
+        .top-nav-toggle span {
+            display: block;
+            width: 16px;
+            height: 1.5px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .top-nav.open .top-nav-toggle span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+        .top-nav.open .top-nav-toggle span:nth-child(2) { opacity: 0; }
+        .top-nav.open .top-nav-toggle span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+        /* ===== 主内容区 ===== */
+        .main-content {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 6rem;
+            padding-bottom: 2rem;
+        }
+
+        /* 网格背景 */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 页面头部 */
+        .page-header {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .page-title {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f7e7a0 0%, #d4b56a 45%, #8a6e30 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 0 32px rgba(201, 169, 97, 0.25);
+        }
+        .page-update-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.85rem;
+        }
+        .page-update-time::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--gold);
+        }
+        .page-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+            letter-spacing: 0.5px;
+            max-width: 680px;
+            margin-bottom: 1.25rem;
+        }
+        .page-goals {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem 2rem;
+            padding: 0.85rem 1.1rem;
+            background: rgba(201, 169, 97, 0.05);
+            border: 1px solid rgba(201, 169, 97, 0.18);
+            border-radius: 10px;
+        }
+        .page-goals .goals-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding-right: 1rem;
+            border-right: 1px solid rgba(201, 169, 97, 0.2);
+            display: inline-flex;
+            align-items: center;
+        }
+        .page-goals .goals-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.82rem;
+            color: var(--text);
+        }
+        .page-goals .goals-item .k {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+        .page-goals .goals-item .v {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* ===== 数据跟踪卡片 ===== */
+        .track-list {
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            padding-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .track-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.15rem 1.3rem;
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
+        .track-card:hover { border-color: rgba(201, 169, 97, 0.35); }
+
+        .track-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.85rem;
+        }
+        .track-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            white-space: nowrap;
+        }
+        .track-title .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--gold);
+            flex-shrink: 0;
+        }
+        .track-badge {
+            font-size: 0.68rem;
+            padding: 0.22rem 0.65rem;
+            border-radius: 100px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .track-main { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
+        .track-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gold-light);
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+            letter-spacing: 1px;
+        }
+        .track-unit { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 1px; }
+
+        .track-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+        .chip {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 0.28rem 0.68rem;
+            border-radius: 100px;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+        .chip b { color: var(--text); font-weight: 600; }
+        .chip .up { color: var(--red); font-weight: 600; }
+        .chip .down { color: var(--green); font-weight: 600; }
+
+        .zone-bar { position: relative; margin-top: 1rem; }
+        .zone-track {
+            height: 6px;
+            border-radius: 100px;
+            background: linear-gradient(90deg, #7ee2b8 0%, #c9a961 25%, #f0b45c 50%, #f87171 75%, #ef4444 100%);
+            opacity: 0.85;
+        }
+        .zone-marker {
+            position: absolute;
+            top: -3px;
+            width: 2px;
+            height: 12px;
+            background: #fff;
+            border-radius: 2px;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+        }
+        .zone-ticks {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .spark { margin-top: 1rem; }
+        .spark svg { width: 100%; height: 46px; display: block; }
+        .spark-empty {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 0.85rem 0;
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            letter-spacing: 1px;
+        }
+        .spark-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .fed-history { margin-top: 0.9rem; border-top: 1px dashed var(--border); padding-top: 0.7rem; }
+        .fed-history-title { font-size: 0.66rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 0.4rem; }
+        .fed-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding: 0.32rem 0;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+        .fed-row .range { color: var(--text); font-weight: 600; }
+        .fed-row .bps.up { color: var(--red); font-weight: 600; }
+        .fed-row .bps.down { color: var(--green); font-weight: 600; }
+
+        .track-note {
+            margin-top: 0.9rem;
+            font-size: 0.72rem;
+            line-height: 1.75;
+            color: var(--text-muted);
+            border-top: 1px dashed var(--border);
+            padding-top: 0.75rem;
+        }
+        .track-note b { color: var(--text-secondary); font-weight: 600; }
+
+        .track-sources {
+            max-width: 780px;
+            margin: 0 auto 3.5rem;
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        .sources-label { font-size: 0.66rem; color: var(--text-muted); letter-spacing: 2px; align-self: center; white-space: nowrap; }
+        .track-sources a {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.25rem 0.75rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .track-sources a:hover { color: var(--gold); border-color: var(--gold); }
+
+        @media (max-width: 768px) {
+            .top-nav { top: 1rem; right: 1rem; }
+            .top-nav-toggle { display: flex; }
+            .top-nav-menu {
+                display: none;
+                position: absolute;
+                top: calc(100% + 0.75rem);
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 0.5rem 0;
+                border-radius: 0.5rem;
+                background: rgba(8, 8, 10, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(201, 169, 97, 0.2);
+                min-width: 140px;
+            }
+            .top-nav.open .top-nav-menu { display: flex; }
+            .top-nav-menu li + li::before {
+                width: calc(100% - 2rem);
+                height: 1px;
+                margin: 0 1rem;
+            }
+            .top-nav-menu a {
+                display: block;
+                padding: 0.7rem 1.25rem;
+                text-align: center;
+                letter-spacing: 2px;
+            }
+            .top-nav-menu a::after {
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 0.3rem;
+            }
+            .top-nav-menu a:hover::after,
+            .top-nav-menu a.active::after {
+                width: calc(100% - 2.5rem);
+            }
+            .brand { top: 1rem; left: 1rem; }
+            .brand-title { font-size: 1.4rem; letter-spacing: 3px; }
+            .main-content { padding-top: 5rem; }
+            .page-header { padding: 1.5rem 1.25rem 1.25rem; }
+            .page-goals { flex-direction: column; gap: 0.5rem; }
+            .page-goals .goals-label { border-right: none; border-bottom: 1px solid rgba(201, 169, 97, 0.2); padding-right: 0; padding-bottom: 0.4rem; }
+            .track-list { gap: 0.9rem; }
+            .track-card { padding: 1rem 1.05rem; border-radius: 14px; }
+            .track-value { font-size: 1.55rem; }
+            .track-head { margin-bottom: 0.65rem; }
+        }
+        @media (max-width: 480px) {
+            .page-header { padding: 1.25rem 1rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 左上角品牌区 -->
+    <div class="brand">
+        <span class="brand-title">投么有度</span>
+        <span class="brand-subtitle">Data Tracking</span>
+    </div>
+
+    <!-- 右上角页面切换 -->
+    <div class="top-nav" id="topNav">
+        <ul class="top-nav-menu">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="holdings.html">退休计划</a></li>
+            <li><a href="fund-tracking.html">基金跟踪</a></li>
+            <li><a href="data-tracking.html" class="active">数据跟踪</a></li>
+            <li><a href="wechat.html">文章</a></li>
+            <li><a href="about.html">关于我</a></li>
+        </ul>
+        <button class="top-nav-toggle" aria-label="切换导航菜单" onclick="this.closest('.top-nav').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+
+    <main class="main-content">
+        <div id="aurora-bg"></div>
+        <div class="grid-bg"></div>
+
+        <header class="page-header">
+            <h1 class="page-title">数据跟踪</h1>
+            <div class="page-update-time">数据更新 · <span id="mtUpdated">—</span></div>
+            <p class="page-subtitle">纳指恐慌 · 美联储利率 · 美国通胀 —— 持仓背后的宏观坐标</p>
+            <div class="page-goals">
+                <span class="goals-label">跟踪指标</span>
+                <span class="goals-item"><span class="k">恐慌</span><span class="v">纳指100 VXN 指数</span></span>
+                <span class="goals-item"><span class="k">利率</span><span class="v">美联储联邦基金利率</span></span>
+                <span class="goals-item"><span class="k">通胀</span><span class="v">美国 CPI / PPI</span></span>
+            </div>
+        </header>
+
+        <section class="track-list">
+
+            <!-- 纳指100恐慌指数 -->
+            <div class="track-card">
+                <div class="track-head">
+                    <div class="track-title"><span class="dot"></span>纳指100恐慌指数</div>
+                    <span class="track-badge" id="vxnBadge">—</span>
+                </div>
+                <div class="track-main">
+                    <span class="track-value" id="vxnValue">—</span>
+                    <span class="track-unit" id="vxnDate">—</span>
+                </div>
+                <div class="track-chips" id="vxnChips"></div>
+                <div class="zone-bar">
+                    <div class="zone-track"></div>
+                    <div class="zone-marker" id="vxnMarker" style="left:0%"></div>
+                    <div class="zone-ticks"><span>10</span><span>20</span><span>30</span><span>40</span></div>
+                </div>
+                <div class="spark" id="vxnSpark"></div>
+                <div class="track-note"><b>VXN</b> 由纳斯达克100指数期权隐含波动率计算得出，衡量市场对未来30天纳指波动的预期，俗称"纳指恐慌指数"。数值越高市场越恐慌；持仓中的纳斯达克类标的与其高度相关。</div>
+            </div>
+
+            <!-- 美联储利率 -->
+            <div class="track-card">
+                <div class="track-head">
+                    <div class="track-title"><span class="dot"></span>美联储 · 联邦基金利率</div>
+                    <span class="track-badge" id="fedBadge">—</span>
+                </div>
+                <div class="track-main">
+                    <span class="track-value" id="fedRange">—</span>
+                    <span class="track-unit">目标区间</span>
+                </div>
+                <div class="track-chips" id="fedChips"></div>
+                <div class="fed-history">
+                    <div class="fed-history-title">利率决议记录</div>
+                    <div id="fedHistory"></div>
+                </div>
+                <div class="track-note"><b>联邦基金利率</b>是美元的基准利率。加息抬高融资成本、利好现金类收益，但压制成长股估值（纳指对利率高度敏感）；降息则相反。跟踪利率方向即跟踪纳指的估值风向。</div>
+            </div>
+
+            <!-- 美国CPI -->
+            <div class="track-card">
+                <div class="track-head">
+                    <div class="track-title"><span class="dot"></span>美国 CPI 通胀</div>
+                    <span class="track-badge" id="cpiBadge">—</span>
+                </div>
+                <div class="track-main">
+                    <span class="track-value" id="cpiValue">—</span>
+                    <span class="track-unit">同比</span>
+                </div>
+                <div class="track-chips" id="cpiChips"></div>
+                <div class="spark" id="cpiSpark"></div>
+                <div class="track-note"><b>CPI</b> 衡量消费者物价同比变化，是美联储 2% 通胀目标的核心参考。CPI 高于目标 → 加息预期升温 → 利空纳指；回落则打开降息空间。</div>
+            </div>
+
+            <!-- 美国PPI -->
+            <div class="track-card">
+                <div class="track-head">
+                    <div class="track-title"><span class="dot"></span>美国 PPI 生产者物价</div>
+                    <span class="track-badge" id="ppiBadge">—</span>
+                </div>
+                <div class="track-main">
+                    <span class="track-value" id="ppiValue">—</span>
+                    <span class="track-unit">同比</span>
+                </div>
+                <div class="track-chips" id="ppiChips"></div>
+                <div class="spark" id="ppiSpark"></div>
+                <div class="track-note"><b>PPI</b> 衡量生产者出厂价格，是 CPI 的上游领先指标。PPI 高企意味着成本端通胀压力，通常先于 CPI 反映在数据上。</div>
+            </div>
+
+        </section>
+
+        <div class="track-sources">
+            <span class="sources-label">数据来源</span>
+            <a href="https://fred.stlouisfed.org/series/VXNCLS" target="_blank" rel="noopener">VXN · FRED</a>
+            <a href="https://www.federalreserve.gov/" target="_blank" rel="noopener">美联储官网</a>
+            <a href="https://fred.stlouisfed.org/series/CPIAUCSL" target="_blank" rel="noopener">CPI · FRED</a>
+            <a href="https://fred.stlouisfed.org/series/PPIACO" target="_blank" rel="noopener">PPI · FRED</a>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/splash-cursor.js?v=2"></script>
+    <script>
+        (function () {
+            var MT = (typeof MACRO_TRACK !== 'undefined') ? MACRO_TRACK : null;
+            function $(id) { return document.getElementById(id); }
+            function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+            function fixed(v, d) { return (v == null || isNaN(v)) ? '—' : Number(v).toFixed(d); }
+
+            /* 迷你走势图（涨=红 通胀/恐慌上升为风险） */
+            function spark(el, points) {
+                if (!points || points.length < 2) {
+                    el.innerHTML = '<div class="spark-empty">走势记录中 · 累计两期数据后自动展示</div>';
+                    return;
+                }
+                var vals = points.map(function (p) { return p.value; });
+                var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+                var range = (max - min) || 1;
+                var W = 100, H = 30, P = 2.5;
+                var xy = vals.map(function (v, i) {
+                    return [(i / (vals.length - 1)) * W, H - P - ((v - min) / range) * (H - P * 2)];
+                });
+                var line = xy.map(function (p) { return p[0].toFixed(2) + ',' + p[1].toFixed(2); }).join(' ');
+                var area = '0,' + H + ' ' + line + ' ' + W + ',' + H;
+                var rising = vals[vals.length - 1] >= vals[0];
+                var color = rising ? '#f87171' : '#7ee2b8';
+                var last = xy[xy.length - 1];
+                el.innerHTML =
+                    '<svg viewBox="0 0 100 ' + H + '" preserveAspectRatio="none">' +
+                    '<polygon points="' + area + '" fill="' + color + '" opacity="0.1"/>' +
+                    '<polyline points="' + line + '" fill="none" stroke="' + color + '" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>' +
+                    '<circle cx="' + last[0].toFixed(2) + '" cy="' + last[1].toFixed(2) + '" r="1.8" fill="' + color + '"/>' +
+                    '</svg>' +
+                    '<div class="spark-meta"><span>' + esc(points[0].label) + '</span><span>区间 ' + min.toFixed(1) + ' ~ ' + max.toFixed(1) + '</span><span>' + esc(points[points.length - 1].label) + '</span></div>';
+            }
+
+            function badge(el, text, color) {
+                el.textContent = text;
+                el.style.background = color + '22';
+                el.style.color = color;
+                el.style.border = '1px solid ' + color + '55';
+            }
+
+            if (!MT) { $('mtUpdated').textContent = '待录入'; return; }
+            $('mtUpdated').textContent = MT.updatedAt || '—';
+
+            /* ===== VXN ===== */
+            var v = MT.vxn || {};
+            $('vxnValue').textContent = v.value != null ? fixed(v.value, 2) : '—';
+            $('vxnDate').textContent = v.date ? '截至 ' + v.date : '';
+            var zone;
+            var val = Number(v.value) || 0;
+            if (val < 15) zone = { label: '平静', color: '#7ee2b8' };
+            else if (val < 20) zone = { label: '正常', color: '#c9a961' };
+            else if (val < 25) zone = { label: '偏高', color: '#f0b45c' };
+            else if (val < 30) zone = { label: '高恐慌', color: '#f87171' };
+            else zone = { label: '极度恐慌', color: '#ef4444' };
+            badge($('vxnBadge'), zone.label, zone.color);
+            $('vxnMarker').style.left = Math.max(0, Math.min(100, (val - 10) / 30 * 100)) + '%';
+            var vxnChips = [];
+            if (v.history && v.history.length >= 2) {
+                var prev = v.history[v.history.length - 2].value;
+                var diff = (v.value || 0) - prev;
+                vxnChips.push('<span class="chip">较前值 <b class="' + (diff >= 0 ? 'up' : 'down') + '">' + (diff >= 0 ? '+' : '') + diff.toFixed(2) + '</b></span>');
+            } else {
+                vxnChips.push('<span class="chip">首期记录</span>');
+            }
+            vxnChips.push('<span class="chip">CBOE VXN · 日频</span>');
+            $('vxnChips').innerHTML = vxnChips.join('');
+            spark($('vxnSpark'), (v.history || []).map(function (h) { return { label: (h.date || '').slice(5), value: h.value }; }));
+
+            /* ===== 美联储利率 ===== */
+            var f = MT.fed || {};
+            $('fedRange').textContent = (f.low != null && f.high != null) ? fixed(f.low, 2) + '% ~ ' + fixed(f.high, 2) + '%' : '—';
+            var lc = f.lastChange || {};
+            var dir = (lc.bps || 0) >= 0 ? '加息' : '降息';
+            badge($('fedBadge'), '当前 ' + fixed(f.high, 2) + '% 上限', (lc.bps || 0) >= 0 ? '#f87171' : '#7ee2b8');
+            var fedChips = [];
+            if (lc.date) fedChips.push('<span class="chip">最近变动 <b>' + esc(lc.date) + '</b> <b class="' + ((lc.bps || 0) >= 0 ? 'up' : 'down') + '">' + dir + ' ' + Math.abs(lc.bps || 0) + 'bp</b></span>');
+            if (f.nextMeeting) fedChips.push('<span class="chip">下次议息 <b>' + esc(f.nextMeeting) + '</b></span>');
+            $('fedChips').innerHTML = fedChips.join('');
+            var rows = (f.history || []).slice().reverse().map(function (h) {
+                var bps = h.bps || 0;
+                var cls = bps >= 0 ? 'up' : 'down';
+                var txt = bps === 0 ? '维持' : (bps > 0 ? '+' : '') + bps + 'bp';
+                return '<div class="fed-row"><span>' + esc(h.date || '') + '</span><span class="range">' + fixed(h.low, 2) + '% ~ ' + fixed(h.high, 2) + '%</span><span class="bps ' + cls + '">' + txt + '</span></div>';
+            });
+            $('fedHistory').innerHTML = rows.length ? rows.join('') : '<div class="fed-row"><span>暂无记录</span></div>';
+
+            /* ===== CPI ===== */
+            function renderInfl(kind) {
+                var d = MT[kind] || {};
+                var up = (d.yoy || 0) >= 2.5;
+                badge($(kind + 'Badge'), (d.yoy != null ? fixed(d.yoy, 1) + '%' : '—') + ' · ' + (up ? '高于目标' : '接近目标'), up ? '#f87171' : '#7ee2b8');
+                $(kind + 'Value').textContent = d.yoy != null ? fixed(d.yoy, 1) + '%' : '—';
+                var chips = [];
+                if (d.period) chips.push('<span class="chip">' + esc(d.period) + ' 期</span>');
+                if (d.mom != null) chips.push('<span class="chip">环比 <b class="' + (d.mom >= 0 ? 'up' : 'down') + '">' + (d.mom >= 0 ? '+' : '') + fixed(d.mom, 1) + '%</b></span>');
+                if (d.prevYoy != null) {
+                    var dChg = (d.yoy || 0) - d.prevYoy;
+                    chips.push('<span class="chip">较前值 <b class="' + (dChg >= 0 ? 'up' : 'down') + '">' + (dChg >= 0 ? '+' : '') + dChg.toFixed(1) + 'pct</b></span>');
+                }
+                chips.push('<span class="chip">目标 2%</span>');
+                $(kind + 'Chips').innerHTML = chips.join('');
+                spark($(kind + 'Spark'), (d.history || []).map(function (h) { return { label: (h.period || '').slice(2), value: h.yoy }; }));
+            }
+            renderInfl('cpi');
+            renderInfl('ppi');
+        })();
+    </script>
+</body>
+</html>

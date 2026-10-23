@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="微信公众号维护 - 文章管理">
-    <title>微信公众号维护</title>
+    <title>投么有度</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
@@ -835,7 +837,7 @@
             </a>
             <a href="javascript:void(0)" onclick="switchPage('analysis', this)">
                 <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg></span>
-                盈亏分析（待定）
+                清仓分析
             </a>
         </nav>
         <div class="sidebar-footer">
@@ -855,7 +857,8 @@
                 <span class="current" id="currentPageName">持仓分布</span>
             </div>
             <div class="topbar-actions">
-                <button class="btn btn-secondary btn-sm" onclick="saveDataJs()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> 保存到 data.js</button>
+                <span id="saveModeHint" style="font-size:0.72rem;color:var(--text-dim);white-space:nowrap;">检测保存模式…</span>
+                <button class="btn btn-secondary btn-sm" onclick="saveDataJs()" title="绿色「直接写入」时点击即静默覆盖 js/data.js；黄色「授权写入」表示未连上本地服务（python scripts/serve-local.py），首次点击需授权项目根目录"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg> 保存到 data.js</button>
             </div>
             <div class="topbar-actions" id="topbarActions">
                 <a href="holdings.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览</a>
@@ -1292,39 +1295,6 @@
                 <!-- 盈亏概览 -->
                 <div class="stats-grid" id="analysisStatsGrid"></div>
 
-                <!-- 现有持仓盈亏 -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <h3><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg> 现有持仓盈亏</h3>
-                        <div style="font-size:0.78rem;color:var(--text-soft);">数据自动取自「持仓分布」的投资标的，盈亏 = 市值 - 持仓成本</div>
-                    </div>
-                    <div class="table-wrap">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>类型</th>
-                                    <th>基金代码</th>
-                                    <th>名称</th>
-                                    <th>当前市值</th>
-                                    <th>持仓成本</th>
-                                    <th>持仓盈亏</th>
-                                    <th>盈亏率</th>
-                                </tr>
-                            </thead>
-                            <tbody id="holdingProfitTbody"></tbody>
-                            <tfoot>
-                                <tr style="font-weight:600;background:var(--bg);">
-                                    <td colspan="3">持仓合计</td>
-                                    <td id="holdingMarketTotal">—</td>
-                                    <td id="holdingCostTotal">—</td>
-                                    <td id="holdingProfitTotal">—</td>
-                                    <td id="holdingRateTotal">—</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
                 <!-- 已清仓标的 -->
                 <div class="panel">
                     <div class="panel-header">
@@ -1359,6 +1329,39 @@
                                     <td id="closedSoldTotal">—</td>
                                     <td id="closedProfitTotal">—</td>
                                     <td colspan="3"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 现有持仓盈亏 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-7"/></svg> 现有持仓盈亏</h3>
+                        <div style="font-size:0.78rem;color:var(--text-soft);">数据自动取自「持仓分布」的投资标的，盈亏 = 市值 - 持仓成本</div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>类型</th>
+                                    <th>基金代码</th>
+                                    <th>名称</th>
+                                    <th>当前市值</th>
+                                    <th>持仓成本</th>
+                                    <th>持仓盈亏</th>
+                                    <th>盈亏率</th>
+                                </tr>
+                            </thead>
+                            <tbody id="holdingProfitTbody"></tbody>
+                            <tfoot>
+                                <tr style="font-weight:600;background:var(--bg);">
+                                    <td colspan="3">持仓合计</td>
+                                    <td id="holdingMarketTotal">—</td>
+                                    <td id="holdingCostTotal">—</td>
+                                    <td id="holdingProfitTotal">—</td>
+                                    <td id="holdingRateTotal">—</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -1560,7 +1563,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <span class="hint" id="invTargetModalHint">收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益 · 月定投 = 日定投金额 × 21个工作日</span>
+                <span class="hint" id="invTargetModalHint">收益率 = 收益 / 本金（持仓成本） × 100% · 持仓成本 = 当前市值 - 收益 · 月定投 = 日定投金额 × 21个工作日</span>
                 <button type="button" class="btn btn-secondary" onclick="closeInvTargetModal()">取消</button>
                 <button type="button" class="btn btn-primary" id="invTargetSubmitBtn" onclick="submitInvTarget()">添加标的</button>
             </div>
@@ -2131,7 +2134,7 @@
             document.getElementById('page-indexQuote').style.display = page === 'indexQuote' ? '' : 'none';
             document.getElementById('page-annual').style.display = page === 'annual' ? '' : 'none';
             document.getElementById('page-analysis').style.display = page === 'analysis' ? '' : 'none';
-            var pageNames = { articles: '微信公众号维护', holdings: '持仓分布', weekly: '实盘周记', indexQuote: '指数速览', annual: '年度汇总（待定）', analysis: '盈亏分析（待定）' };
+            var pageNames = { articles: '微信公众号维护', holdings: '持仓分布', weekly: '实盘周记', indexQuote: '指数速览', annual: '年度汇总（待定）', analysis: '清仓分析' };
             document.getElementById('currentPageName').textContent = pageNames[page] || '持仓分布';
             document.getElementById('topbarActions').innerHTML = page === 'articles'
                 ? '<a href="wechat.html" class="btn-preview" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 预览公众号页面</a>'
@@ -2159,47 +2162,103 @@
             }
         }
 
-        /* ===== 保存到 data.js：用 File System Access API 直接把最新数据写入本地 js/data.js =====
-       前提：需在 localhost 或 https 下打开 admin（File System Access API 不支持 file://）
-       首次选择 js/data.js，之后自动记住文件，直接覆盖写入。 */
+        /* ===== 保存到 data.js =====
+       方式一（推荐，零弹窗）：用 python scripts/serve-local.py 启动本地服务，POST 接口直接覆盖 js/data.js
+       方式二（降级）：File System Access API，需 localhost/https，首次选择「项目根目录 invest-hub」，
+       之后固定覆盖该目录下的 js/data.js；浏览器重启后可能再次询问权限，这是浏览器安全策略。 */
         async function saveDataJs() {
+            var src;
             try {
-                if (!window.showSaveFilePicker) {
-                    throw new Error('unsupported');
-                }
-                var src = buildDataJs();
-                var handle = null;
-                try {
-                    handle = await idbGet('dataFileHandle');
-                    if (handle && typeof handle.requestPermission === 'function') {
-                        var perm = await handle.requestPermission({ mode: 'readwrite' });
-                        if (perm !== 'granted') handle = null;
-                    }
-                } catch (e) { handle = null; }
-                if (!handle) {
-                    handle = await window.showSaveFilePicker({
-                        suggestedName: 'data.js',
-                        types: [{
-                            description: 'JavaScript 数据文件',
-                            accept: { 'text/javascript': ['.js'] }
-                        }]
-                    });
-                    await idbSet('dataFileHandle', handle);
-                }
-                var writable = await handle.createWritable();
-                await writable.write(src);
-                await writable.close();
-                showToast('已写入 ' + handle.name + '，刷新前端页面即可看到更新', 'success');
+                src = buildDataJs();
             } catch (e) {
-                // 降级：无法直接写（file:// 打开或授权取消），改为下载
+                showToast('生成 data.js 内容失败：' + ((e && e.message) || e), 'error');
+                return;
+            }
+
+            // 1) 优先走本地服务写入接口（python scripts/serve-local.py），点击即静默覆盖，无任何弹窗
+            try {
+                var resp = await fetch('/api/save-data-js', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: src
+                });
+                // 404/405/501 表示当前是普通静态服务器（无写入接口），继续走浏览器文件授权
+                if (resp.status !== 404 && resp.status !== 405 && resp.status !== 501) {
+                    var res = null;
+                    try { res = await resp.json(); } catch (e2) { res = null; }
+                    if (res && res.ok) {
+                        showToast('已覆盖 js/data.js，刷新前端页面即可看到更新', 'success');
+                        return;
+                    }
+                    showToast('写入 js/data.js 失败：' + ((res && res.error) || ('HTTP ' + resp.status)), 'error');
+                    return;
+                }
+            } catch (e) { /* 接口不可用，继续降级 */ }
+
+            if (!window.showDirectoryPicker) {
                 downloadDataJs();
-                if (!window.showSaveFilePicker) {
-                    showToast('当前非 localhost/https，已改为下载，请手动覆盖 js/data.js', 'warn');
-                } else {
-                    showToast('已改为下载（可用浏览器选文件时取消所致），请手动覆盖 js/data.js', 'warn');
+                showToast('未检测到本地保存服务，当前环境也不支持直接写入，已改为下载，请手动覆盖 js/data.js', 'warn');
+                return;
+            }
+
+            var dir = null;
+            try {
+                dir = await idbGet('dataDirHandle');
+                if (dir && typeof dir.requestPermission === 'function') {
+                    var perm = await dir.requestPermission({ mode: 'readwrite' });
+                    if (perm !== 'granted') dir = null;
+                }
+            } catch (e) { dir = null; }
+
+            // 缓存句柄失效（目录被移动/删除）时，清除后重新授权一次
+            for (var attempt = 0; attempt < 2; attempt++) {
+                try {
+                    if (!dir) {
+                        dir = await window.showDirectoryPicker({ id: 'invest-hub', mode: 'readwrite' });
+                        await idbSet('dataDirHandle', dir);
+                    }
+                    var jsDir = await dir.getDirectoryHandle('js');
+                    var file = await jsDir.getFileHandle('data.js');
+                    var writable = await file.createWritable();
+                    await writable.write(src);
+                    await writable.close();
+                    showToast('已覆盖 js/data.js（' + dir.name + '），刷新前端页面即可看到更新', 'success');
+                    return;
+                } catch (e) {
+                    if (e && e.name === 'AbortError') {
+                        showToast('已取消保存，js/data.js 未修改', 'warn');
+                        return;
+                    }
+                    if (e && e.name === 'NotFoundError' && attempt === 0) {
+                        // 目录里没有 js/data.js：多半是选错了文件夹或旧句柄失效，重新选择
+                        await idbSet('dataDirHandle', null);
+                        dir = null;
+                        continue;
+                    }
+                    if (e && e.name === 'NotFoundError') {
+                        showToast('所选文件夹下没有 js/data.js，请重新点击保存并选择项目根目录 invest-hub', 'error');
+                        return;
+                    }
+                    downloadDataJs();
+                    showToast('直接写入失败（' + ((e && e.message) || e) + '），已改为下载，请手动覆盖 js/data.js', 'warn');
+                    return;
                 }
             }
         }
+        // 页面加载时检测保存模式：本地服务 API 可达 = 绿色「直接写入」（点击零弹窗）；否则黄色「授权写入」（浏览器安全策略会弹授权窗）
+        function checkSaveMode() {
+            var el = document.getElementById('saveModeHint');
+            if (!el) return;
+            var fallback = function () { el.innerHTML = '<span style="color:#e0a020;">● 授权写入</span>'; };
+            fetch('/api/ping', { cache: 'no-store' }).then(function (r) {
+                if (!r.ok) throw new Error('no api');
+                return r.json();
+            }).then(function (j) {
+                if (j && j.ok) el.innerHTML = '<span style="color:#22c55e;">● 直接写入</span>';
+                else fallback();
+            }).catch(fallback);
+        }
+        checkSaveMode();
         // 下载 data.js 备用
         function downloadDataJs() {
             var src = buildDataJs();
@@ -2276,6 +2335,9 @@
                 '/* ===== 现金数据 ===== */',
                 'const CASH = ' + JSON.stringify(Storage.getCash(), null, 4) + ';',
                 '',
+                '/* ===== 宏观数据跟踪（数据跟踪页：VXN恐慌指数 / 美联储利率 / 美国CPI·PPI） ===== */',
+                'const MACRO_TRACK = ' + JSON.stringify(Storage.getMacroTrack ? Storage.getMacroTrack() : {}, null, 4) + ';',
+                '',
                 '/* ===== 年度收益汇总数据 ===== */',
                 'const ANNUAL_RETURNS = ' + JSON.stringify(Storage.getAnnualReturns(), null, 4) + ';',
                 '',
@@ -2337,6 +2399,7 @@
             '    updateInvTarget(i, t) { if (i >= 0 && i < INV_TARGETS.length) INV_TARGETS[i] = t; return INV_TARGETS; },\n' +
             '    deleteInvTarget(i) { if (i >= 0 && i < INV_TARGETS.length) INV_TARGETS.splice(i, 1); return INV_TARGETS; },\n' +
             '    getCash() { return CASH; },\n' +
+            '    getMacroTrack() { return MACRO_TRACK; },\n' +
             '    addCash(x) { CASH.push(x); return CASH; },\n' +
             '    updateCash(i, x) { if (i >= 0 && i < CASH.length) CASH[i] = x; return CASH; },\n' +
             '    deleteCash(i) { if (i >= 0 && i < CASH.length) CASH.splice(i, 1); return CASH; },\n' +
@@ -3413,9 +3476,11 @@
             list.forEach(function (f) {
                 var premium = (f.premium === '' || f.premium == null) ? null : parseFloat(f.premium);
                 if (isNaN(premium)) premium = null;
+                var prevPremium = (f.prevPremium === '' || f.prevPremium == null) ? null : parseFloat(f.prevPremium);
+                if (isNaN(prevPremium)) prevPremium = null;
                 var limitText = String(f.dailyLimit || '').trim();
                 var prevLimitText = String(f.prevDailyLimit || '').trim();
-                var item = { name: f.name, code: f.code, index: (f.index || 'NDX'), premium: premium, status: String(f.purchaseStatus || ''), limitText: limitText, limitVal: parseDailyLimit(limitText), prevStatus: String(f.prevPurchaseStatus || ''), prevLimitText: prevLimitText, prevLimitVal: parseDailyLimit(prevLimitText), trackingError: String(f.trackingError || '') };
+                var item = { name: f.name, code: f.code, index: (f.index || 'NDX'), premium: premium, prevPremium: prevPremium, status: String(f.purchaseStatus || ''), limitText: limitText, limitVal: parseDailyLimit(limitText), prevStatus: String(f.prevPurchaseStatus || ''), prevLimitText: prevLimitText, prevLimitVal: parseDailyLimit(prevLimitText), trackingError: String(f.trackingError || '') };
                 if (f.cat === 'ETF') etfs.push(item);
                 else offmarket.push(item);
             });
@@ -3426,11 +3491,18 @@
                 var bv = b.premium == null ? Infinity : b.premium;
                 return av - bv;
             });
-            // 场外：暂停申购排最后，其余按单日限额从高到低（无限额最大、无数据排最后）
+            // 场外排序：仍可申购（按单日限额从高到低）→ 今日由有额度变为暂停申购 → 一直暂停申购
+            // 中间组单独成段，避免「突然暂停」的标的被埋在列表末尾而不易察觉
+            function offRank(x) {
+                if (x.status.indexOf('暂停') === -1) return 0;
+                var prevPaused = x.prevStatus.indexOf('暂停') !== -1;
+                var prevHadQuota = !prevPaused && (x.prevLimitVal != null || !!x.prevLimitText);
+                return prevHadQuota ? 1 : 2;
+            }
             offmarket.sort(function (a, b) {
-                var pa = a.status.indexOf('暂停') !== -1 ? 1 : 0;
-                var pb = b.status.indexOf('暂停') !== -1 ? 1 : 0;
-                if (pa !== pb) return pa - pb;
+                var ra = offRank(a);
+                var rb = offRank(b);
+                if (ra !== rb) return ra - rb;
                 var av = a.limitVal == null ? -Infinity : a.limitVal;
                 var bv = b.limitVal == null ? -Infinity : b.limitVal;
                 return bv - av;
@@ -3444,8 +3516,11 @@
             var f = getIndexFunds();
 
             var P = 'margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.2px;';
-            var H = 'display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;';
-            var Q = 'margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;letter-spacing:0.2px;';
+            // 统一「暖奶油 + 金饰 + 棕字」体系：标题=带金色书脊的圆角卡（有底色），汇总=上下金色细线的纯文字层（无底色），表头=金色底线的奶油网格行，靠轮廓层级而非配色区分
+            var H = 'display:block;margin:30px 0 12px;padding:8px 16px;background:#f5ecda;border:1px solid #e6d9ba;border-left:5px solid #c9a961;border-radius:6px;font-weight:700;font-size:16px;line-height:1.5;color:#7a5c28;letter-spacing:0.5px;';
+            var Q = 'margin:8px 0 0;padding:8px 6px;border-top:1px solid #e6d9ba;border-bottom:1px solid #e6d9ba;font-size:13.5px;line-height:1.7;color:#8a6d35;letter-spacing:0.2px;';
+            // 汇总栏中的「限购变动」重点说明：暖橙底 + 橙色书脊，突出今日与昨日的差异
+            var QC = 'margin:6px 0 0;padding:8px 10px;background:#fff4e5;border:1px solid #f2d9b0;border-left:4px solid #e0720a;border-radius:4px;font-size:13px;line-height:1.7;color:#a85a10;letter-spacing:0.2px;';
             // 指数行情行：字号 13px 且省略"涨跌"二字，配合下方内容顺序，保证手机端单行显示（实测单行需约 305px，375px 手机可用约 320px）
             var QP = 'margin:6px 0;padding:9px 12px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:13px;line-height:1.7;color:#7a6a45;letter-spacing:0.2px;';
             var W = 'margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;';
@@ -3454,8 +3529,8 @@
             // 表格宽度自适应：基金名称列占剩余宽度并允许换行，数值列一律不换行、按内容取最小宽度，
             // 避免公众号（尤其手机端）重排表格时出现列宽变形
             var TBL = 'width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px;line-height:1.6;color:#3f3f3f;letter-spacing:0.2px;';
-            var TH = 'border:1px solid #e3d9c0;background:#f3ecdc;color:#7a5c28;padding:6px 5px;text-align:left;font-weight:700;word-break:break-word;';
-            var TD = 'border:1px solid #e8e0cd;padding:6px 5px;color:#3f3f3f;vertical-align:top;word-break:break-word;';
+            var TH = 'border:1px solid #e6d9ba;border-bottom:2px solid #c9a961;background:#f0e7d3;color:#7a5c28;padding:7px 6px;text-align:left;font-weight:700;word-break:break-word;';
+            var TD = 'border:1px solid #e6d9ba;padding:6px 5px;color:#3f3f3f;vertical-align:top;word-break:break-word;';
             // 数值列：不换行 + width:1%（自动布局下即"最小内容宽度"），把宽度尽量让给基金名称列
             var THV = TH + 'white-space:nowrap;width:1%;';
             var TDV = TD + 'white-space:nowrap;width:1%;';
@@ -3489,7 +3564,15 @@
                 } else {
                     text = '可申购总额：' + fmtMoney(total) + ' 元' + (paused > 0 ? '（另有 ' + paused + ' 只暂停申购）' : '');
                 }
-                return { total: total, unlimited: unlimited, paused: paused, text: text };
+                // 今日限购与昨日的变动明细：用于汇总栏重点说明（仅统计两日均有数据的标的）
+                var changes = [];
+                list.forEach(function (l) {
+                    var cur = limitCellPlain(l);
+                    var prev = prevCellPlain(l);
+                    if (prev === '—' || prev === cur) return;
+                    changes.push({ name: l.name, prev: prev, cur: cur });
+                });
+                return { total: total, unlimited: unlimited, paused: paused, text: text, changes: changes };
             }
             function limitCell(l) {
                 if (l.status.indexOf('暂停') !== -1) return '暂停申购';
@@ -3535,10 +3618,15 @@
                 list.forEach(function (e) {
                     var premStr = e.premium == null ? '—' : (sign(e.premium) + e.premium.toFixed(2) + '%');
                     var c = e.premium == null ? '#999' : (e.premium >= 0 ? '#c00000' : '#0a7d48');
+                    // 与昨日溢价率对比：变动时用 ▲/▼ 标识并高亮该单元格；昨日值以小字换行显示，便于手机端阅读
+                    var changed = e.premium != null && e.prevPremium != null && Math.abs(e.premium - e.prevPremium) >= 0.005;
+                    var mark = changed ? ' <span style="color:#e0720a;font-weight:700;">' + (e.premium > e.prevPremium ? '▲' : '▼') + '</span>' : '';
+                    var curStyle = TDV + (changed ? 'background:#fff4e5;' : '');
+                    var prevStr = e.prevPremium == null ? '—' : (sign(e.prevPremium) + e.prevPremium.toFixed(2) + '%');
                     s += '<tr>' +
                         '<td style="' + TD + '">' + escWeekly(e.name) + '</td>' +
                         '<td style="' + TDV + '">' + e.code + '</td>' +
-                        '<td style="' + TDV + '"><strong style="color:' + c + ';">' + premStr + '</strong></td>' +
+                        '<td style="' + curStyle + '"><strong style="color:' + c + ';">' + premStr + '</strong>' + mark + '<br><span style="font-size:12px;color:#8a8a8a;">昨日 ' + prevStr + '</span></td>' +
                         '<td style="' + TDV + '">' + (e.trackingError || '—') + '</td>' +
                         '</tr>';
                 });
@@ -3550,6 +3638,12 @@
                 if (!list.length) return s + '<section style="' + Q + '">暂无该分组标的。</section>';
                 var sum = summarizeOff(list);
                 s += '<section style="' + Q + '"><strong>汇总：' + sum.text + '</strong></section>';
+                if (sum.changes.length) {
+                    s += '<section style="' + QC + '"><strong>⚠ 今日限购较昨日变动（' + sum.changes.length + ' 只）：</strong>' +
+                        sum.changes.map(function (c) {
+                            return escWeekly(c.name) + ' ' + escWeekly(c.prev) + ' → <strong style="color:#c00000;">' + escWeekly(c.cur) + '</strong>';
+                        }).join('；') + '</section>';
+                }
                 s += '<table style="' + TBL + '"><thead><tr>' +
                     '<th style="' + TH + '">基金名称</th>' +
                     '<th style="' + THV + '">代码</th>' +
@@ -3603,7 +3697,14 @@
             var textLines = [];
             textLines.push('大家好，这里是叨居，带来 ' + dateText + ' 场内 ETF 与场外基金的一览速递。');
             textLines.push('');
-            var etfLine = function (e) { return e.name + '（' + e.code + '）溢价率：' + (e.premium == null ? '—' : sign(e.premium) + e.premium.toFixed(2) + '%') + '　跟踪误差：' + (e.trackingError || '—'); };
+            var etfLine = function (e) {
+                var cur = e.premium == null ? '—' : (sign(e.premium) + e.premium.toFixed(2) + '%');
+                var tail = '　跟踪误差：' + (e.trackingError || '—');
+                var changed = e.premium != null && e.prevPremium != null && Math.abs(e.premium - e.prevPremium) >= 0.005;
+                if (!changed) return e.name + '（' + e.code + '）溢价率：' + cur + tail;
+                var mark = e.premium > e.prevPremium ? '▲' : '▼';
+                return e.name + '（' + e.code + '）溢价率：' + cur + ' ' + mark + '（昨日：' + (sign(e.prevPremium) + e.prevPremium.toFixed(2) + '%') + '）' + tail;
+            };
             var offLine = function (l) {
                 var cur = limitCell(l);
                 var prev = prevCellPlain(l);
@@ -3621,7 +3722,11 @@
                 textLines.push('【' + label + ' · 共 ' + list.length + ' 只】');
                 if (!list.length) { textLines.push('- 暂无该分组标的'); return; }
                 list.forEach(function (l) { textLines.push('- ' + offLine(l)); });
-                textLines.push('→ ' + summarizeOff(list).text);
+                var sum = summarizeOff(list);
+                textLines.push('→ ' + sum.text);
+                if (sum.changes.length) {
+                    textLines.push('⚠ 今日限购较昨日变动（' + sum.changes.length + ' 只）：' + sum.changes.map(function (c) { return c.name + ' ' + c.prev + ' → ' + c.cur; }).join('；'));
+                }
             };
             appendOff('纳斯达克100 · 场外基金', ndxOff);
             appendEtf('纳斯达克100 · 场内 ETF', ndxEtf);
@@ -3721,7 +3826,7 @@
             });
             var totalCash = cashList.reduce(function(s, c) { return s + (parseFloat(c.amount) || 0); }, 0);
             var totalAsset = totalMarket + totalCash;
-            var totalRate = totalMarket !== 0 ? (totalProfit / totalMarket * 100) : 0;
+            var totalRate = totalCost !== 0 ? (totalProfit / totalCost * 100) : 0;
             // 月定投规划 = 日定投合计 × 21（按每月约21个工作日估算）
             var monthlyInvest = totalDailyInvest * 21;
             // 资金规划净额 = 现金合计 - 月定投规划（判断现金是否覆盖下月定投）
@@ -3800,6 +3905,7 @@
                 var catTagClass = getInvCategoryTagColor(t.category);
                 var profitVal = parseFloat(t.profit) || 0;
                 var marketVal = parseFloat(t.marketValue) || 0;
+                var costVal = marketVal - profitVal;
                 return '<tr>' +
                     '<td><span class="tag ' + tagClass + '">' + (t.type || '—') + '</span></td>' +
                     '<td><span class="tag ' + catTagClass + '">' + (t.category || '—') + '</span></td>' +
@@ -3807,7 +3913,7 @@
                     '<td class="td-title">' + (t.name || '—') + '</td>' +
                     '<td>' + formatMoney(t.marketValue) + '</td>' +
                     '<td style="color:' + profitColor(profitVal) + ';font-weight:500">' + formatProfit(t.profit) + '</td>' +
-                    '<td style="color:' + rateColor(profitVal, marketVal) + ';font-weight:500">' + formatRate(t.profit, t.marketValue) + '</td>' +
+                    '<td style="color:' + rateColor(profitVal, costVal) + ';font-weight:500">' + formatRate(t.profit, costVal) + '</td>' +
                     '<td>' + formatMoney(t.cost) + '</td>' +
                     '<td>' + (parseFloat(t.dailyInvest) > 0 ? formatMoney(t.dailyInvest) : '—') + '</td>' +
                     '<td class="td-summary" title="' + (t.remark || '').replace(/"/g, '&quot;') + '">' + (t.remark || '—') + '</td>' +
@@ -3824,16 +3930,16 @@
             var market = parseFloat(document.getElementById('invMarketValue').value) || 0;
             var rateEl = document.getElementById('invProfitRate');
             var costEl = document.getElementById('invCost');
-            // 持仓成本 = 当前市值 - 收益
+            // 持仓成本（本金） = 当前市值 - 收益
             var cost = market - profit;
             costEl.value = isNaN(cost) || market === 0 ? '' : cost.toFixed(2);
-            // 收益率 = 收益 / 当前市值
-            if (market === 0) {
+            // 收益率 = 收益 / 本金（持仓成本）
+            if (cost === 0) {
                 rateEl.value = '';
                 rateEl.style.color = 'var(--text-soft)';
                 return;
             }
-            var rate = profit / market * 100;
+            var rate = profit / cost * 100;
             rateEl.value = (rate > 0 ? '+' : '') + rate.toFixed(2) + '%';
             rateEl.style.color = profit > 0 ? '#f87171' : (profit < 0 ? '#4ade80' : 'var(--text-soft)');
         }
@@ -3876,8 +3982,9 @@
             if (!marketInput || !profitInput || !rateCell) return;
             var market = parseFloat(marketInput.value) || 0;
             var profit = parseFloat(profitInput.value) || 0;
-            if (market > 0) {
-                var rate = profit / market * 100;
+            var cost = market - profit;
+            if (cost !== 0) {
+                var rate = profit / cost * 100;
                 rateCell.textContent = (rate > 0 ? '+' : '') + rate.toFixed(2) + '%';
                 rateCell.style.color = profit > 0 ? '#f87171' : (profit < 0 ? '#4ade80' : 'var(--text-soft)');
             } else {
@@ -3927,7 +4034,7 @@
             populateInvTypeDropdowns();
             populateInvCategoryDropdowns();
             document.getElementById('invTargetModalTitle').textContent = '新增投资标的';
-            document.getElementById('invTargetModalHint').textContent = '收益率 = 收益 / 当前市值 × 100% · 持仓成本 = 当前市值 - 收益 · 月定投 = 日定投金额 × 21个工作日';
+            document.getElementById('invTargetModalHint').textContent = '收益率 = 收益 / 本金（持仓成本） × 100% · 持仓成本 = 当前市值 - 收益 · 月定投 = 日定投金额 × 21个工作日';
             document.getElementById('invTargetSubmitBtn').textContent = '添加标的';
             document.getElementById('invTargetModal').classList.add('show');
         }
@@ -4554,7 +4661,16 @@
             if (closed.length === 0) {
                 cTbody.innerHTML = '<tr><td colspan="9" class="empty-tip">暂无清仓记录，点击「新增清仓记录」录入</td></tr>';
             } else {
-                cTbody.innerHTML = closed.map(function(item, idx) {
+                // 按清仓日期倒序展示（保留原始索引用于编辑/删除）
+                var closedSorted = closed.map(function(item, idx) { return { item: item, idx: idx }; });
+                closedSorted.sort(function(a, b) {
+                    var da = (a.item.closeDate || '').toString();
+                    var db = (b.item.closeDate || '').toString();
+                    if (da === db) return b.idx - a.idx;
+                    return db.localeCompare(da);
+                });
+                cTbody.innerHTML = closedSorted.map(function(entry) {
+                    var item = entry.item, idx = entry.idx;
                     var cost = parseFloat(item.cost) || 0;
                     var sold = parseFloat(item.soldValue) || 0;
                     var profit = parseFloat(item.profit);

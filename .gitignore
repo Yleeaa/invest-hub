@@ -25,3 +25,7 @@ photo/thumbs/DSC01401.jpg
 photo/thumbs/DSC01404.jpg
 photo/thumbs/DSC01416.jpg
 photos.html
+
+# 本地管理服务（仅本地使用：8080 端口静默保存 data.js，服务器不需要）
+scripts/serve-local.py
+启动本地服务.bat

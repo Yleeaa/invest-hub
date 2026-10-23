@@ -247,7 +247,6 @@ const SAMPLE_RETURNS = {
 /* ===== 投资标的类型 ===== */
 const INV_TYPES = [
     "债券",
-    "偏债",
     "A股",
     "港股",
     "美股",
@@ -257,20 +256,18 @@ const INV_TYPES = [
 /* ===== 投资分类（用于持仓明细聚合展示） ===== */
 const INV_CATEGORIES = [
     "债券",
-    "偏债",
     "纳斯达克",
     "标普500",
-    "恒生科技",
     "红利低波",
     "日股"
 ];
 
 /* ===== 投资分类备注 ===== */
 const INV_CATEGORY_NOTES = {
-    "标普500": "日定投：60元",
-    "红利低波": "日定投：10元",
-    "日股": "日定投：20元",
-    "纳斯达克": "日定投：70元"
+    "标普500": "定投中",
+    "红利低波": "定投中",
+    "日股": "定投中",
+    "纳斯达克": "定投中"
 };
 
 /* ===== 持仓数据更新记录 ===== */
@@ -281,28 +278,6 @@ const HOLDINGS_UPDATE = {
 
 /* ===== 投资标的数据 ===== */
 const INV_TARGETS = [
-    {
-        "type": "偏债",
-        "category": "偏债",
-        "code": "001838",
-        "name": "易方达瑞锦灵活配置混合C",
-        "marketValue": 0,
-        "profit": 0,
-        "cost": 0,
-        "dailyInvest": 0,
-        "remark": ""
-    },
-    {
-        "type": "港股",
-        "category": "恒生科技",
-        "code": "015204",
-        "name": "南方恒生科技ETF联接(QDII)C",
-        "marketValue": 0,
-        "profit": 0,
-        "cost": 0,
-        "dailyInvest": 0,
-        "remark": ""
-    },
     {
         "type": "美股",
         "category": "纳斯达克",
@@ -379,6 +354,51 @@ const CASH = [
         "remark": ""
     }
 ];
+
+/* ===== 宏观数据跟踪（数据跟踪页：VXN恐慌指数 / 美联储利率 / 美国CPI·PPI） ===== */
+const MACRO_TRACK = {
+    "updatedAt": "2026-10-19",
+    "vxn": {
+        "value": 27.13,
+        "date": "2026-10-16",
+        "history": [
+            { "date": "2026-10-16", "value": 27.13 }
+        ]
+    },
+    "fed": {
+        "low": 3.75,
+        "high": 4.00,
+        "lastChange": { "date": "2026-09-16", "bps": 25 },
+        "nextMeeting": "2026-10-28",
+        "history": [
+            { "date": "2026-09-16", "low": 3.75, "high": 4.00, "bps": 25 }
+        ]
+    },
+    "cpi": {
+        "period": "2026-09",
+        "yoy": 3.7,
+        "mom": 0.6,
+        "prevYoy": 3.4,
+        "history": [
+            { "period": "2026-04", "yoy": 3.8 },
+            { "period": "2026-05", "yoy": 4.2 },
+            { "period": "2026-06", "yoy": 3.5 },
+            { "period": "2026-07", "yoy": 3.4 },
+            { "period": "2026-08", "yoy": 3.4 },
+            { "period": "2026-09", "yoy": 3.7 }
+        ]
+    },
+    "ppi": {
+        "period": "2026-08",
+        "yoy": 5.4,
+        "mom": 0.4,
+        "prevYoy": 4.8,
+        "history": [
+            { "period": "2026-07", "yoy": 4.8 },
+            { "period": "2026-08", "yoy": 5.4 }
+        ]
+    }
+};
 
 /* ===== 年度收益汇总数据 ===== */
 const ANNUAL_RETURNS = [
@@ -458,12 +478,22 @@ const MONTHLY_RETURNS = [
 const CLOSED_POSITIONS = [
     {
         "type": "A股",
-        "code": "600519",
-        "name": "2026已清仓标的汇总",
-        "cost": 10000,
-        "soldValue": 10500,
-        "profit": 500,
-        "closeDate": "2026-07-10",
+        "code": "009690/009689",
+        "name": "偏债基金",
+        "cost": 35000,
+        "soldValue": 34758.93,
+        "profit": -241.0699999999997,
+        "closeDate": "2026-10-16",
+        "note": ""
+    },
+    {
+        "type": "A股",
+        "code": "020989",
+        "name": "恒生科技",
+        "cost": 2550,
+        "soldValue": 2179.07,
+        "profit": -370.92999999999984,
+        "closeDate": "2026-10-13",
         "note": ""
     }
 ];
@@ -912,6 +942,7 @@ const Storage = {
     updateInvTarget(i, t) { if (i >= 0 && i < INV_TARGETS.length) INV_TARGETS[i] = t; return INV_TARGETS; },
     deleteInvTarget(i) { if (i >= 0 && i < INV_TARGETS.length) INV_TARGETS.splice(i, 1); return INV_TARGETS; },
     getCash() { return CASH; },
+    getMacroTrack() { return MACRO_TRACK; },
     addCash(x) { CASH.push(x); return CASH; },
     updateCash(i, x) { if (i >= 0 && i < CASH.length) CASH[i] = x; return CASH; },
     deleteCash(i) { if (i >= 0 && i < CASH.length) CASH.splice(i, 1); return CASH; },

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="海外被动指数基金（纳指100 · 标普500 · 道琼斯 · 日经225）：基本信息与限购情况">
-    <title>基金跟踪 · 生活大于投资</title>
+    <meta name="description" content="海外被动指数基金（纳指100 · 标普500 · 道琼斯 · 日经225 · 德国DAX · 法国CAC40）：基本信息与限购情况">
+    <title>投么有度</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Inter:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -262,8 +264,8 @@
             gap: 0.15rem;
             min-width: 80px;
         }
-        .stat .k { font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.5px; }
-        .stat .v { font-size: 1.1rem; font-weight: 700; }
+        .stat .k { font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.5px; white-space: nowrap; }
+        .stat .v { font-size: 1.1rem; font-weight: 700; white-space: nowrap; line-height: 1.4; }
         .stat .v.gold { color: var(--gold-bright); }
         .stat .v.red { color: var(--stop); }
         .stat .v.green { color: var(--ok); }
@@ -319,8 +321,7 @@
 
         /* ===== 表格 ===== */
         .table-wrap {
-            overflow: auto;
-            max-height: calc(100vh - 5.5rem);
+            overflow: visible;
             border: 1px solid var(--surface-border);
             border-radius: 14px;
             background: var(--bg-soft);
@@ -328,7 +329,10 @@
             -ms-overflow-style: none;
         }
         .table-wrap::-webkit-scrollbar { display: none; }
-        table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 0.78rem; }
+        /* 列宽由内容自适应分配（auto），不再硬编码百分比，各列间距与内容相称；
+           量宽完成后加 .cols-locked 改为固定布局，使各筛选下表头完全一致 */
+        table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: auto; font-size: 0.78rem; }
+        table.cols-locked { table-layout: fixed; }
         thead th {
             position: sticky;
             top: 0;
@@ -337,20 +341,22 @@
             color: var(--text-soft);
             font-weight: 500;
             letter-spacing: 1px;
-            padding: 0.75rem 0.5rem;
+            padding: 0.75rem 0.35rem;
             text-align: left;
             white-space: nowrap;
             border-bottom: 1px solid var(--surface-border);
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         thead th.sortable { cursor: pointer; user-select: none; }
         thead th.sortable:hover { color: var(--gold-bright); }
+        /* 数值列表头与单元格内容同为右对齐，避免表头与数据出现视觉错位 */
+        thead th.num { text-align: right; }
         thead th .arrow { color: var(--gold); margin-left: 2px; font-size: 0.7rem; }
+        /* 未排序时箭头为空，不再占位，避免右对齐表头整体左偏 2px */
+        thead th .arrow:empty { margin-left: 0; }
         tbody td {
             position: relative;
             z-index: 0;
-            padding: 0.6rem 0.5rem;
+            padding: 0.6rem 0.35rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             white-space: normal;
             vertical-align: middle;
@@ -362,6 +368,8 @@
         td.name a { color: var(--text); text-decoration: none; }
         td.name a:hover { color: var(--gold-bright); }
         td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        /* 成立日：禁止在日期连字符处断行，保持单行显示 */
+        td.muted { white-space: nowrap; }
         .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 5px; font-size: 0.72rem; letter-spacing: 1px; }
         .tag.etf { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
         .tag.conn { background: rgba(90, 180, 255, 0.13); color: #7fc4ff; }
@@ -374,6 +382,9 @@
         .badge.plain { background: rgba(255,255,255,0.06); color: var(--text-soft); }
         .muted { color: var(--text-dim); }
         .limit-zero { color: var(--stop); }
+        .limit-ok { color: var(--ok); }
+        .arrow-up { color: var(--stop); }
+        .arrow-down { color: var(--ok); }
 
         .note { margin-top: 1.2rem; color: var(--text-dim); font-size: 0.78rem; line-height: 1.7; }
         .note a { color: var(--gold-bright); text-decoration: none; }
@@ -422,13 +433,14 @@
             .brand { top: 1rem; left: 1rem; }
             .brand-title { font-size: 1.4rem; letter-spacing: 3px; }
         }
+        /* 列宽锁定后表格宽度固定，若超出卡片宽度则改为横向滚动（由 JS 按实测宽度切换） */
+        .table-wrap.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
         @media (max-width: 720px) {
             .page { padding: 6.5rem 1rem 3rem; }
             .page h1 { font-size: 1.7rem; }
             #search { width: 100%; margin-left: 0; }
-            /* 表格 13 列在窄屏被 table-layout:fixed 挤扁：固定最小宽度触发横向滑动，保证每列可读、内容完整 */
-            .table-wrap { -webkit-overflow-scrolling: touch; overflow-x: auto; }
-            table { min-width: 920px; }
+            thead th { padding-left: 0.3rem; padding-right: 0.3rem; }
+            tbody td { padding-left: 0.3rem; padding-right: 0.3rem; }
         }
     </style>
 </head>
@@ -451,7 +463,7 @@
     </div>
 
     <main class="page">
-        <h1>纳指100 · 标普500 · 道琼斯 · 日经225 指数基金全景</h1>
+        <h1>指数基金全景</h1>
         <p class="updated">数据更新：<b id="updated">—</b> · <span id="source">本地数据</span> </p>
 
         <div class="tabs" id="indexTabs">
@@ -459,6 +471,8 @@
             <button class="tab" data-idx="SPX">标普500</button>
             <button class="tab" data-idx="DJI">道琼斯</button>
             <button class="tab" data-idx="NKY">日经225</button>
+            <button class="tab" data-idx="DAX">德国DAX</button>
+            <button class="tab" data-idx="CAC">法国CAC40</button>
         </div>
 
         <div class="toolbar">
@@ -471,23 +485,23 @@
 
         <div class="table-wrap">
             <table id="tbl">
-                <colgroup>
-                    <col style="width:8%"><col style="width:16%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:7%"><col style="width:8%"><col style="width:7%"><col style="width:6%"><col style="width:6%"><col style="width:6%"><col style="width:7%">
+                <colgroup id="colgroup">
+                    <col><col><col><col><col><col><col><col><col><col><col><col>
                 </colgroup>
                 <thead>
                     <tr>
                         <th class="sortable" data-key="code">代码<span class="arrow"></span></th>
                         <th>基金简称</th>
-                        <th>类别</th>
-                        <th class="sortable" data-key="establishDate">成立日<span class="arrow"></span></th>
-                        <th class="sortable" data-key="nav">单位净值<span class="arrow"></span></th>
-                        <th class="sortable" data-key="scale">规模<span class="arrow"></span></th>
-                        <th>限购状态</th>
-                        <th class="sortable" data-key="dailyLimit">单日限额<span class="arrow"></span></th>
-                        <th class="sortable" data-key="mgmtFee">管理费<span class="arrow"></span></th>
-                        <th class="sortable" data-key="custodyFee">托管费<span class="arrow"></span></th>
-                        <th class="sortable" data-key="trackingError">跟踪误差<span class="arrow"></span></th>
-                        <th class="sortable" data-key="premium">溢价率<span class="arrow"></span></th>
+                        <th class="sortable" data-key="dailyLimit">限购状态<span class="arrow"></span></th>
+                        <th class="sortable num" data-key="premium">溢价率<span class="arrow"></span></th>
+                        <th class="sortable num" data-key="trackingError">跟踪误差<span class="arrow"></span></th>
+                        <th class="sortable num" data-key="nav">单位净值<span class="arrow"></span></th>
+                        <th class="sortable num" data-key="scale">规模<span class="arrow"></span></th>
+                        <th class="num">管理费</th>
+                        <th class="num">托管费</th>
+                        <th class="sortable num" data-key="purchaseFee">申购费<span class="arrow"></span></th>
+                        <th class="num">赎回费</th>
+                        <th class="sortable num" data-key="establishDate">成立日<span class="arrow"></span></th>
                     </tr>
                 </thead>
                 <tbody id="tbody"></tbody>
@@ -495,7 +509,7 @@
         </div>
 
         <p class="note">
-            说明：① 场内 ETF 通过证券账户在二级市场自由买卖，其“限购状态”标为<b>场内交易</b>；部分 ETF 的一级申赎可能暂停，不影响二级市场交易。② “限大额”表示单日申购有金额上限（受 QDII 外汇额度影响，美股指数基金普遍限购）。③ 默认排序：场外在前，场内 ETF 在后、按<b>溢价率从低到高</b>排列；场外按「暂停申购置底、单日限额降序」排列。④ <b>跟踪误差</b>为年化跟踪误差（来源：天天基金特色数据）；<b>溢价率</b> = (最新价 - IOPV)/IOPV，仅场内 ETF 展示（来源：东方财富行情）。数据每日自动更新，具体请以基金公司公告及<a href="http://fund.eastmoney.com/" target="_blank" rel="noopener">天天基金</a>为准。
+            说明：① 场内 ETF 通过证券账户在二级市场自由买卖，其“限购状态”标为<b>场内交易</b>；部分 ETF 的一级申赎可能暂停，不影响二级市场交易。② “限大额”表示单日申购有金额上限（受 QDII 外汇额度影响，美股指数基金普遍限购）。③ 默认排序：场外在前，场内 ETF 在后、按<b>溢价率从低到高</b>排列；场外按「暂停申购置底、单日限额降序」排列。④ <b>跟踪误差</b>为年化跟踪误差（来源：天天基金特色数据）；<b>溢价率</b> = (最新价 - IOPV)/IOPV，仅场内 ETF 展示（来源：东方财富行情）。⑤ <b>单日累计限额</b>为当前表格中「限购状态」列各单日限额数值之和（口径一致：不含场内 ETF、暂停申购及「无限额」基金，随筛选结果变化）；<b>限购状态</b>列合并展示「限购状态」标签与「单日限额」金额（金额下方小字为昨日限额）；<b>费率</b>列展示管理费与托管费；<b>申购费</b>列展示天天基金当前优惠费率（副行标注原费率，悬停可查看适用金额档位；点击该列表头按申购费率排序），场内 ETF 无申购费、显示「—」；<b>赎回费</b>按持有期限分档，主行显示短期档、副行显示长期档，悬停可查看全部档位，场内 ETF 无此项。数据每日自动更新，具体请以基金公司公告及<a href="http://fund.eastmoney.com/" target="_blank" rel="noopener">天天基金</a>为准。
         </p>
     </main>
 
@@ -519,7 +533,7 @@
             function badge(f) {
                 if (f.cat === 'ETF') return { cls: 'ok', text: '场内交易' };
                 var s = f.purchaseStatus;
-                if (s === '限大额') return { cls: 'warn', text: '限大额' };
+                if (s === '限大额') return null;
                 if (s === '暂停申购') return { cls: 'stop', text: '暂停申购' };
                 if (s === '开放申购') return { cls: 'ok', text: '开放申购' };
                 if (s === '封闭期') return { cls: 'closed', text: '封闭期' };
@@ -529,17 +543,60 @@
                 if (cat === 'ETF') return '<span class="tag etf">场内</span>';
                 return '<span class="tag idx">场外</span>';
             }
+            // 限购状态单元格：合并展示「单日限额」金额 + 「限购状态」标签（限大额不再展示标签）
+            function statusCell(f) {
+                var b = badge(f);
+                return limitCell(f) +
+                    (b ? '<div style="margin-top:2px"><span class="badge ' + b.cls + '">' + b.text + '</span></div>' : '');
+            }
             function limitCell(f) {
-                if (f.cat === 'ETF') return '<span class="muted">—</span>';
-                if (f.purchaseStatus === '暂停申购') return '<span class="muted">—</span>';
-                var v = f.dailyLimit;
-                if (!v || v === '---') return '<span class="muted">—</span>';
-                var zero = num(v) === 0;
-                return zero ? '<span class="limit-zero">' + v + '</span>' : v;
+                var today;
+                if (f.cat === 'ETF' || f.purchaseStatus === '暂停申购') {
+                    today = '<span class="muted">—</span>';
+                } else {
+                    var v = f.dailyLimit;
+                    today = (!v || v === '---')
+                        ? '<span class="muted">—</span>'
+                        : (num(v) === 0 ? '<span class="limit-zero">' + v + '</span>' : '<span class="limit-ok">' + v + '</span>');
+                }
+                // 场内 ETF 不展示昨日限额；场外即使当日暂停申购也保留昨日值
+                if (f.cat === 'ETF') return today;
+                // 今日与昨日均为暂停申购时，不再展示昨日限额
+                if (f.purchaseStatus === '暂停申购' && f.prevPurchaseStatus === '暂停申购') return today;
+                var prev = String(f.prevDailyLimit || '').trim();
+                if (!prev) return today;
+                return today + '<div class="muted" style="font-size:0.68rem">昨日 ' + esc(prev) + '</div>';
             }
             function trackCell(f) {
                 if (!f.trackingError) return '<span class="muted">—</span>';
                 return f.trackingError;
+            }
+            // 申购费单元格：主行显示当前优惠费率，副行小字标注原费率，悬停查看适用金额档位；场内 ETF 无此项
+            function purchaseFeeCell(f) {
+                if (f.cat === 'ETF') return '<span class="muted">—</span>';
+                var actual = String(f.purchaseFee || '').trim();
+                if (!actual) return '<span class="muted">—</span>';
+                var orig = String(f.purchaseFeeOrig || '').trim();
+                var cond = String(f.purchaseFeeCond || '').trim();
+                var tip = cond ? ' title="适用金额：' + esc(cond) + '"' : '';
+                return '<div' + tip + '>' + esc(actual) + '</div>' +
+                    (orig && orig !== actual ? '<div class="muted" style="font-size:0.68rem;white-space:nowrap">原 ' + esc(orig) + '</div>' : '');
+            }
+            // 赎回费单元格：主行显示短期（首档）费率，副行显示长期（末档）费率，悬停查看全部档位
+            function redeemFeeCell(f) {
+                var tiers = f.redeemFees || [];
+                if (!tiers.length) return '<span class="muted">—</span>';
+                var short = function (s) {
+                    return String(s || '').replace(/大于等于|大于或等于/g, '≥').replace(/小于等于/g, '≤')
+                        .replace(/小于/g, '<').replace(/大于/g, '>');
+                };
+                var all = tiers.map(function (t) { return short(t.cond) + ' ' + t.fee; }).join('；');
+                var first = tiers[0], last = tiers[tiers.length - 1];
+                var html = '<div style="white-space:nowrap" title="' + esc(all) + '">' + esc(short(first.cond)) + ' ' + esc(first.fee) + '</div>';
+                if (tiers.length > 1) {
+                    html += '<div class="muted" style="font-size:0.68rem;white-space:nowrap">' + esc(short(last.cond)) + ' ' + esc(last.fee) + '</div>';
+                }
+                return html;
             }
             function premiumCell(f) {
                 if (f.cat !== 'ETF') return '<span class="muted">—</span>';
@@ -549,7 +606,16 @@
                 var hint = f.premiumBasis === 'nav'
                     ? '<span class="muted" title="净值口径：市价÷单位净值−1，QDII 净值存在滞后，仅供参考">（净值）</span>'
                     : '';
-                return '<span class="' + cls + '">' + (p > 0 ? '+' : '') + p + '%</span>' + hint;
+                var prev = f.prevPremium;
+                // 与昨日对比的升降箭头，标在今日数值处（溢价升高标红，降低标绿）
+                var arrow = '';
+                if (prev != null && prev !== '') {
+                    if (num(p) > num(prev)) arrow = ' <span class="arrow-up">↑</span>';
+                    else if (num(p) < num(prev)) arrow = ' <span class="arrow-down">↓</span>';
+                }
+                var html = '<span class="' + cls + '">' + (p > 0 ? '+' : '') + p + '%</span>' + arrow + hint;
+                if (prev == null || prev === '') return html;
+                return html + '<div class="muted" style="font-size:0.68rem">昨日 ' + (prev > 0 ? '+' : '') + prev + '%</div>';
             }
             function isSuspended(f) {
                 return f.cat !== 'ETF' && f.purchaseStatus === '暂停申购';
@@ -563,6 +629,33 @@
             function premiumRank(f) {
                 var p = num(f.premium);
                 return p == null ? Infinity : p;
+            }
+            // 单日限额文本 -> 元（“无限额”/空值返回 null）
+            function limitYuan(v) {
+                if (!v || v === '---') return null;
+                var s = String(v);
+                if (s.indexOf('无限额') >= 0) return null;
+                var m = s.match(/-?[\d.]+/);
+                if (!m) return null;
+                var n = parseFloat(m[0]);
+                if (s.indexOf('万') >= 0) n *= 10000;
+                return n;
+            }
+            function fmtMoney(n) {
+                if (n >= 10000) return (Math.round(n / 100) / 100) + '万元';
+                return (Math.round(n * 100) / 100) + '元';
+            }
+            // 表格「单日限额」列的合计（口径与 limitCell 一致：场外、非暂停申购、非无限额）
+            function limitSum(list) {
+                var sum = 0, has = false;
+                list.forEach(function (f) {
+                    if (f.cat === 'ETF' || f.purchaseStatus === '暂停申购') return;
+                    var n = limitYuan(f.dailyLimit);
+                    if (n == null) return;
+                    sum += n;
+                    has = true;
+                });
+                return has ? sum : null;
             }
             function defaultSort(list) {
                 return list.slice().sort(function (a, b) {
@@ -586,13 +679,15 @@
                 var limited = list.filter(function (f) { return f.cat !== 'ETF' && f.purchaseStatus === '限大额'; }).length;
                 var stopped = list.filter(function (f) { return f.cat !== 'ETF' && f.purchaseStatus === '暂停申购'; }).length;
                 var closed = list.filter(function (f) { return f.cat !== 'ETF' && f.purchaseStatus === '封闭期'; }).length;
+                var sum = limitSum(list);
                 document.getElementById('stats').innerHTML =
                     stat('基金总数', list.length, 'gold') +
                     stat('场内', onEx) +
                     stat('场外', offEx) +
                     stat('限大额', limited, '') +
                     stat('暂停申购', stopped, 'red') +
-                    stat('封闭期', closed, '');
+                    stat('封闭期', closed, '') +
+                    stat('单日累计限额', sum == null ? '—' : fmtMoney(sum), 'green');
             }
 
             function sortList(list) {
@@ -658,27 +753,144 @@
                 var tbody = document.getElementById('tbody');
                 if (!list.length) {
                     tbody.innerHTML = '<tr><td colspan="12" class="empty-tip">没有符合条件的结果</td></tr>';
-                    return;
+                } else {
+                    tbody.innerHTML = rowsHtml(list);
                 }
+                syncTableScroll();
+                // 筛选或切换指数后表格可能骤然变短：sticky 表头会随表格底缘提前脱吸、悬在视口中部，看起来像表头偏移；
+                // 此时平滑滚回表格顶部，让表头稳定落在可视区
+                requestAnimationFrame(function () {
+                    var rect = document.getElementById('tbl').getBoundingClientRect();
+                    if (rect.top < 0 && rect.bottom < window.innerHeight) {
+                        window.scrollTo({ top: Math.max(0, window.scrollY + rect.top - 96), behavior: 'smooth' });
+                    }
+                });
+            }
+
+            // 行渲染：抽出为独立函数，供「列宽锁定」时用同一套模板按全量数据量宽
+            function rowsHtml(list) {
                 var html = '';
                 list.forEach(function (f) {
-                    var b = badge(f);
                     html += '<tr>' +
                         '<td class="code">' + f.code + '</td>' +
-                        '<td class="name"><a href="http://fund.eastmoney.com/' + f.code + '.html" target="_blank" rel="noopener">' + esc(f.name) + '</a></td>' +
-                        '<td>' + catTag(f.cat) + '</td>' +
-                        '<td class="muted">' + (f.establishDate || '—') + '</td>' +
+                        '<td class="name"><a href="http://fund.eastmoney.com/' + f.code + '.html" target="_blank" rel="noopener">' + esc(f.name) + '</a> ' + catTag(f.cat) + '</td>' +
+                        '<td>' + statusCell(f) + '</td>' +
+                        '<td class="num">' + premiumCell(f) + '</td>' +
+                        '<td class="num">' + trackCell(f) + '</td>' +
                         '<td class="num">' + (f.nav || '<span class="muted">—</span>') + '<div class="muted" style="font-size:0.68rem">' + (f.navDate || '') + '</div></td>' +
                         '<td class="num">' + (f.scale || '—') + '</td>' +
-                        '<td><span class="badge ' + b.cls + '">' + b.text + '</span></td>' +
-                        '<td>' + limitCell(f) + '</td>' +
-                        '<td class="num">' + (feeText(f.mgmtFee) || '—') + '</td>' +
-                        '<td class="num">' + (feeText(f.custodyFee) || '—') + '</td>' +
-                        '<td class="num">' + trackCell(f) + '</td>' +
-                        '<td class="num">' + premiumCell(f) + '</td>' +
+                        '<td class="num">' + feeText(f.mgmtFee) + '</td>' +
+                        '<td class="num">' + feeText(f.custodyFee) + '</td>' +
+                        '<td class="num">' + purchaseFeeCell(f) + '</td>' +
+                        '<td class="num">' + redeemFeeCell(f) + '</td>' +
+                        '<td class="num muted">' + (f.establishDate || '—') + '</td>' +
                         '</tr>';
                 });
-                tbody.innerHTML = html;
+                return html;
+            }
+
+            // 列宽锁定：先用全量数据（「全部」）量出各列的最小内容宽度与内容自然单行宽度，
+            // 再在可用宽度内按「内容宽度 + 等量富余」均匀分配，使各列间距一致（简称列吸收剩余空间）；
+            // 之后切换「全部 / 场内 / 场外」时列宽与间距都取自同一份 colgroup，表头完全一致
+            var colsLocked = false;
+            // 均匀分布：各列取「内容自然宽度 + 等量富余 g」，且不低于最小内容宽度（保证表头不溢出、内容不折行）；
+            // 基金简称列（第 2 列）弹性换行、吸收剩余空间；空间不足时返回 null（回退最小内容宽度布局，移动端横向滚动）
+            function distributeWidths(mins, contents, avail) {
+                var n = mins.length, NAME = 1, i, k;
+                var base = 0;
+                mins.forEach(function (w) { base += w; });
+                if (!(avail > base)) return null;
+                var g = (avail - base) / n;
+                for (k = 0; k < 6; k++) {
+                    var W = mins.slice(), used = 0;
+                    for (i = 0; i < n; i++) {
+                        if (i === NAME) continue;
+                        if (contents[i] && contents[i] + g > W[i]) W[i] = contents[i] + g;
+                        used += W[i];
+                    }
+                    var rest = avail - used;
+                    if (rest >= mins[NAME]) { W[NAME] = rest; return W; }
+                    g = Math.max(0, g - (mins[NAME] - rest) / (n - 1));
+                    if (!g) break;
+                }
+                return null;
+            }
+            function lockColWidths() {
+                if (colsLocked) return;
+                var tbl = document.getElementById('tbl');
+                var cols = tbl.querySelectorAll('colgroup col');
+                var full = dedupShareClasses(DATA).filter(function (f) { return f.ccy === '人民币'; });
+                document.getElementById('tbody').innerHTML = rowsHtml(full);
+                // 离屏克隆：宽度压到 1px，浏览器只能按最小内容宽度排版，逐列量取
+                var probe = tbl.cloneNode(true);
+                probe.classList.remove('cols-locked');
+                probe.removeAttribute('style');
+                probe.querySelectorAll('col').forEach(function (c) { c.removeAttribute('style'); });
+                probe.setAttribute('style', 'position:absolute;left:-99999px;top:0;visibility:hidden;width:1px;table-layout:auto;');
+                document.body.appendChild(probe);
+                var widths = [], total = 0;
+                probe.querySelectorAll('thead th').forEach(function (th) {
+                    var w = th.getBoundingClientRect().width;
+                    widths.push(w);
+                    total += w;
+                });
+                // 第二次量取：将各单元格临时设为不换行，用 Range 逐行量自然宽度，取该列最宽的一行，
+                // 作为均匀分配富余空间的基准；基金简称列（第 2 列）弹性换行，不参与
+                var rows = probe.querySelectorAll('tbody tr');
+                var contents = [];
+                rows.forEach(function (tr) {
+                    Array.prototype.forEach.call(tr.cells, function (td, i) {
+                        if (i !== 1) td.style.whiteSpace = 'nowrap';
+                    });
+                });
+                var rng = document.createRange();
+                var runWidth = function (nodes) {
+                    rng.setStartBefore(nodes[0]);
+                    rng.setEndAfter(nodes[nodes.length - 1]);
+                    return rng.getBoundingClientRect().width;
+                };
+                rows.forEach(function (tr) {
+                    Array.prototype.forEach.call(tr.cells, function (td, i) {
+                        if (i === 1) return;
+                        var w = 0, run = null;
+                        Array.prototype.forEach.call(td.childNodes, function (node) {
+                            if (node.nodeType === 1 && node.tagName === 'DIV') {
+                                if (run) { var rw = runWidth(run); if (rw > w) w = rw; run = null; }
+                                rng.selectNodeContents(node);
+                                var dw = rng.getBoundingClientRect().width;
+                                if (dw > w) w = dw;
+                            } else if (node.nodeType === 1 || (node.nodeType === 3 && node.nodeValue.trim())) {
+                                (run = run || []).push(node);
+                            }
+                        });
+                        if (run) { var rw2 = runWidth(run); if (rw2 > w) w = rw2; }
+                        if (w && (!contents[i] || w > contents[i])) contents[i] = w;
+                    });
+                });
+                document.body.removeChild(probe);
+                if (!total || cols.length !== widths.length) return;
+                // 优先按「内容宽度 + 等量富余」均匀分布；空间不足（移动端）则维持最小内容宽度布局
+                var wrap = document.querySelector('.table-wrap');
+                var finalW = distributeWidths(widths, contents, wrap ? wrap.clientWidth : 0) || widths;
+                var sum = 0;
+                finalW.forEach(function (w) { sum += w; });
+                var acc = 0;
+                finalW.forEach(function (w, i) {
+                    var pct = i === finalW.length - 1 ? 100 - acc : Math.round(w / sum * 10000) / 100;
+                    acc = Math.round((acc + pct) * 100) / 100;
+                    cols[i].style.width = pct + '%';
+                });
+                tbl.style.minWidth = Math.ceil(total) + 'px';
+                tbl.classList.add('cols-locked');
+                colsLocked = true;
+            }
+
+            // 表格宽度超出卡片时切换为横向滚动，避免 overflow:visible 下溢出卡片边框
+            function syncTableScroll() {
+                var wrap = document.querySelector('.table-wrap');
+                var tbl = document.getElementById('tbl');
+                if (!wrap || !tbl) return;
+                wrap.classList.toggle('scroll-x', tbl.offsetWidth - wrap.clientWidth > 1);
             }
 
             function makeChips(groupId, key, options, value) {
@@ -725,7 +937,32 @@
                 });
             });
 
+            // 先按全量数据锁定列宽，再渲染当前筛选结果，保证各筛选下表头一致
+            lockColWidths();
             render();
+            // 视口宽度变化时：立即切换横向滚动状态，并限流重新锁宽（均匀分布与可用宽度相关）
+            var relayoutLast = 0, relayoutTimer = null;
+            function relayoutCols() {
+                relayoutLast = Date.now();
+                colsLocked = false;
+                lockColWidths();
+                render();
+            }
+            window.addEventListener('resize', function () {
+                syncTableScroll();
+                clearTimeout(relayoutTimer);
+                if (Date.now() - relayoutLast > 200) { relayoutCols(); }
+                else { relayoutTimer = setTimeout(relayoutCols, 200); }
+            });
+
+            // 网页字体（Inter / Noto Sans SC）加载完成后重新量宽，避免用回退字体量出偏差
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(function () {
+                    colsLocked = false;
+                    lockColWidths();
+                    render();
+                });
+            }
 
             // 若配置了云端 HTTP 接口，优先拉取最新数据；失败则沿用本地兜底数据
             if (API_URL) {
@@ -736,6 +973,8 @@
                             DATA = json.data.map(function (f) { return f; });
                             UPDATED = json.updated || UPDATED;
                             SOURCE = '云端数据（每日自动更新）';
+                            colsLocked = false;
+                            lockColWidths();
                             render();
                         }
                     })

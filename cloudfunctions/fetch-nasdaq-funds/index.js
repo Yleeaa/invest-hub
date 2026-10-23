@@ -143,11 +143,38 @@ const DOW_LIST = [
   ['513400', '鹏华道琼斯工业平均ETF(QDII)', '鹏华', 'ETF', '人民币', '-']
 ];
 
-/* 合并纳指100、标普500、日经225与道琼斯清单，并标记标的指数（NDX=纳斯达克100 / SPX=标普500 / NKY=日经225 / DJI=道琼斯工业平均） */
+/* ============================================================
+ * 德国DAX 被动指数基金完整清单（截至 2026-09，仅人民币份额）
+ * 说明：华安德国(DAX)ETF 及其场外联接。
+ * ============================================================ */
+const DAX_LIST = [
+  // —— 场内 ETF（证券账户二级市场可直接买卖）——
+  ['513030', '华安德国(DAX)ETF', '华安', 'ETF', '人民币', '-'],
+
+  // —— 场外 ETF 联接 ——
+  ['000614', '华安德国30(DAX)ETF联接A', '华安', '联接', '人民币', 'A']
+];
+
+/* ============================================================
+ * 法国CAC40 被动指数基金完整清单（截至 2026-09，仅人民币份额）
+ * 说明：华安法国CAC40ETF 及其场外发起式联接。
+ * ============================================================ */
+const CAC_LIST = [
+  // —— 场内 ETF（证券账户二级市场可直接买卖）——
+  ['513080', '华安法国CAC40ETF(QDII)', '华安', 'ETF', '人民币', '-'],
+
+  // —— 场外 ETF 联接 ——
+  ['021539', '华安法国CAC40ETF发起式联接(QDII)A', '华安', '联接', '人民币', 'A'],
+  ['021540', '华安法国CAC40ETF发起式联接(QDII)C', '华安', '联接', '人民币', 'C']
+];
+
+/* 合并纳指100、标普500、道琼斯、日经225、德国DAX与法国CAC40清单，并标记标的指数（NDX=纳斯达克100 / SPX=标普500 / DJI=道琼斯工业平均 / NKY=日经225 / DAX=德国DAX / CAC=法国CAC40） */
 const FUND_LIST = NDX_LIST.map((it) => it.concat('NDX'))
   .concat(SPX_LIST.map((it) => it.concat('SPX')))
   .concat(DOW_LIST.map((it) => it.concat('DJI')))
-  .concat(NIKKEI_LIST.map((it) => it.concat('NKY')));
+  .concat(NIKKEI_LIST.map((it) => it.concat('NKY')))
+  .concat(DAX_LIST.map((it) => it.concat('DAX')))
+  .concat(CAC_LIST.map((it) => it.concat('CAC')));
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -273,10 +300,47 @@ async function fetchTrackingError(code) {
   }
 }
 
+/* 从 jjfl 页的「申购费率」区块解析首个金额档：天天基金优惠费率 / 原费率 / 适用金额 */
+function parsePurchaseFee(html) {
+  const block = html.match(/申购费率<\/label>[\s\S]*?<tbody>([\s\S]*?)<\/tbody>/);
+  if (!block) return {};
+  const row = block[1].match(/<tr[^>]*>([\s\S]*?)<\/tr>/);
+  if (!row) return {};
+  const tds = row[1].match(/<td[^>]*>([\s\S]*?)<\/td>/g) || [];
+  if (tds.length < 2) return {};
+  const text = (s) => String(s).replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+  const origM = tds[1].match(/<strike[^>]*>([\s\S]*?)<\/strike>/);
+  const parts = tds[1].split('|');
+  const actual = text(parts[parts.length - 1]); // 有优惠时取「|」后的优惠费率，无优惠即原费率
+  const orig = origM ? text(origM[1]) : actual;
+  return {
+    purchaseFee: actual,
+    purchaseFeeOrig: orig,
+    purchaseFeeCond: text(tds[0])
+  };
+}
+
+/* 从 jjfl 页的「赎回费率」区块解析各持有期限档位（表头：适用期限 / 赎回费率） */
+function parseRedeemFee(html) {
+  const block = html.match(/赎回费率[\s\S]*?<tbody>([\s\S]*?)<\/tbody>/);
+  if (!block) return { redeemFee: '', redeemFees: [] };
+  const text = (s) => String(s).replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+  const rows = block[1].match(/<tr[^>]*>([\s\S]*?)<\/tr>/g) || [];
+  const tiers = [];
+  rows.forEach((r) => {
+    const tds = r.match(/<td[^>]*>([\s\S]*?)<\/td>/g) || [];
+    if (tds.length < 2) return;
+    tiers.push({ cond: text(tds[0]), fee: text(tds[1]) });
+  });
+  return { redeemFee: tiers.length ? tiers[0].fee : '', redeemFees: tiers };
+}
+
 /* 从 jjfl 页解析基本信息 + 限购情况 */
 function parseDetail(html, code) {
   const navM = html.match(/单位净值（([^）]*)）：[\s\S]*?<b[^>]*>\s*([\d.]+)/);
   const scaleM = html.match(/净资产规模：<span>\s*([^<\s（]+)\s*（截止至：([\d-]+)）<\/span>/);
+  const fee = parsePurchaseFee(html);
+  const redeem = parseRedeemFee(html);
   return {
     code,
     nav: navM ? navM[2] : '',
@@ -290,6 +354,11 @@ function parseDetail(html, code) {
     mgmtFee: pick(html, /管理费率<\/td><td class="w135">([^<]*)<\/td>/),
     custodyFee: pick(html, /托管费率<\/td><td class="w135">([^<]*)<\/td>/),
     salesFee: pick(html, /销售服务费率<\/td><td class="w135">([^<]*)<\/td>/),
+    purchaseFee: fee.purchaseFee || '',
+    purchaseFeeOrig: fee.purchaseFeeOrig || '',
+    purchaseFeeCond: fee.purchaseFeeCond || '',
+    redeemFee: redeem.redeemFee || '',
+    redeemFees: redeem.redeemFees || [],
     establishDate: pick(html, /成立日期：<span>([\d-]+)<\/span>/),
     fundType: pick(html, /类型：<span>([^<]*)<\/span>/),
     manager: pick(html, /管理人：<a[^>]*>([^<]*)<\/a>/),
@@ -378,8 +447,17 @@ async function main(event, context) {
       // 集合已存在时忽略
     }
     const coll = db.collection('nasdaq_funds');
+    // 先读取现有集合，把上一版溢价率写入场内 ETF 的 prevPremium（供公众号预览做“昨日溢价率”对比）
+    const prevPremiumMap = {};
+    try {
+      const snap = await coll.limit(1000).get();
+      ((snap && snap.data) || []).forEach((d) => {
+        if (d && d.code && d.premium != null && d.premium !== '') prevPremiumMap[d.code] = d.premium;
+      });
+    } catch (e) { /* 集合为空或读取失败，则本次无昨日溢价率 */ }
     for (const row of data) {
-      await coll.doc(row.code).set(Object.assign({}, row, { updated }));
+      const prevExtra = row.cat === 'ETF' && prevPremiumMap[row.code] != null ? { prevPremium: prevPremiumMap[row.code] } : {};
+      await coll.doc(row.code).set(Object.assign({}, row, prevExtra, { updated }));
     }
     summary.persisted = true;
   } catch (e) {

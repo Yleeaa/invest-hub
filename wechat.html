@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="文章 - 生活大于投资">
-    <title>叨居</title>
+    <title>投么有度</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -253,9 +255,16 @@
             flex: 1;
             min-width: 280px;
         }
+        .page-title-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.4rem 1.5rem;
+        }
         .page-title {
             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
-            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-size: 1.9rem;
             font-weight: 900;
             line-height: 1.2;
             letter-spacing: 2px;
@@ -275,7 +284,7 @@
             color: var(--gold);
             font-weight: 500;
             letter-spacing: 0.5px;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0;
         }
         .page-update-time::before {
             content: '';
@@ -294,8 +303,9 @@
         }
         .footer-qr {
             position: absolute;
-            right: 2rem;
-            bottom: 2.5rem;
+            right: 5rem;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -567,16 +577,18 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
         .article-list {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1rem;
         }
         .article-item {
+            display: flex;
+            flex-direction: column;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid var(--surface-border);
             border-left: 3px solid var(--gold);
             border-radius: 10px;
-            padding: 1.5rem;
+            padding: 1.15rem 1.35rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -609,6 +621,10 @@
             color: var(--text-soft);
             font-size: 0.9rem;
             line-height: 1.7;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* 徽标 */
@@ -752,7 +768,7 @@
             .category-tree::-webkit-scrollbar-thumb { background: rgba(201, 169, 97, 0.2); }
             .article-item { padding: 1.25rem; }
             .article-item .title { font-size: 1rem; }
-            .footer-qr { position: relative; right: auto; bottom: auto; margin: 1.5rem auto 0; width: fit-content; }
+            .footer-qr { position: relative; right: auto; top: auto; bottom: auto; transform: none; margin: 1.5rem auto 0; width: fit-content; }
         }
         @media (max-width: 480px) {
             .page-header { padding: 1.75rem 1rem 1.25rem; }
@@ -792,8 +808,10 @@
         <header class="page-header">
             <div class="header-top">
                 <div class="header-left">
-                    <h1 class="page-title">叨居</h1>
-                    <div class="page-update-time">原创文章 · <span id="articleCount">0</span> 篇</div>
+                    <div class="page-title-row">
+                        <h1 class="page-title">叨居</h1>
+                        <div class="page-update-time">原创文章 · <span id="articleCount">0</span> 篇</div>
+                    </div>
                     <p class="page-subtitle">记录普通投资者的退休计划思考，分享全球资产配置、长期定投与生活哲学。</p>
                 </div>
             </div>

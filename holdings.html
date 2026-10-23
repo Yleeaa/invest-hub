@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="持仓明细 - 退休计划的实践记录">
-    <title>持仓明细 · 生活大于投资</title>
+    <title>投么有度</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -277,6 +279,14 @@
             padding: 0.5rem 0 1rem;
             border-bottom: 1px solid var(--h-card-border);
         }
+        /* 标题行：标题在左，数据更新在右 */
+        .page-title-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.4rem 1.5rem;
+        }
         .page-title {
             font-family: 'Noto Serif SC', 'Cormorant Garamond', 'Songti SC', serif;
             font-size: clamp(2rem, 4vw, 2.8rem);
@@ -299,7 +309,7 @@
             color: var(--h-gold);
             font-weight: 500;
             letter-spacing: 0.5px;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0;
         }
         .page-update-time::before {
             content: '';
@@ -317,41 +327,81 @@
             max-width: 680px;
             margin-bottom: 1.25rem;
         }
-        .page-goals {
+        /* ===== 理财目标进度（内嵌于 Hero 总览） ===== */
+        .hero-goal {
+            grid-column: 1 / -1;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .goal-head {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.65rem 2rem;
-            padding: 0.85rem 1.1rem;
-            background: rgba(201, 169, 97, 0.05);
-            border: 1px solid rgba(201, 169, 97, 0.18);
-            border-radius: 10px;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
         }
-        .page-goals .goals-label {
-            font-size: 0.72rem;
+        .goal-title {
+            font-size: 0.98rem;
             font-weight: 600;
-            color: var(--h-gold);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding-right: 1rem;
-            border-right: 1px solid rgba(201, 169, 97, 0.2);
-            display: inline-flex;
-            align-items: center;
-        }
-        .page-goals .goals-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            font-size: 0.82rem;
             color: var(--h-text);
-        }
-        .page-goals .goals-item .k {
-            color: var(--h-text-3);
-            font-size: 0.75rem;
             letter-spacing: 0.5px;
         }
-        .page-goals .goals-item .v {
+        .goal-title .goal-flag {
+            display: inline-block;
+            margin-right: 0.5rem;
+            padding: 0.15rem 0.45rem;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--h-gold);
+            background: rgba(212, 175, 122, 0.12);
+            border: 1px solid rgba(212, 175, 122, 0.25);
+            border-radius: 5px;
+            vertical-align: 2px;
+        }
+        .goal-target {
+            margin-top: 0.35rem;
+            font-size: 0.75rem;
+            color: var(--h-text-3);
+            letter-spacing: 0.5px;
+        }
+        .goal-pct {
+            font-size: 1.55rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--h-gold);
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+        .goal-bar {
+            position: relative;
+            height: 12px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+        .goal-bar > span {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0;
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--h-blue), var(--h-gold));
+            transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .goal-foot {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: var(--h-text-3);
+        }
+        .goal-foot b {
             color: var(--h-text);
-            font-weight: 500;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
         }
 
         /* ===== Hero 顶部总览 ===== */
@@ -398,10 +448,30 @@
             font-variant-numeric: tabular-nums;
         }
         .hero-value .currency { font-size: 1.4rem; color: var(--h-text-2); margin-right: 0.4rem; font-weight: 500; }
+        /* 总市值旁的总仓位占比 */
+        .hero-value .hero-weight {
+            display: inline-block;
+            margin-left: 0.75rem;
+            padding: 0.22rem 0.6rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--h-gold);
+            background: rgba(212, 175, 122, 0.12);
+            border: 1px solid rgba(212, 175, 122, 0.25);
+            border-radius: 6px;
+            vertical-align: 0.6rem;
+            white-space: nowrap;
+        }
         .hero-meta {
             display: flex;
-            gap: 1.5rem;
+            flex-direction: column;
+            gap: 0.9rem;
             margin-top: 1rem;
+        }
+        .hero-meta-row {
+            display: flex;
+            gap: 1.5rem;
             flex-wrap: wrap;
         }
         .hero-meta-item {
@@ -416,6 +486,18 @@
         .hero-meta-item .val {
             font-size: 1.05rem;
             font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+        /* 第二行（资产结构）各指标用不同颜色区分 */
+        #heroAsset { color: var(--h-gold); }
+        #heroCash { color: var(--h-blue); }
+        #heroCost { color: #7dd3c0; }
+        #heroBondPct { color: var(--purple); }
+        #heroEquityPct { color: #f0a35e; }
+        /* 指标下的补充小字（如现金占比） */
+        .hero-meta-item .sub {
+            font-size: 0.68rem;
+            color: var(--h-text-3);
             font-variant-numeric: tabular-nums;
         }
 
@@ -506,54 +588,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== 统计卡片 ===== */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .stat-card {
-            position: relative;
-            background: var(--h-card);
-            border: 1px solid var(--h-card-border);
-            border-radius: 14px;
-            padding: 1.25rem 1.4rem;
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .stat-card::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 2px;
-            background: linear-gradient(90deg, var(--h-gold), transparent);
-            opacity: 0.5;
-        }
-        .stat-card .label {
-            font-size: 0.8rem;
-            color: var(--h-text-3);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .stat-card .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--h-text);
-            font-variant-numeric: tabular-nums;
-            letter-spacing: -0.3px;
-        }
-        .stat-card .sub {
-            font-size: 0.75rem;
-            color: var(--h-text-3);
-            margin-top: 0.4rem;
-        }
-        .stat-card .value.text-success { color: var(--up); }
-        .stat-card .value.text-danger { color: var(--down); }
-
         /* ===== 图表容器 ===== */
         .chart-row {
             display: grid;
@@ -562,6 +596,14 @@
             margin-bottom: 1.5rem;
         }
         .chart-row.equal { grid-template-columns: 1fr 1fr; }
+
+        /* ===== 持仓明细 + 清仓记录 双栏 ===== */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 1.25rem;
+            align-items: start;
+        }
         .chart-box {
             background:
                 linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%),
@@ -611,6 +653,23 @@
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
+        }
+        /* 图表底部合计条（如总仓位） */
+        .chart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-top: 0.9rem;
+            padding-top: 0.7rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            font-size: 0.82rem;
+            color: var(--h-text-3);
+        }
+        .chart-total b {
+            color: var(--h-gold);
+            font-size: 0.95rem;
+            font-variant-numeric: tabular-nums;
         }
         .legend-item {
             display: flex;
@@ -712,6 +771,25 @@
         .action-bar .left { display: flex; gap: 0.6rem; flex-wrap: wrap; }
         .action-bar .right { color: var(--h-text-2); font-size: 0.85rem; }
 
+        /* 持仓明细顶部摘要：各指标分色，便于浏览 */
+        #detailSummary {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.35rem 1.25rem;
+            font-size: 0.85rem;
+        }
+        #detailSummary .sum-item { white-space: nowrap; }
+        #detailSummary .sum-item i {
+            font-style: normal;
+            margin-right: 0.4rem;
+            color: var(--h-text-3);
+        }
+        #detailSummary .sum-item b { font-weight: 600; font-variant-numeric: tabular-nums; }
+        #detailSummary .v-market { color: #7dd3c0; }
+        #detailSummary .v-cash { color: #5b8def; }
+        #detailSummary .v-asset { color: var(--h-gold); }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -756,12 +834,14 @@
 
         .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-        #detailTable {
+        #detailTable,
+        #closedTable {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.88rem;
         }
-        #detailTable th {
+        #detailTable th,
+        #closedTable th {
             background: transparent;
             color: var(--h-text-3);
             font-weight: 500;
@@ -773,14 +853,28 @@
             text-align: left;
             white-space: nowrap;
         }
-        #detailTable td {
+        #detailTable td,
+        #closedTable td {
             padding: 0.9rem 0.6rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             color: var(--h-text);
             font-variant-numeric: tabular-nums;
         }
-        #detailTable tbody tr { transition: background 0.2s ease; }
-        #detailTable tbody tr:last-child td { border-bottom: none; }
+        #detailTable tbody tr,
+        #closedTable tbody tr { transition: background 0.2s ease; }
+        #detailTable tbody tr:last-child td,
+        #closedTable tbody tr:last-child td { border-bottom: none; }
+        /* 备注列：与左侧收益率拉开距离 */
+        #detailTable th.col-note,
+        #detailTable td.col-note {
+            padding-left: 2.5rem;
+        }
+        #detailTable tfoot td {
+            border-bottom: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            color: var(--h-text-2);
+        }
 
         .badge {
             display: inline-block;
@@ -956,14 +1050,337 @@
             margin-right: 0.2rem;
         }
 
+        /* 公众号二维码 */
+        body.holdings-page .footer-qr {
+            position: absolute;
+            right: 5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+        body.holdings-page .footer-qr-img {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(212, 175, 122, 0.1));
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.holdings-page .footer-qr-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        body.holdings-page .footer-qr:hover .footer-qr-img {
+            border-color: rgba(255, 255, 255, 0.65);
+            box-shadow: 0 0 20px rgba(212, 175, 122, 0.25);
+        }
+        body.holdings-page .footer-qr span {
+            font-size: 0.65rem;
+            color: var(--text-soft);
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        body.holdings-page .footer-qr:hover span {
+            color: var(--h-text);
+        }
+        body.holdings-page .qr-popup {
+            position: absolute;
+            bottom: calc(100% + 0.75rem);
+            right: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 12px 40px rgba(255, 255, 255, 0.12);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+            z-index: 100;
+        }
+        body.holdings-page .footer-qr:hover .qr-popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        body.holdings-page .qr-popup-img {
+            width: 180px;
+            height: 180px;
+            background: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        body.holdings-page .qr-popup-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        body.holdings-page .qr-popup-title {
+            font-size: 0.8rem;
+            background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        body.holdings-page .qr-popup-desc {
+            font-size: 0.7rem;
+            color: var(--text-soft);
+        }
+
         /* ===== 响应式 ===== */
+        /* ===== 回撤提醒（dd-）===== */
+        .dd-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%),
+                var(--h-card);
+            border: 1px solid var(--h-card-border);
+            border-radius: 16px;
+            padding: 0.9rem 1.15rem;
+            margin-bottom: 1.15rem;
+            backdrop-filter: blur(10px);
+        }
+        .dd-key-label { font-size: 0.7rem; color: var(--h-text-2); letter-spacing: 2px; margin-bottom: 0.2rem; }
+        .dd-key-value { font-size: 1.45rem; font-weight: 800; color: var(--h-gold-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dd-key-note { margin-top: 0.15rem; font-size: 0.68rem; color: var(--h-text-3); white-space: nowrap; }
+        .dd-stats { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+        .dd-stat .lbl { font-size: 0.68rem; color: var(--h-text-3); letter-spacing: 1.5px; margin-bottom: 0.2rem; }
+        .dd-stat .val { font-size: 0.92rem; font-weight: 700; color: var(--h-text); white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dd-stat .val.loss-num { color: var(--down); }
+        .dd-block { margin-bottom: 1.15rem; }
+        .dd-block-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--h-text);
+            letter-spacing: 1.5px;
+            margin-bottom: 0.6rem;
+        }
+        .dd-block-title::before {
+            content: '';
+            width: 3px;
+            height: 14px;
+            background: linear-gradient(180deg, var(--h-gold-2), var(--h-gold));
+            border-radius: 2px;
+        }
+        .dd-block-title span { font-size: 0.66rem; font-weight: 500; color: var(--h-text-3); letter-spacing: 1px; }
+        .dd-alert-list { display: flex; flex-direction: column; gap: 0.5rem; }
+        .dd-alert-card {
+            background: var(--h-card);
+            border: 1px solid rgba(74, 222, 128, 0.25);
+            border-radius: 10px;
+            padding: 0.6rem 0.9rem;
+        }
+        .dd-alert-head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .dd-name { display: flex; align-items: center; gap: 0.55rem; min-width: 0; }
+        .dd-name .badge {
+            font-size: 0.62rem;
+            padding: 0.12rem 0.5rem;
+            border-radius: 100px;
+            background: rgba(91, 141, 239, 0.14);
+            color: var(--h-blue);
+            white-space: nowrap;
+        }
+        .dd-name .name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--h-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .dd-loss-val { font-size: 0.8rem; color: var(--down); white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dd-alert-body { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .dd-recover { display: flex; align-items: baseline; gap: 0.4rem; white-space: nowrap; }
+        .dd-recover .lbl { font-size: 0.66rem; color: var(--h-text-2); letter-spacing: 1px; }
+        .dd-recover .val { font-size: 1.1rem; font-weight: 800; color: var(--h-gold-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dd-progress { flex: 1 1 200px; min-width: 160px; }
+        .dd-progress-meta { display: flex; justify-content: space-between; font-size: 0.62rem; color: var(--h-text-3); margin-bottom: 0.2rem; white-space: nowrap; }
+        .dd-track { position: relative; height: 4px; border-radius: 100px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+        .dd-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 100px; background: linear-gradient(90deg, #2f9e5f, var(--down)); }
+        .dd-all-clear {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 0.9rem;
+            background: rgba(248, 113, 113, 0.05);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            border-radius: 10px;
+            font-size: 0.78rem;
+            color: var(--up);
+            letter-spacing: 1px;
+        }
+        .dd-all-clear .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--up);
+            box-shadow: 0 0 10px rgba(248, 113, 113, 0.7);
+            animation: ddPulse 2.5s ease-in-out infinite;
+            flex: 0 0 auto;
+        }
+        @keyframes ddPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(1.4); }
+        }
+        .dd-pad-list { display: flex; flex-direction: column; gap: 0.45rem; }
+        .dd-pad-row {
+            background: var(--h-card);
+            border: 1px solid var(--h-card-border);
+            border-radius: 10px;
+            padding: 0.5rem 0.9rem;
+        }
+        .dd-pad-main { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+        .dd-pad-stats { display: flex; align-items: baseline; gap: 0.9rem; flex-wrap: wrap; }
+        .dd-pad-stat { display: flex; align-items: baseline; gap: 0.28rem; white-space: nowrap; }
+        .dd-pad-stat .lbl { font-size: 0.66rem; color: var(--h-text-3); letter-spacing: 1px; }
+        .dd-pad-stat .val { font-size: 0.85rem; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dd-pad-stat .val.up { color: var(--up); }
+        .dd-pad-stat .val.down { color: var(--down); }
+        .dd-pad-stat .val.gold { color: var(--h-gold-2); }
+        .dd-pad-bar { margin-top: 0.4rem; display: flex; align-items: center; gap: 0.45rem; }
+        .dd-pad-bar .bar-lbl { font-size: 0.58rem; color: var(--h-text-3); white-space: nowrap; letter-spacing: 0.5px; }
+        .dd-pad-track { flex: 1; height: 4px; border-radius: 100px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+        .dd-pad-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--h-gold), var(--h-gold-2)); }
+        .dd-pad-fill.loss-fill { background: linear-gradient(90deg, rgba(74, 222, 128, 0.5), rgba(74, 222, 128, 0.85)); }
+        .dd-ref-btn {
+            margin-top: 0.55rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(201, 169, 97, 0.1);
+            border: 1px solid rgba(201, 169, 97, 0.35);
+            color: var(--h-gold-2);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            padding: 0.28rem 0.75rem;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .dd-ref-btn:hover { background: rgba(201, 169, 97, 0.2); border-color: rgba(201, 169, 97, 0.6); }
+        .dd-ref-sub {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.72rem;
+            color: var(--h-text-2);
+            letter-spacing: 2px;
+            margin-bottom: 0.65rem;
+        }
+        .dd-ref-sub::before { content: ''; width: 14px; height: 1px; border-radius: 2px; opacity: 0.7; }
+        .dd-ref-sub.loss-tag::before { background: var(--down); }
+        .dd-ref-sub.gain-tag::before { background: var(--up); }
+        .dd-ref-grid + .dd-ref-sub { margin-top: 0.9rem; }
+        .dd-ref-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+        .dd-ref-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 0.55rem 0.5rem;
+            text-align: center;
+        }
+        .dd-ref-lbl { font-size: 0.72rem; color: var(--h-text-2); white-space: nowrap; margin-bottom: 0.3rem; }
+        .dd-ref-val { font-size: 1.02rem; font-weight: 800; color: var(--h-gold-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .dd-ref-formula {
+            margin-top: 0.8rem;
+            padding-top: 0.7rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            font-size: 0.72rem;
+            color: var(--h-text-3);
+            letter-spacing: 1px;
+            line-height: 1.8;
+        }
+        .dd-ref-formula b { color: var(--h-text-2); font-weight: 600; }
+        .dd-modal { position: fixed; inset: 0; z-index: 999; display: none; align-items: center; justify-content: center; padding: 1.25rem; }
+        .dd-modal.open { display: flex; }
+        .dd-modal-mask { position: absolute; inset: 0; background: rgba(4, 8, 16, 0.72); backdrop-filter: blur(4px); }
+        .dd-modal-dialog {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%), #101a2e;
+            border: 1px solid var(--h-card-border);
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            animation: ddModalIn 0.22s ease;
+        }
+        @keyframes ddModalIn {
+            from { opacity: 0; transform: translateY(14px) scale(0.97); }
+            to { opacity: 1; transform: none; }
+        }
+        .dd-modal-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.95rem 1.15rem 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--h-text);
+            letter-spacing: 2px;
+        }
+        .dd-modal-close {
+            background: none;
+            border: none;
+            color: var(--h-text-3);
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0.1rem 0.45rem;
+        }
+        .dd-modal-close:hover { color: var(--h-text); }
+        .dd-modal-body { padding: 0.25rem 1.15rem 1.15rem; }
+
         @media (max-width: 900px) {
             .hero-grid { grid-template-columns: 1fr; }
             .hero-ring { display: none; }
             .chart-row,
             .chart-row.equal { grid-template-columns: 1fr; }
+            .detail-grid { grid-template-columns: 1fr; }
             .donut-wrap { flex-direction: column; }
             .donut-wrap .chart-canvas-wrapper { flex: 0 0 auto; width: 100%; }
+        }
+        @media (max-width: 768px) {
+            .dd-summary { flex-direction: column; align-items: flex-start; }
+            .dd-alert-body { flex-direction: column; align-items: stretch; }
+            .dd-progress { width: 100%; }
+            .dd-ref-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .dd-ref-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
             .top-nav { top: 1rem; right: 1rem; }
@@ -1013,16 +1430,91 @@
             .container { padding: 1rem 1rem 2rem; }
             .hero { padding: 1.5rem 1.25rem; }
             .hero-value { font-size: 2.2rem; }
-            .stat-card .value { font-size: 1.3rem; }
             .chart-canvas-wrapper { height: 240px; }
             .action-bar { flex-direction: column; align-items: stretch; }
+            body.holdings-page .footer-qr { position: relative; right: auto; top: auto; bottom: auto; transform: none; margin: 1.5rem auto 0; width: fit-content; }
+
+            /* ===== 移动端：持仓明细 / 清仓记录 由表格转为纵向卡片，避免横向截断 ===== */
+            .detail-grid .table-wrapper { overflow-x: visible; }
+            #detailTable,
+            #closedTable { display: block; width: 100%; }
+            #detailTable thead,
+            #closedTable thead { display: none; }
+            #detailTable tbody,
+            #detailTable tfoot,
+            #closedTable tbody { display: block; }
+            #detailTable tbody tr,
+            #detailTable tfoot tr,
+            #closedTable tbody tr {
+                display: block;
+                padding: 0.65rem 0.25rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            }
+            #detailTable tbody tr:last-child,
+            #closedTable tbody tr:last-child { border-bottom: none; }
+            #detailTable td,
+            #closedTable td {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.75rem;
+                padding: 0.28rem 0;
+                border-bottom: none;
+                text-align: right;
+            }
+            #detailTable td::before,
+            #closedTable td::before {
+                content: attr(data-label);
+                flex: 0 0 auto;
+                color: var(--h-text-3);
+                font-size: 0.72rem;
+                letter-spacing: 0.5px;
+                text-align: left;
+            }
+            /* 首列作为卡片标题，不做标签 */
+            #detailTable td:first-child,
+            #closedTable td:first-child {
+                justify-content: flex-start;
+                padding-bottom: 0.45rem;
+            }
+            #detailTable td:first-child::before,
+            #closedTable td:first-child::before { content: none; }
+            /* 仓位：标签在上，进度条与占比纵向排列 */
+            #detailTable td[data-label="仓位"] {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.2rem;
+                padding: 0.4rem 0;
+            }
+            #detailTable td[data-label="仓位"] .weight-bar { width: 100%; }
+            /* 备注单独一行，标签在上、内容在下 */
+            #detailTable td.col-note {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.15rem;
+                padding: 0.4rem 0 0.1rem;
+                padding-left: 0;
+            }
+            /* 空单元格（合计行的占位列）不占空间 */
+            #detailTable td:empty,
+            #closedTable td:empty { display: none; }
+            #detailTable tfoot td { border-top: none; }
+            #detailTable tfoot tr { border-top: 1px solid rgba(255, 255, 255, 0.12); }
+            /* 空状态提示行 */
+            #detailTable td[colspan],
+            #closedTable td[colspan] {
+                justify-content: center;
+                text-align: center;
+                padding: 1.5rem 0.5rem;
+            }
+            #detailTable td[colspan]::before,
+            #closedTable td[colspan]::before { content: none; }
         }
         @media (max-width: 480px) {
             .container { padding: 0.75rem 0.75rem 2rem; }
             .hero { padding: 1.25rem 1rem; }
             .hero-value { font-size: 1.9rem; }
             .hero-meta { gap: 1rem; }
-            .stat-card .value { font-size: 1.15rem; }
             .chart-canvas-wrapper { height: 220px; }
             .tabs { width: 100%; }
             .tab { flex: 1; text-align: center; padding: 0.55rem 0.5rem; font-size: 0.82rem; }
@@ -1058,36 +1550,60 @@
         <div class="container">
             <!-- 页面标题 -->
             <div class="page-header">
-                <h1 class="page-title">退休实盘计划</h1>
-                <div class="page-update-time">数据更新：<span id="pageUpdateDate">2026-08-24</span></div>
-                <p class="page-subtitle">个人长期资产配置记录，目标为退休积累，所有内容仅作个人记录，不构成投资建议。</p>
-                <div class="page-goals">
-                    <span class="goals-label">目标与进度</span>
-                    <span class="goals-item"><span class="k">当前阶段</span><span class="v">积累期</span></span>
-                    <span class="goals-item"><span class="k">配置目标</span><span class="v">平衡收益与波动，做长期定投积累。</span></span>
+                <div class="page-title-row">
+                    <h1 class="page-title">退休实盘计划</h1>
+                    <div class="page-update-time">数据更新：<span id="pageUpdateDate">2026-08-24</span></div>
                 </div>
+                <p class="page-subtitle">个人长期资产配置记录，目标为退休积累，所有内容仅作个人记录，不构成投资建议。</p>
             </div>
 
             <!-- Hero 总览 -->
             <div class="hero">
                 <div class="hero-grid">
                     <div>
-                        <div class="hero-label">组合总市值</div>
+                        <div class="hero-label">总市值</div>
                         <div class="hero-value" id="heroTotalValue">
-                            <span class="currency">¥</span>0
+                            <span class="currency">¥</span>0<span class="hero-weight">总仓位 0.0%</span>
                         </div>
                         <div class="hero-meta">
-                            <div class="hero-meta-item">
-                                <span class="lbl">持仓收益</span>
-                                <span class="val" id="heroProfit">+ ¥ 0</span>
+                            <!-- 第一行：收益表现 -->
+                            <div class="hero-meta-row">
+                                <div class="hero-meta-item">
+                                    <span class="lbl">持仓收益</span>
+                                    <span class="val" id="heroProfit">+ ¥ 0</span>
+                                </div>
+                                <div class="hero-meta-item">
+                                    <span class="lbl">持仓收益率</span>
+                                    <span class="val" id="heroRate">+ 0.00%</span>
+                                </div>
+                                <div class="hero-meta-item">
+                                    <span class="lbl">最新更新</span>
+                                    <span class="val" id="heroDate">2026-08-02</span>
+                                </div>
                             </div>
-                            <div class="hero-meta-item">
-                                <span class="lbl">持仓收益率</span>
-                                <span class="val" id="heroRate">+ 0.00%</span>
-                            </div>
-                            <div class="hero-meta-item">
-                                <span class="lbl">最新更新</span>
-                                <span class="val" id="heroDate">2026-08-02</span>
+                            <!-- 第二行：资产结构 -->
+                            <div class="hero-meta-row">
+                                <div class="hero-meta-item">
+                                    <span class="lbl">总资产</span>
+                                    <span class="val" id="heroAsset">¥ 0</span>
+                                </div>
+                                <div class="hero-meta-item">
+                                    <span class="lbl">投入本金</span>
+                                    <span class="val" id="heroCost">¥ 0</span>
+                                </div>
+                                <div class="hero-meta-item">
+                                    <span class="lbl">现金</span>
+                                    <span class="val" id="heroCash">¥ 0</span>
+                                    <span class="sub" id="heroCashPct">占比 0.0%</span>
+                                </div>
+                                <div class="hero-meta-item">
+                                    <span class="lbl">债券类占比</span>
+                                    <span class="val" id="heroBondPct">0.0%</span>
+                                </div>
+                                <div class="hero-meta-item">
+                                    <span class="lbl">权益类占比</span>
+                                    <span class="val" id="heroEquityPct">0.0%</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1114,6 +1630,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 100 万理财目标进度（内嵌 Hero 总览） -->
+                    <div class="hero-goal">
+                        <div class="goal-head">
+                            <div>
+                                <div class="goal-title"><span class="goal-flag">目标</span>100 万目标</div>
+                                <div class="goal-target">统计口径：总资金（总市值 + 现金） / ¥ 1,000,000</div>
+                            </div>
+                            <div class="goal-pct" id="goalPct">0.0%</div>
+                        </div>
+                        <div class="goal-bar"><span id="goalFill"></span></div>
+                        <div class="goal-foot">
+                            <span>已积累 <b id="goalDone">¥ 0</b></span>
+                            <span>距目标还差 <b id="goalGap">¥ 1,000,000</b></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1121,13 +1653,11 @@
             <div class="tabs">
                 <div class="tab active" data-tab="stats"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px;"><rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="9" width="4" height="12" rx="1"/><rect x="17" y="5" width="4" height="16" rx="1"/></svg> 统计页面</div>
                 <div class="tab" data-tab="detail"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px;"><path d="M9 2h6a1 1 0 0 1 1 1v1h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg> 持仓明细</div>
+                <div class="tab" data-tab="drawdown"><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:4px;"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg> 回撤提醒</div>
             </div>
 
             <!-- ============ 统计页面 ============ -->
             <div class="tab-content active" id="tab-stats">
-                <!-- 关键指标 -->
-                <div class="stat-grid" id="statGrid"></div>
-
                 <!-- 资产类型分布 + 市场分布 -->
                 <div class="chart-row equal">
                     <div class="chart-box">
@@ -1138,6 +1668,7 @@
                             </div>
                             <div class="custom-legend" id="typeLegend"></div>
                         </div>
+                        <div class="chart-total" id="typeTotal"></div>
                     </div>
                     <div class="chart-box">
                         <h3><svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--h-gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:6px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg> 市场分布</h3>
@@ -1157,19 +1688,99 @@
                     <div class="right text-muted" id="detailSummary" style="font-size: 0.85rem;"></div>
                 </div>
 
-                <div class="card" style="padding: 0.5rem;">
-                    <div class="table-wrapper">
-                        <table id="detailTable">
-                            <thead>
-                                <tr>
-                                    <th>分类名称</th>
-                                    <th style="text-align:right;">总市值</th>
-                                    <th style="text-align:right;">收益率</th>
-                                    <th style="min-width:100px;">占比</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                <div class="detail-grid">
+                    <div class="card" style="padding: 0.5rem;">
+                        <h3 class="card-title" style="margin: 0; padding: 0.6rem 0.75rem 0.4rem;">现有持仓</h3>
+                        <div class="table-wrapper">
+                            <table id="detailTable">
+                                <thead>
+                                    <tr>
+                                        <th>分类名称</th>
+                                        <th style="min-width:100px;">仓位</th>
+                                        <th style="text-align:right;">总市值</th>
+                                        <th style="text-align:right;">收益率</th>
+                                        <th class="col-note" style="min-width:120px;">备注</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot id="detailFoot"></tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card" style="padding: 0.5rem;">
+                        <h3 class="card-title" style="margin: 0; padding: 0.6rem 0.75rem 0.4rem;">清仓记录</h3>
+                        <div class="table-wrapper">
+                            <table id="closedTable">
+                                <thead>
+                                    <tr>
+                                        <th style="color: var(--h-gold); font-weight: 700;">清仓标的</th>
+                                        <th style="text-align:right;">清仓收益率</th>
+                                        <th style="text-align:right;">清仓日期</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============ 回撤提醒 ============ -->
+            <div class="tab-content" id="tab-drawdown">
+                <!-- 整体状态 -->
+                <div class="dd-summary">
+                    <div class="dd-key">
+                        <div class="dd-key-label" id="ddKeyLabel">整体安全垫</div>
+                        <div class="dd-key-value" id="ddKeyValue">—</div>
+                        <div class="dd-key-note" id="ddKeyNote">—</div>
+                        <button class="dd-ref-btn" id="ddRefBtn" type="button">回本数学对照</button>
+                    </div>
+                    <div class="dd-stats">
+                        <div class="dd-stat">
+                            <div class="lbl">总成本</div>
+                            <div class="val" id="ddTotalCost">—</div>
+                        </div>
+                        <div class="dd-stat">
+                            <div class="lbl">总市值</div>
+                            <div class="val" id="ddTotalMarket">—</div>
+                        </div>
+                        <div class="dd-stat">
+                            <div class="lbl">浮亏分类</div>
+                            <div class="val" id="ddLossCount">—</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 持仓安全垫 -->
+                <div class="dd-block">
+                    <div class="dd-block-title">持仓安全垫<span>离成本线最近的排前面</span></div>
+                    <div class="dd-pad-list" id="ddPadList"></div>
+                </div>
+
+                <!-- 回撤预警 -->
+                <div class="dd-block">
+                    <div class="dd-block-title">回撤预警<span>按亏损深度排序</span></div>
+                    <div class="dd-alert-list" id="ddAlertList"></div>
+                </div>
+
+                <!-- 回本数学对照弹窗 -->
+                <div class="dd-modal" id="ddRefModal">
+                    <div class="dd-modal-mask" data-close></div>
+                    <div class="dd-modal-dialog">
+                        <div class="dd-modal-head">
+                            <span>回本数学对照</span>
+                            <button class="dd-modal-close" type="button" data-close>&times;</button>
+                        </div>
+                        <div class="dd-modal-body">
+                            <div class="dd-ref-sub loss-tag">浮亏时 · 回本所需涨幅</div>
+                            <div class="dd-ref-grid" id="ddRefLoss"></div>
+                            <div class="dd-ref-sub gain-tag">浮盈时 · 跌回成本线的跌幅</div>
+                            <div class="dd-ref-grid" id="ddRefGain"></div>
+                            <div class="dd-ref-formula">
+                                公式：<b>回本所需涨幅 = 亏损幅度 ÷（1 − 亏损幅度）</b>；<b>可跌回成本幅度 = 盈利幅度 ÷（1 + 盈利幅度）</b>。盈亏按成本计算、涨跌按市值计算，两者不对称：亏得越深，回本涨幅加速扩大；赚得越多，抗跌垫增长却越来越慢。控制回撤，永远比博取反弹更重要。
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1204,12 +1815,21 @@
             <div class="footer-divider"></div>
             <p class="footer-disclaimer">本站所有内容仅为个人投资记录与思考，不构成任何投资建议</p>
             <p class="footer-copyright"><span class="copyright-symbol"></span> Life &gt; Investment</p>
+            <div class="footer-qr">
+                <div class="footer-qr-img"><img src="images/qrcode.jpg" alt="公众号二维码"></div>
+                <span>扫码关注</span>
+                <div class="qr-popup">
+                    <div class="qr-popup-img"><img src="images/qrcode.jpg" alt="公众号二维码"></div>
+                    <div class="qr-popup-title">叨居</div>
+                    <div class="qr-popup-desc">扫码关注公众号</div>
+                </div>
+            </div>
         </footer>
     </main>
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/holdings.js"></script>
+    <script src="js/holdings.js?v=8"></script>
     <script src="js/splash-cursor.js?v=2"></script>
     <script>
         // Chart.js 全局主题（适配深色背景 + 中国惯例）
@@ -1434,7 +2054,7 @@
                 sumCapital += parseFloat(item.capital) || 0;
             });
             const totalRate = sumCapital !== 0 ? (sumTotal / sumCapital) : 0; // 小数（0.0357 即 3.57%）
-            return { totalProfit: sumTotal, totalRate: totalRate, floating: floating };
+            return { totalProfit: sumTotal, totalRate: totalRate, floating: floating, totalCapital: sumCapital };
         }
 
         // 渲染 Hero 区域（基于新投资标的数据）
@@ -1448,7 +2068,46 @@
 
             const totalEl = document.getElementById('heroTotalValue');
             if (totalEl) {
-                totalEl.innerHTML = '<span class="currency">¥</span>' + fmtMoney(m.totalMarket);
+                // 总仓位占比 = 总市值 / 总资产
+                const assetBase = m.totalAsset || 0;
+                const weightPct = assetBase > 0 ? (m.totalMarket / assetBase * 100).toFixed(1) : '0.0';
+                totalEl.innerHTML = '<span class="currency">¥</span>' + fmtMoney(m.totalMarket) +
+                    '<span class="hero-weight">总仓位 ' + weightPct + '%</span>';
+            }
+            const costEl = document.getElementById('heroCost');
+            if (costEl) {
+                // 投入本金：取自后台「年度汇总」各年投入本金（capital）之和
+                costEl.textContent = '¥ ' + fmtMoney(annual.totalCapital || 0);
+            }
+            // 总资产 / 现金
+            const assetEl = document.getElementById('heroAsset');
+            if (assetEl) {
+                assetEl.textContent = '¥ ' + fmtMoney(m.totalAsset || 0);
+            }
+            const cashEl = document.getElementById('heroCash');
+            if (cashEl) {
+                cashEl.textContent = '¥ ' + fmtMoney(m.totalCash || 0);
+            }
+            // 现金占总资产比例
+            const cashPctEl = document.getElementById('heroCashPct');
+            if (cashPctEl) {
+                const base = m.totalAsset || 0;
+                cashPctEl.textContent = '占比 ' + (base > 0 ? (m.totalCash / base * 100) : 0).toFixed(1) + '%';
+            }
+            // 债券类（债券 + 偏债）/ 权益类（A股/港股/美股/日股）占总资产百分比
+            let bondTotal = 0, equityTotal = 0;
+            list.forEach(function (item) {
+                if (item.type === '债券' || item.type === '偏债') bondTotal += item.marketValue;
+                else if (['A股', '港股', '美股', '日股'].indexOf(item.type) !== -1) equityTotal += item.marketValue;
+            });
+            const assetBase = m.totalAsset || 0;
+            const bondPctEl = document.getElementById('heroBondPct');
+            if (bondPctEl) {
+                bondPctEl.textContent = (assetBase > 0 ? bondTotal / assetBase * 100 : 0).toFixed(1) + '%';
+            }
+            const equityPctEl = document.getElementById('heroEquityPct');
+            if (equityPctEl) {
+                equityPctEl.textContent = (assetBase > 0 ? equityTotal / assetBase * 100 : 0).toFixed(1) + '%';
             }
             const profitEl = document.getElementById('heroProfit');
             if (profitEl) {
@@ -1501,6 +2160,21 @@
                 ring.style.strokeDashoffset = offset;
                 ringPct.textContent = (rate >= 0 ? '+' : '') + (rate * 100).toFixed(2) + '%';
                 ringPct.style.color = rate >= 0 ? 'var(--up)' : 'var(--down)';
+            }
+
+            // 100 万理财目标进度（总资金 = 总市值 + 现金）
+            const GOAL_TARGET = 1000000;
+            const goalPctEl = document.getElementById('goalPct');
+            if (goalPctEl) {
+                const funds = (m.totalAsset != null ? m.totalAsset : m.totalMarket) || 0;
+                const pct = funds / GOAL_TARGET * 100;
+                goalPctEl.textContent = pct.toFixed(1) + '%';
+                const fill = document.getElementById('goalFill');
+                if (fill) fill.style.width = Math.min(100, pct).toFixed(2) + '%';
+                const done = document.getElementById('goalDone');
+                if (done) done.textContent = '¥ ' + fmtMoney(funds);
+                const gap = document.getElementById('goalGap');
+                if (gap) gap.textContent = '¥ ' + fmtMoney(Math.max(0, GOAL_TARGET - funds));
             }
         }
 

@@ -272,7 +272,7 @@ const INV_CATEGORY_NOTES = {
 
 /* ===== 持仓数据更新记录 ===== */
 const HOLDINGS_UPDATE = {
-    "date": "2026-10-17",
+    "date": "2026-10-24",
     "note": ""
 };
 
@@ -283,9 +283,9 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "000003",
         "name": "纳斯达克100",
-        "marketValue": 11795.65,
-        "profit": 838.65,
-        "cost": 10957,
+        "marketValue": 11738.62,
+        "profit": 466.59,
+        "cost": 11272.03,
         "dailyInvest": 70,
         "remark": ""
     },
@@ -294,9 +294,9 @@ const INV_TARGETS = [
         "category": "标普500",
         "code": "000004",
         "name": "标普500",
-        "marketValue": 7413,
-        "profit": 443,
-        "cost": 6970,
+        "marketValue": 7695.84,
+        "profit": 395.84,
+        "cost": 7300,
         "dailyInvest": 60,
         "remark": ""
     },
@@ -305,9 +305,9 @@ const INV_TARGETS = [
         "category": "日股",
         "code": "000006",
         "name": "日股",
-        "marketValue": 3932.8,
-        "profit": 180.31,
-        "cost": 3752.4900000000002,
+        "marketValue": 3970.24,
+        "profit": 117.75,
+        "cost": 3852.49,
         "dailyInvest": 20,
         "remark": ""
     },
@@ -316,9 +316,9 @@ const INV_TARGETS = [
         "category": "红利低波",
         "code": "000002",
         "name": "红利低波",
-        "marketValue": 10949.25,
-        "profit": 477.11,
-        "cost": 10472.14,
+        "marketValue": 10840.21,
+        "profit": 318.07,
+        "cost": 10522.14,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -327,9 +327,9 @@ const INV_TARGETS = [
         "category": "债券",
         "code": "000001",
         "name": "债券",
-        "marketValue": 41312.42,
-        "profit": 312.42,
-        "cost": 41000,
+        "marketValue": 41309.36,
+        "profit": 357.61,
+        "cost": 40951.75,
         "dailyInvest": 0,
         "remark": ""
     },
@@ -338,8 +338,8 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "000006",
         "name": "纳斯达克科技",
-        "marketValue": 2903.92,
-        "profit": 543.92,
+        "marketValue": 2755.21,
+        "profit": 395.21,
         "cost": 2360,
         "dailyInvest": 0,
         "remark": ""
@@ -350,7 +350,7 @@ const INV_TARGETS = [
 const CASH = [
     {
         "name": "余额宝",
-        "amount": 23800.46,
+        "amount": 23046.38,
         "remark": ""
     }
 ];
@@ -362,16 +362,27 @@ const MACRO_TRACK = {
         "value": 27.13,
         "date": "2026-10-16",
         "history": [
-            { "date": "2026-10-16", "value": 27.13 }
+            {
+                "date": "2026-10-16",
+                "value": 27.13
+            }
         ]
     },
     "fed": {
         "low": 3.75,
-        "high": 4.00,
-        "lastChange": { "date": "2026-09-16", "bps": 25 },
+        "high": 4,
+        "lastChange": {
+            "date": "2026-09-16",
+            "bps": 25
+        },
         "nextMeeting": "2026-10-28",
         "history": [
-            { "date": "2026-09-16", "low": 3.75, "high": 4.00, "bps": 25 }
+            {
+                "date": "2026-09-16",
+                "low": 3.75,
+                "high": 4,
+                "bps": 25
+            }
         ]
     },
     "cpi": {
@@ -380,12 +391,30 @@ const MACRO_TRACK = {
         "mom": 0.6,
         "prevYoy": 3.4,
         "history": [
-            { "period": "2026-04", "yoy": 3.8 },
-            { "period": "2026-05", "yoy": 4.2 },
-            { "period": "2026-06", "yoy": 3.5 },
-            { "period": "2026-07", "yoy": 3.4 },
-            { "period": "2026-08", "yoy": 3.4 },
-            { "period": "2026-09", "yoy": 3.7 }
+            {
+                "period": "2026-04",
+                "yoy": 3.8
+            },
+            {
+                "period": "2026-05",
+                "yoy": 4.2
+            },
+            {
+                "period": "2026-06",
+                "yoy": 3.5
+            },
+            {
+                "period": "2026-07",
+                "yoy": 3.4
+            },
+            {
+                "period": "2026-08",
+                "yoy": 3.4
+            },
+            {
+                "period": "2026-09",
+                "yoy": 3.7
+            }
         ]
     },
     "ppi": {
@@ -394,8 +423,14 @@ const MACRO_TRACK = {
         "mom": 0.4,
         "prevYoy": 4.8,
         "history": [
-            { "period": "2026-07", "yoy": 4.8 },
-            { "period": "2026-08", "yoy": 5.4 }
+            {
+                "period": "2026-07",
+                "yoy": 4.8
+            },
+            {
+                "period": "2026-08",
+                "yoy": 5.4
+            }
         ]
     }
 };
@@ -469,7 +504,7 @@ const MONTHLY_RETURNS = [
     {
         "year": "2026",
         "month": 10,
-        "profit": -132.48,
+        "profit": -887.5,
         "note": ""
     }
 ];
@@ -506,6 +541,28 @@ const WEEKLY_CONFIG = {
 
 /* ===== 实盘周记存档（coverUrl/pushedAt/draftMediaId 为草稿箱推送预留字段） ===== */
 const WEEKLY_POSTS = [
+    {
+        "week": 8,
+        "date": "2026-10-24",
+        "title": "实盘周记｜第8周｜自建网站丨-787.87元，本周全球股市回调，投资以来出现单周最大亏损",
+        "essay": "本周收益：-787.87元，出现今年投资以来单周最大亏损\n本周全球股市出现不同程度回调，包括美股，回调程度也不小\n面临回调，整体的持仓体验没有变化，持仓中的资产是个人觉得可以长期持有的优质资产，短期波动并不代表什么\n所以还是继续按计划定投",
+        "weeklyProfit": -787.87,
+        "weeklyRate": null,
+        "snapshot": {
+            "totalAsset": 101355.86,
+            "totalMarket": 78309.48,
+            "totalCash": 23046.38,
+            "totalProfit": 2051.07,
+            "totalProfitRate": 0.02619184803678942,
+            "bondPct": 40.75675545548131,
+            "equityPct": 36.505161122405745,
+            "targetCount": 6
+        },
+        "html": "<p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">大家好，这里是<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">叨居</strong>，欢迎来到我的投资纪实记录。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">经过一段时间准备，我的个人记录网站「<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">投么有度</strong>」开启长期实盘更新。<br>从2026年开始，我计划用二十年时间，慢慢实践属于自己的退休积累计划。<br>投资对于我而言，永远只是生活的附属，<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">生活大于投资</strong>，也是我一直坚持的核心理念。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">这是开始分享实盘周记的<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">第8周</strong>。</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周账户概况（更新日期：2026-10-24）</section><section style=\"margin:14px 0 18px;padding:16px 12px;background:#f5faf5;border:1px solid #d8ecd8;border-radius:8px;text-align:center;\"><span style=\"font-size:13px;color:#7a6a45;\">本 周 收 益</span><br><strong style=\"font-size:24px;line-height:1.5;color:#0a7d48;\">¥ -787.87</strong></section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">初始本金：<strong>¥ 100,000.00</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">总资产：<strong>¥ 101,355.86</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">组合总市值：<strong>¥ 78,309.48</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">现金：<strong>¥ 23,046.38</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益：<strong style=\"color:#c00000;\">¥ +2,051.07</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益率：<strong style=\"color:#c00000;\">+2.62%</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">当前资产配比：</p><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">债券类占比：40.8%</section><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">权益类占比：36.5%</section><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周复盘</section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">本周收益：-787.87元，出现今年投资以来单周最大亏损</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">本周全球股市出现不同程度回调，包括美股，回调程度也不小</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">面临回调，整体的持仓体验没有变化，持仓中的资产是个人觉得可以长期持有的优质资产，短期波动并不代表什么</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">所以还是继续按计划定投</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">重要声明</section><section style=\"margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;\">所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。</section><p style=\"margin:26px 0 0;font-size:13px;line-height:1.8;color:#999;\">更多长期投资思考与复盘笔记，会持续更新于此。</p><section style=\"margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;\"><strong style=\"font-size:15px;\">每周更新实盘周记，欢迎关注</strong><br><span style=\"font-size:13px;\">公众号：叨居</span><br><span style=\"font-size:13px;color:#8a7a55;\">往后每周，在这里同步账户最新情况，记录一路上的思考与成长。<br>完整的数据内容，可前往【个人主页】访问个人网站【投么有度】查看。</span></section>",
+        "coverUrl": "",
+        "pushedAt": "",
+        "draftMediaId": ""
+    },
     {
         "week": 7,
         "date": "2026-10-17",

@@ -1,6 +1,6 @@
 /* 本文件由 scripts/run-fetch-local.js 自动生成，请勿手动修改 */
-/* 生成时间：2026/10/25 02:57:45（Asia/Shanghai） */
-window.NASDAQ_FUNDS_UPDATED = "2026/10/25 02:57:45";
+/* 生成时间：2026/10/26 03:13:30（Asia/Shanghai） */
+window.NASDAQ_FUNDS_UPDATED = "2026/10/26 03:13:30";
 window.NASDAQ_FUNDS = [
   {
     "code": "513100",
@@ -3200,8 +3200,8 @@ window.NASDAQ_FUNDS = [
     "establishDate": "2024-01-17",
     "fundType": "指数型-海外股票",
     "manager": "鹏华基金",
-    "scale": "29.55亿元",
-    "scaleDate": "2026-06-30",
+    "scale": "38.85亿元",
+    "scaleDate": "2026-09-30",
     "trackingError": "1.06%",
     "iopv": 1.2922,
     "premium": 2,

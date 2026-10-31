@@ -272,7 +272,7 @@ const INV_CATEGORY_NOTES = {
 
 /* ===== 持仓数据更新记录 ===== */
 const HOLDINGS_UPDATE = {
-    "date": "2026-10-24",
+    "date": "2026-10-31",
     "note": ""
 };
 
@@ -283,9 +283,9 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "000003",
         "name": "纳斯达克100",
-        "marketValue": 11738.62,
-        "profit": 466.59,
-        "cost": 11272.03,
+        "marketValue": 12197.52,
+        "profit": 620.52,
+        "cost": 11577,
         "dailyInvest": 70,
         "remark": ""
     },
@@ -294,9 +294,9 @@ const INV_TARGETS = [
         "category": "标普500",
         "code": "000004",
         "name": "标普500",
-        "marketValue": 7695.84,
-        "profit": 395.84,
-        "cost": 7300,
+        "marketValue": 8095.75,
+        "profit": 445.75,
+        "cost": 7650,
         "dailyInvest": 60,
         "remark": ""
     },
@@ -305,9 +305,9 @@ const INV_TARGETS = [
         "category": "日股",
         "code": "000006",
         "name": "日股",
-        "marketValue": 3970.24,
-        "profit": 117.75,
-        "cost": 3852.49,
+        "marketValue": 4036.03,
+        "profit": 83.54,
+        "cost": 3952.49,
         "dailyInvest": 20,
         "remark": ""
     },
@@ -316,9 +316,9 @@ const INV_TARGETS = [
         "category": "红利低波",
         "code": "000002",
         "name": "红利低波",
-        "marketValue": 10840.21,
-        "profit": 318.07,
-        "cost": 10522.14,
+        "marketValue": 11305.43,
+        "profit": 733.29,
+        "cost": 10572.14,
         "dailyInvest": 10,
         "remark": ""
     },
@@ -327,9 +327,9 @@ const INV_TARGETS = [
         "category": "债券",
         "code": "000001",
         "name": "债券",
-        "marketValue": 41309.36,
-        "profit": 357.61,
-        "cost": 40951.75,
+        "marketValue": 41248.97,
+        "profit": 296.57,
+        "cost": 40952.4,
         "dailyInvest": 0,
         "remark": ""
     },
@@ -338,8 +338,8 @@ const INV_TARGETS = [
         "category": "纳斯达克",
         "code": "000006",
         "name": "纳斯达克科技",
-        "marketValue": 2755.21,
-        "profit": 395.21,
+        "marketValue": 2778.21,
+        "profit": 418.21,
         "cost": 2360,
         "dailyInvest": 0,
         "remark": ""
@@ -350,7 +350,7 @@ const INV_TARGETS = [
 const CASH = [
     {
         "name": "余额宝",
-        "amount": 23046.38,
+        "amount": 22250.3,
         "remark": ""
     }
 ];
@@ -450,19 +450,19 @@ const MONTHLY_RETURNS = [
     {
         "year": "2026",
         "month": 1,
-        "profit": 436.18,
+        "profit": 437.98,
         "note": ""
     },
     {
         "year": "2026",
         "month": 2,
-        "profit": -514.59,
+        "profit": -514.71,
         "note": ""
     },
     {
         "year": "2026",
         "month": 3,
-        "profit": -1145.93,
+        "profit": -1146.97,
         "note": ""
     },
     {
@@ -504,7 +504,7 @@ const MONTHLY_RETURNS = [
     {
         "year": "2026",
         "month": 10,
-        "profit": -887.5,
+        "profit": -334.99,
         "note": ""
     }
 ];
@@ -541,6 +541,28 @@ const WEEKLY_CONFIG = {
 
 /* ===== 实盘周记存档（coverUrl/pushedAt/draftMediaId 为草稿箱推送预留字段） ===== */
 const WEEKLY_POSTS = [
+    {
+        "week": 9,
+        "date": "2026-10-31",
+        "title": "实盘周记｜第9周｜自建网站丨10万本金退休投资记录",
+        "essay": "本周红利低波表现优异，涨幅3%左右，现阶段持有红利是不错的选择\n美股本周五出现了比较大的跌幅：\n      其中：道琼斯  -1.09%   纳斯达克 -2.86%  标普500 -1.82%  纳斯达克100 -3.46%  \n债券市场本周也回调不少，当下持有债券仍是不错的选择；",
+        "weeklyProfit": 552.41,
+        "weeklyRate": null,
+        "snapshot": {
+            "totalAsset": 101912.21,
+            "totalMarket": 79661.91,
+            "totalCash": 22250.3,
+            "totalProfit": 2597.88,
+            "totalProfitRate": 0.032611319512675506,
+            "bondPct": 40.47500294616317,
+            "equityPct": 37.69218624539689,
+            "targetCount": 6
+        },
+        "html": "<p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">大家好，这里是<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">叨居</strong>，欢迎来到我的投资纪实记录。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">经过一段时间准备，我的个人记录网站「<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">投么有度</strong>」开启长期实盘更新。<br>从2026年开始，我计划用二十年时间，慢慢实践属于自己的退休积累计划。<br>投资对于我而言，永远只是生活的附属，<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">生活大于投资</strong>，也是我一直坚持的核心理念。</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">这是开始分享实盘周记的<strong style=\"color:#B8860B;background:#faf7f0;padding:1px 4px;border-radius:3px;\">第9周</strong>。</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周账户概况（更新日期：2026-10-31）</section><section style=\"margin:14px 0 18px;padding:16px 12px;background:#fdf6f6;border:1px solid #f2d9d9;border-radius:8px;text-align:center;\"><span style=\"font-size:13px;color:#7a6a45;\">本 周 收 益</span><br><strong style=\"font-size:24px;line-height:1.5;color:#c00000;\">+¥ 552.41</strong></section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">初始本金：<strong>¥ 100,000.00</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">总资产：<strong>¥ 101,912.21</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">组合总市值：<strong>¥ 79,661.91</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">现金：<strong>¥ 22,250.30</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益：<strong style=\"color:#c00000;\">¥ +2,597.88</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">累计持仓收益率：<strong style=\"color:#c00000;\">+3.26%</strong></p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">当前资产配比：</p><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">债券类占比：40.5%</section><section style=\"margin:6px 0;padding:10px 14px;background:#faf7f0;border-left:4px solid #c9a961;border-radius:4px;font-size:14px;line-height:1.8;color:#7a6a45;\">权益类占比：37.7%</section><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">本周复盘</section><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">本周红利低波表现优异，涨幅3%左右，现阶段持有红利是不错的选择</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">美股本周五出现了比较大的跌幅：</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">其中：道琼斯  -1.09%   纳斯达克 -2.86%  标普500 -1.82%  纳斯达克100 -3.46%</p><p style=\"margin:0 0 14px;font-size:15px;line-height:1.9;color:#3f3f3f;letter-spacing:0.5px;\">债券市场本周也回调不少，当下持有债券仍是不错的选择；</p><section style=\"display:inline-block;margin:30px 0 14px;padding:5px 14px;background:#f3ecdc;border-left:4px solid #c9a961;font-weight:700;font-size:16px;line-height:1.6;color:#7a5c28;\">重要声明</section><section style=\"margin-top:30px;padding:14px 16px;background:#fafafa;border:1px solid #ececec;border-radius:6px;font-size:13px;line-height:1.8;color:#999;\">所有内容仅属于我个人的投资成长记录，不构成任何投资建议。市场有风险，入市需谨慎。</section><p style=\"margin:26px 0 0;font-size:13px;line-height:1.8;color:#999;\">更多长期投资思考与复盘笔记，会持续更新于此。</p><section style=\"margin:30px 0 0;padding:16px 18px;background:#faf7f0;border:1px solid #e8dfc8;border-radius:8px;text-align:center;font-size:14px;line-height:2.2;color:#7a6a45;\"><strong style=\"font-size:15px;\">每周更新实盘周记，欢迎关注</strong><br><span style=\"font-size:13px;\">公众号：叨居</span><br><span style=\"font-size:13px;color:#8a7a55;\">往后每周，在这里同步账户最新情况，记录一路上的思考与成长。<br>完整的数据内容，可前往【个人主页】访问个人网站【投么有度】查看。</span></section>",
+        "coverUrl": "",
+        "pushedAt": "",
+        "draftMediaId": ""
+    },
     {
         "week": 8,
         "date": "2026-10-24",
